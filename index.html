@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laporan Auto WhatsApp Lengkap</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laporan Auto WhatsApp Lengkap</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-100 via-white to-blue-200 min-h-screen flex items-center justify-center">
 
@@ -21,17 +21,13 @@
     <select id="stesenSelect" class="w-full p-2 border rounded bg-white text-gray-800"></select>
   </div>
 
-// Tambah stesen baru
-document.getElementById('addStesen').addEventListener('click', () => {
-    const newStesen = document.getElementById('newStesen').value.trim();
-    if(newStesen && !stesenList.includes(newStesen)) {
-        stesenList.push(newStesen);
-        localStorage.setItem('stesenList', JSON.stringify(stesenList));
-        refreshDropdown();
-        document.getElementById('newStesen').value = "";
-        alert("Stesen baru ditambah!");
-    }
-});
+  <!-- Tambah stesen baru -->
+  <div class="rounded-2xl shadow-lg p-4 flex space-x-2 bg-white">
+    <input type="text" id="newStesen" placeholder="Tambah stesen baru" class="flex-1 p-2 border rounded-l">
+    <button id="addStesen" class="px-4 bg-blue-700 text-white rounded-r hover:bg-blue-800 transition-all duration-300 font-semibold text-sm">
+      Tambah
+    </button>
+  </div>
 
   <!-- Reset LocalStorage -->
   <div class="rounded-2xl shadow-lg p-4 bg-white">
@@ -65,7 +61,6 @@ function refreshDropdown() {
     const lastStesen = localStorage.getItem('stesenHariIni');
     if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
 }
-
 refreshDropdown();
 
 // Tambah stesen baru
@@ -73,7 +68,6 @@ document.getElementById('addStesen').addEventListener('click', () => {
     const newStesen = document.getElementById('newStesen').value.trim();
     if(newStesen && !stesenList.includes(newStesen)) {
         stesenList.push(newStesen);
-        if(stesenList.length > 7) stesenList.shift(); // max 7 stesen
         localStorage.setItem('stesenList', JSON.stringify(stesenList));
         refreshDropdown();
         document.getElementById('newStesen').value = "";
@@ -133,7 +127,6 @@ function copyAndOpenWA() {
         window.open(waLink, "_blank");
     });
 }
-
 document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
 
 // Auto-run setiap 60 minit
