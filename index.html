@@ -12,12 +12,12 @@
 
   <!-- Header -->
   <div class="rounded-2xl shadow-2xl p-5 text-center text-white bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700">
-    <h2 class="text-2xl font-bold">Laporan Setiap Jam😈🤣</h2>
+    <h2 class="text-2xl font-bold">Laporan Setiap Jam 😈🤣</h2>
   </div>
 
   <!-- Pilih / ubah stesen -->
-  <div class="rounded-2xl shadow-lg p-4 bg-white">
-    <label class="block text-gray-800 mb-2 font-semibold" for="stesenSelect">Stesen hari ini:</label>
+  <div class="rounded-2xl shadow-lg p-4 bg-white space-y-2">
+    <label class="block text-gray-800 font-semibold" for="stesenSelect">Stesen hari ini:</label>
     <select id="stesenSelect" class="w-full p-2 border rounded bg-white text-gray-800"></select>
   </div>
 
@@ -27,16 +27,25 @@
     <button id="addStesen" class="px-4 bg-blue-700 text-white rounded-r hover:bg-blue-800 transition-all duration-300 font-semibold text-sm">Tambah</button>
   </div>
 
+  <!-- Reset LocalStorage -->
+  <div class="rounded-2xl shadow-lg p-4 bg-white">
+    <button id="resetStorage" class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded font-semibold transition-all duration-300">
+      Reset Senarai Stesen 🚮
+    </button>
+  </div>
+
   <!-- Button Copy & Buka WhatsApp -->
   <div class="rounded-2xl shadow-lg p-4 bg-white">
-    <button id="sendReport" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded transition-all duration-300 font-semibold">Copy & Buka WhatsApp</button>
+    <button id="sendReport" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded transition-all duration-300 font-semibold">
+      Copy & Buka WhatsApp
+    </button>
   </div>
 
 </div>
 
 <script>
-// Muat stesen dari localStorage
-let stesenList = JSON.parse(localStorage.getItem('stesenList')) || ["UNIVERSITI (KJL)", "ABDULLAH HUKUM (KJL)", "KERINCHI (KJL)"];
+const defaultStesen = ["UNIVERSITI (KJL)", "ABDULLAH HUKUM (KJL)", "KERINCHI (KJL)"];
+let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [...defaultStesen];
 const stesenSelect = document.getElementById('stesenSelect');
 
 function refreshDropdown() {
@@ -64,6 +73,14 @@ document.getElementById('addStesen').addEventListener('click', () => {
         document.getElementById('newStesen').value = "";
         alert("Stesen baru ditambah!");
     }
+});
+
+// Reset LocalStorage → kembali ke senarai asal
+document.getElementById('resetStorage').addEventListener('click', () => {
+    localStorage.removeItem('stesenList');
+    stesenList = [...defaultStesen];
+    refreshDropdown();
+    alert("Senarai stesen telah direset!");
 });
 
 // Generate teks laporan
@@ -111,7 +128,6 @@ function copyAndOpenWA() {
     });
 }
 
-// Button manual
 document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
 
 // Auto-run setiap 60 minit
