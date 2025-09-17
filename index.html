@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan Auto WhatsApp Lengkap</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-white to-blue-200 min-h-screen flex items-center justify-center">
+
+<div class="w-full max-w-md p-6 space-y-6">
+
+  <!-- Header -->
+  <div class="rounded-2xl shadow-2xl p-5 text-center text-white bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700">
+    <h2 class="text-2xl font-bold">Laporan Setiap Jam😈🤣</h2>
+  </div>
+
+  <!-- Pilih / ubah stesen -->
+  <div class="rounded-2xl shadow-lg p-4 bg-white">
+    <label class="block text-gray-800 mb-2 font-semibold" for="stesenSelect">Stesen hari ini:</label>
+    <select id="stesenSelect" class="w-full p-2 border rounded bg-white text-gray-800"></select>
+  </div>
+
+  <!-- Tambah stesen baru -->
+  <div class="rounded-2xl shadow-lg p-4 flex space-x-2 bg-white">
+    <input type="text" id="newStesen" placeholder="Tambah stesen baru" class="flex-1 p-2 border rounded-l">
+    <button id="addStesen" class="px-4 bg-blue-700 text-white rounded-r hover:bg-blue-800 transition-all duration-300 font-semibold text-sm">Tambah</button>
+  </div>
+
+  <!-- Button Copy & Buka WhatsApp -->
+  <div class="rounded-2xl shadow-lg p-4 bg-white">
+    <button id="sendReport" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded transition-all duration-300 font-semibold">Copy & Buka WhatsApp</button>
+  </div>
+
+</div>
+
+<script>
+// Muat stesen dari localStorage
+let stesenList = JSON.parse(localStorage.getItem('stesenList')) || ["UNIVERSITI (KJL)", "ABDULLAH HUKUM (KJL)", "KERINCHI (KJL)"];
+const stesenSelect = document.getElementById('stesenSelect');
+
+function refreshDropdown() {
+    stesenSelect.innerHTML = "";
+    stesenList.forEach(stesen => {
+        const option = document.createElement('option');
+        option.value = stesen;
+        option.textContent = stesen;
+        stesenSelect.appendChild(option);
+    });
+    const lastStesen = localStorage.getItem('stesenHariIni');
+    if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
+}
+
+refreshDropdown();
+
+// Tambah stesen baru
+document.getElementById('addStesen').addEventListener('click', () => {
+    const newStesen = document.getElementById('newStesen').value.trim();
+    if(newStesen && !stesenList.includes(newStesen)) {
+        stesenList.push(newStesen);
+        if(stesenList.length > 7) stesenList.shift(); // max 7 stesen
+        localStorage.setItem('stesenList', JSON.stringify(stesenList));
+        refreshDropdown();
+        document.getElementById('newStesen').value = "";
+        alert("Stesen baru ditambah!");
+    }
+});
+
+// Generate teks laporan
+function generateText() {
+    const now = new Date();
+    const tarikh = now.toLocaleDateString('ms-MY'); 
+    const masa = now.toTimeString().slice(0,5).replace(":", "") + " HRS"; 
+    const stesenHariIni = stesenSelect.value;
+    localStorage.setItem('stesenHariIni', stesenHariIni);
+
+    return `
+*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
+
+Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
+
+TARIKH : ${tarikh}
+MASA : ${masa}
+TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1 & 2
+LOKASI : STESEN ${stesenHariIni}
+
+1. Lapor kawalan dan pemantauan di platform Stesen ${stesenHariIni}.
+2. Pergerakan penumpang keluar/masuk tren lancar.
+3. Perkhidmatan tren beroperasi seperti biasa.
+
+Anggota Bertugas:- 
+PPB NAZMI
+
+*#TERUSKAN PERKARA BAIK*
+`;
+}
+
+// Fungsi copy + buka WhatsApp
+function copyAndOpenWA() {
+    const text = generateText();
+    navigator.clipboard.writeText(text).then(() => {
+        const encodedText = encodeURIComponent(text);
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        let waLink;
+        if (/android/i.test(ua) || (/iPad|iPhone|iPod/.test(ua) && !window.MSStream)) {
+            waLink = `https://api.whatsapp.com/send?text=${encodedText}`;
+        } else {
+            waLink = `https://web.whatsapp.com/send?text=${encodedText}`;
+        }
+        window.open(waLink, "_blank");
+    });
+}
+
+// Button manual
+document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
+
+// Auto-run setiap 60 minit
+setInterval(copyAndOpenWA, 60*60*1000);
+</script>
+
+</body>
+</html>
