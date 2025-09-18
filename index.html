@@ -3,134 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Auto WhatsApp Lengkap</title>
+  <title>Laporan Auto WhatsApp</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-100 via-white to-blue-200 min-h-screen flex items-center justify-center">
 
-<div class="w-full max-w-md p-6 space-y-6">
+<div class="w-full max-w-2xl bg-white p-6 rounded-2xl shadow-lg space-y-4">
+  <h2 class="text-xl font-bold text-center">📋 Sistem Laporan Auto WhatsApp</h2>
 
-  <!-- Header -->
-  <div class="rounded-2xl shadow-2xl p-5 text-center text-white bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700">
-    <h2 class="text-2xl font-bold">Laporan Setiap Jam 😈🤣</h2>
+  <!-- Pilih Jenis Laporan -->
+  <label class="block">Jenis Laporan</label>
+  <select id="jenisLaporan" class="w-full border p-2 rounded">
+    <option value="jam">Laporan Keadaan Stesen Setiap Jam</option>
+    <option value="redmike">Laporan Redmike</option>
+  </select>
+
+  <!-- Pilihan Stesen -->
+  <label class="block">Stesen</label>
+  <select id="stesen" class="w-full border p-2 rounded">
+    <option value="ASIA JAYA">ASIA JAYA</option>
+    <option value="KELANA JAYA">KELANA JAYA</option>
+    <option value="TAMAN BAHAGIA">TAMAN BAHAGIA</option>
+  </select>
+
+  <!-- Form Redmike -->
+  <div id="formRedmike" class="hidden space-y-2">
+    <label>2. Masa</label>
+    <input id="masa" type="text" class="w-full border p-2 rounded" placeholder="Contoh: 1755 HRS">
+
+    <label>4. Ketua Zon/Penyelia</label>
+    <input id="ketuaZon" type="text" class="w-full border p-2 rounded">
+
+    <label>5. SCC Bertugas</label>
+    <input id="scc" type="text" class="w-full border p-2 rounded">
+
+    <label>6. Anggota STN</label>
+    <input id="anggota" type="text" class="w-full border p-2 rounded">
+
+    <label>7. Hosler/CSA</label>
+    <input id="csa" type="text" class="w-full border p-2 rounded">
+
+    <label>8. Nama Mangsa</label>
+    <input id="nama" type="text" class="w-full border p-2 rounded">
+
+    <label>No MyKad</label>
+    <input id="mykad" type="text" class="w-full border p-2 rounded">
+
+    <label>Jantina</label>
+    <input id="jantina" type="text" class="w-full border p-2 rounded">
+
+    <label>Umur</label>
+    <input id="umur" type="text" class="w-full border p-2 rounded">
+
+    <label>Warganegara</label>
+    <input id="warga" type="text" class="w-full border p-2 rounded">
+
+    <label>No Telefon</label>
+    <input id="telefon" type="text" class="w-full border p-2 rounded">
+
+    <label>Pekerjaan</label>
+    <input id="kerja" type="text" class="w-full border p-2 rounded">
+
+    <label>Alamat</label>
+    <textarea id="alamat" class="w-full border p-2 rounded"></textarea>
+
+    <label>9. Kecederaan</label>
+    <input id="kecederaan" type="text" class="w-full border p-2 rounded">
+
+    <label>10. Sebab Kejadian</label>
+    <input id="sebab" type="text" class="w-full border p-2 rounded">
+
+    <label>11. Red State</label>
+    <input id="redstate" type="text" class="w-full border p-2 rounded">
+
+    <label>12. Green State</label>
+    <input id="greenstate" type="text" class="w-full border p-2 rounded">
+
+    <label>13. Pegawai Perubatan</label>
+    <input id="pegawai" type="text" class="w-full border p-2 rounded">
+
+    <label>14. Pemandu Ambulans</label>
+    <input id="pemandu" type="text" class="w-full border p-2 rounded">
+
+    <label>15. Butiran Ambulans</label>
+    <input id="ambulans" type="text" class="w-full border p-2 rounded">
+
+    <label>16. Kronologi Ringkasan Kejadian</label>
+    <textarea id="kronologi" class="w-full border p-2 rounded" rows="5"></textarea>
+
+    <label>17. Tindakan</label>
+    <textarea id="tindakan" class="w-full border p-2 rounded" rows="4"></textarea>
   </div>
 
-  <!-- Pilih / ubah stesen -->
-  <div class="rounded-2xl shadow-lg p-4 bg-white space-y-2">
-    <label class="block text-gray-800 font-semibold" for="stesenSelect">Stesen hari ini:</label>
-    <select id="stesenSelect" class="w-full p-2 border rounded bg-white text-gray-800"></select>
-  </div>
+  <!-- Output -->
+  <textarea id="output" class="w-full border p-2 rounded h-60"></textarea>
 
-  <!-- Tambah stesen baru -->
-  <div class="rounded-2xl shadow-lg p-4 flex space-x-2 bg-white">
-    <input type="text" id="newStesen" placeholder="Tambah stesen baru" class="flex-1 p-2 border rounded-l">
-    <button id="addStesen" class="px-4 bg-blue-700 text-white rounded-r hover:bg-blue-800 transition-all duration-300 font-semibold text-sm">
-      Tambah
-    </button>
+  <!-- Button -->
+  <div class="flex space-x-2">
+    <button onclick="generate()" class="flex-1 bg-blue-500 text-white p-2 rounded">Generate</button>
+    <button onclick="copyText()" class="flex-1 bg-green-500 text-white p-2 rounded">Copy</button>
+    <button onclick="sendWA()" class="flex-1 bg-purple-500 text-white p-2 rounded">Buka WhatsApp</button>
   </div>
-
-  <!-- Reset LocalStorage -->
-  <div class="rounded-2xl shadow-lg p-4 bg-white">
-    <button id="resetStorage" class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded font-semibold transition-all duration-300">
-      Reset Senarai Stesen 🚮
-    </button>
-  </div>
-
-  <!-- Button Copy & Buka WhatsApp -->
-  <div class="rounded-2xl shadow-lg p-4 bg-white">
-    <button id="sendReport" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded transition-all duration-300 font-semibold">
-      Copy & Buka WhatsApp
-    </button>
-  </div>
-
 </div>
 
 <script>
-const defaultStesen = ["UNIVERSITI (KJL)", "ABDULLAH HUKUM (KJL)", "KERINCHI (KJL)"];
-let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [...defaultStesen];
-const stesenSelect = document.getElementById('stesenSelect');
+const jenis = document.getElementById("jenisLaporan");
+const formRedmike = document.getElementById("formRedmike");
 
-function refreshDropdown() {
-    stesenSelect.innerHTML = "";
-    stesenList.forEach(stesen => {
-        const option = document.createElement('option');
-        option.value = stesen;
-        option.textContent = stesen;
-        stesenSelect.appendChild(option);
-    });
-    const lastStesen = localStorage.getItem('stesenHariIni');
-    if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
-}
-refreshDropdown();
-
-// Tambah stesen baru
-document.getElementById('addStesen').addEventListener('click', () => {
-    const newStesen = document.getElementById('newStesen').value.trim();
-    if(newStesen && !stesenList.includes(newStesen)) {
-        stesenList.push(newStesen);
-        localStorage.setItem('stesenList', JSON.stringify(stesenList));
-        refreshDropdown();
-        document.getElementById('newStesen').value = "";
-        alert("Stesen baru ditambah!");
-    }
+jenis.addEventListener("change", () => {
+  formRedmike.classList.toggle("hidden", jenis.value !== "redmike");
 });
 
-// Reset LocalStorage → kembali ke senarai asal
-document.getElementById('resetStorage').addEventListener('click', () => {
-    localStorage.removeItem('stesenList');
-    stesenList = [...defaultStesen];
-    refreshDropdown();
-    alert("Senarai stesen telah direset!");
-});
+function generate() {
+  const today = new Date();
+  const tarikh = today.toLocaleDateString("ms-MY");
 
-// Generate teks laporan
-function generateText() {
-    const now = new Date();
-    const tarikh = now.toLocaleDateString('ms-MY'); 
-    const masa = now.toTimeString().slice(0,5).replace(":", "") + " HRS"; 
-    const stesenHariIni = stesenSelect.value;
-    localStorage.setItem('stesenHariIni', stesenHariIni);
+  const jenisVal = jenis.value;
+  const stesen = document.getElementById("stesen").value;
 
-    return `
-*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
+  let laporan = "";
 
-Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
+  if (jenisVal === "jam") {
+    laporan = `*LAPORAN KEADAAN STESEN SETIAP JAM*\n
+Tarikh: ${tarikh}
+Masa: ${today.toLocaleTimeString("ms-MY")}
+Stesen: ${stesen}`;
+  }
 
-TARIKH : ${tarikh}
-MASA : ${masa}
-TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1 & 2
-LOKASI : STESEN ${stesenHariIni}
+  if (jenisVal === "redmike") {
+    const masa = document.getElementById("masa").value;
+    const ketuaZon = document.getElementById("ketuaZon").value;
+    const scc = document.getElementById("scc").value;
+    const anggota = document.getElementById("anggota").value;
+    const csa = document.getElementById("csa").value;
+    const nama = document.getElementById("nama").value;
+    const mykad = document.getElementById("mykad").value;
+    const jantina = document.getElementById("jantina").value;
+    const umur = document.getElementById("umur").value;
+    const warga = document.getElementById("warga").value;
+    const telefon = document.getElementById("telefon").value;
+    const kerja = document.getElementById("kerja").value;
+    const alamat = document.getElementById("alamat").value;
+    const kecederaan = document.getElementById("kecederaan").value;
+    const sebab = document.getElementById("sebab").value;
+    const redstate = document.getElementById("redstate").value;
+    const greenstate = document.getElementById("greenstate").value;
+    const pegawai = document.getElementById("pegawai").value;
+    const pemandu = document.getElementById("pemandu").value;
+    const ambulans = document.getElementById("ambulans").value;
+    const kronologi = document.getElementById("kronologi").value;
+    const tindakan = document.getElementById("tindakan").value;
 
-1. Lapor kawalan dan pemantauan di platform Stesen ${stesenHariIni}.
-2. Pergerakan penumpang keluar/masuk tren lancar.
-3. Perkhidmatan tren beroperasi seperti biasa.
+    laporan = `*ASSALAMMUALAIKUM TUAN/PUAN*
 
-Anggota Bertugas:- 
-PPB NAZMI
+*LAPORAN AWAL KEJADIAN RED MIKE STN ${stesen}*
 
-*#TERUSKAN PERKARA BAIK*
-`;
+*1. TARIKH*
+- ${tarikh}
+
+*2. MASA*
+- ${masa}
+
+*3. STESEN*
+- ${stesen}
+
+*4. KETUA ZON/PENYELIA BERTUGAS*
+- ${ketuaZon}
+
+*5. SCC BERTUGAS*
+- ${scc}
+
+*6. ANGGOTA STN BERTUGAS*
+- ${anggota}
+
+*7. HOSLER/CSA BERTUGAS*
+- ${csa}
+
+*8. BUTIR-BUTIR MANGSA*
+NAMA : ${nama}
+NO MYKAD : ${mykad}
+JANTINA : ${jantina}
+UMUR : ${umur}
+W/NEGARA : ${warga}
+NO TEL : ${telefon}
+PEKERJAAN : ${kerja}
+ALAMAT : ${alamat}
+
+*9. KECEDERAAN :*
+- ${kecederaan}
+
+*10. SEBAB KEJADIAN :*
+- ${sebab}
+
+*11. RED STATE :*
+- ${redstate}
+
+*12. GREEN STATE :*
+- ${greenstate}
+
+*13. BUTIRAN PEGAWAI PERUBATAN :*
+- ${pegawai}
+
+*14. BUTIRAN PEMANDU AMBULAN :*
+- ${pemandu}
+
+*15. BUTIRAN AMBULAN :*
+- ${ambulans}
+
+*16. KRONOLOGI RINGKASAN KEJADIAN :*
+${kronologi}
+
+*17. TINDAKAN :*
+${tindakan}
+
+*Sekian Laporan kejadian, Sekian terima kasih.*`;
+  }
+
+  document.getElementById("output").value = laporan;
 }
 
-// Fungsi copy + buka WhatsApp
-function copyAndOpenWA() {
-    const text = generateText();
-    navigator.clipboard.writeText(text).then(() => {
-        const encodedText = encodeURIComponent(text);
-        const ua = navigator.userAgent || navigator.vendor || window.opera;
-        let waLink;
-        if (/android/i.test(ua) || (/iPad|iPhone|iPod/.test(ua) && !window.MSStream)) {
-            waLink = `https://api.whatsapp.com/send?text=${encodedText}`;
-        } else {
-            waLink = `https://web.whatsapp.com/send?text=${encodedText}`;
-        }
-        window.open(waLink, "_blank");
-    });
+function copyText() {
+  const output = document.getElementById("output");
+  output.select();
+  document.execCommand("copy");
+  alert("Laporan dicopy!");
 }
-document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
 
-// Auto-run setiap 60 minit
-setInterval(copyAndOpenWA, 60*60*1000);
+function sendWA() {
+  const text = encodeURIComponent(document.getElementById("output").value);
+  window.open(`https://wa.me/?text=${text}`, "_blank");
+}
 </script>
 
 </body>
