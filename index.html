@@ -5,74 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Laporan Auto WhatsApp</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Animasi polis berkelip merah-biru */
-    @keyframes polis {
-      0%, 100% { color: #ef4444; } /* merah */
-      50% { color: #3b82f6; } /* biru */
-    }
-    .anim-polis { animation: polis 1s infinite; }
-
-    /* Animasi stesen bergetar */
-    @keyframes stesen {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-    .anim-stesen { animation: stesen 2s infinite ease-in-out; }
-
-    /* Animasi pulse butang utama */
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59,130,246,0.7); }
-      50% { transform: scale(1.05); box-shadow: 0 0 20px 5px rgba(59,130,246,0.4); }
-    }
-    .anim-pulse { animation: pulse 2s infinite; }
-  </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex items-center justify-center relative">
 
-<div class="w-full max-w-md p-6 space-y-6">
+  <!-- Background blur -->
+  <div class="absolute inset-0 bg-[url('URL_GAMBAR_AWAK')] bg-cover bg-center filter blur-md"></div>
 
-  <!-- Header -->
-  <div class="rounded-2xl shadow-xl p-5 text-center text-white bg-gradient-to-r from-blue-600 to-blue-500 flex items-center justify-center space-x-2">
-    <span class="text-2xl anim-polis">🚨</span>
-    <h2 class="text-2xl font-bold">Laporan Setiap Jam</h2>
-    <span class="text-2xl anim-stesen">🚉</span>
+  <!-- Overlay putih supaya teks senang baca -->
+  <div class="absolute inset-0 bg-white/70"></div>
+
+  <!-- Isi laporan -->
+  <div class="relative w-full max-w-md p-6 space-y-6">
+
+    <!-- Header -->
+    <div class="rounded-2xl shadow-xl p-5 text-center text-white bg-gradient-to-r from-blue-600 to-blue-500">
+      <h2 class="text-2xl font-bold">Laporan Setiap Jam</h2>
+    </div>
+
+    <!-- Pilih / ubah stesen -->
+    <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
+      <label class="block text-gray-800 font-semibold" for="stesenSelect">Stesen hari ini:</label>
+      <select id="stesenSelect" 
+              class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
+    </div>
+
+    <!-- Tambah stesen baru -->
+    <div class="rounded-2xl shadow-md p-3 bg-white flex items-center space-x-2">
+      <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
+             class="flex-1 p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
+      <button id="addStesen" 
+        class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-semibold text-xs shadow">
+        📍
+      </button>
+    </div>
+
+    <!-- Reset LocalStorage -->
+    <div class="rounded-2xl shadow-md p-4 bg-white">
+      <button id="resetStorage" 
+        class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded font-semibold transition shadow">
+        Reset Senarai Stesen 🚮
+      </button>
+    </div>
+
+    <!-- Button Copy & Buka WhatsApp -->
+    <div class="rounded-2xl shadow-md p-4 bg-white">
+      <button id="sendReport" 
+        class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded font-semibold transition shadow">
+        Copy & Buka WhatsApp
+      </button>
+    </div>
+
   </div>
-
-  <!-- Pilih / ubah stesen -->
-  <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
-    <label class="block text-gray-800 font-semibold" for="stesenSelect">Stesen hari ini:</label>
-    <select id="stesenSelect" 
-            class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
-  </div>
-
-  <!-- Tambah stesen baru -->
-  <div class="rounded-2xl shadow-md p-3 bg-white flex items-center space-x-2">
-    <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
-           class="flex-1 p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
-    <button id="addStesen" 
-      class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-semibold text-sm shadow">
-      📍
-    </button>
-  </div>
-
-  <!-- Reset LocalStorage -->
-  <div class="rounded-2xl shadow-md p-4 bg-white">
-    <button id="resetStorage" 
-      class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded font-semibold transition shadow">
-      Reset Senarai Stesen 🚮
-    </button>
-  </div>
-
-  <!-- Button Copy & Buka WhatsApp -->
-  <div class="rounded-2xl shadow-md p-4 bg-white">
-    <button id="sendReport" 
-      class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded font-semibold transition shadow anim-pulse">
-      Copy & Buka WhatsApp
-    </button>
-  </div>
-
-</div>
 
 <script>
 const defaultStesen = [
