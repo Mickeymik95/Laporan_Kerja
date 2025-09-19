@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Auto WhatsApp</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan Auto WhatsApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="min-h-screen relative">
 
-  <!-- Background -->
+  <!-- Background gradient penuh -->
   <div class="absolute inset-0 bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900"></div>
-  <div class="absolute inset-0 bg-white/60"></div>
 
-  <!-- Container utama -->
-  <div class="relative w-full max-w-4xl mx-auto p-8 space-y-8 
-              bg-white/10 backdrop-blur-md 
-              border border-gray-400 rounded-2xl shadow-2xl mt-10">
+  <!-- Page content -->
+  <div class="relative w-full max-w-4xl mx-auto p-6 space-y-6">
 
-    <!-- Banner -->
-    <nav class="bg-cover bg-center h-40 w-full rounded-2xl shadow-xl border border-white/30"
+    <!-- Navbar / Banner -->
+    <nav class="bg-cover bg-center h-32 w-full rounded-2xl shadow-xl border border-white/30"
          style="background-image: url('DSC_0085_1.jpg');">
     </nav>
 
-    <!-- Header -->
-    <div class="text-center space-y-2">
-      <h2 class="text-3xl font-extrabold uppercase text-blue-700 drop-shadow-md tracking-wide">
+    <!-- Header tanpa container -->
+    <div class="text-center space-y-2 text-white">
+      <h2 class="text-3xl font-extrabold uppercase drop-shadow-md tracking-wide">
         📑 Laporan Setiap Jam 👮🏿‍♂️
       </h2>
-      <p class="text-sm font-semibold lowercase italic text-blue-900 tracking-wide">
+      <p class="text-sm font-semibold lowercase italic tracking-wide">
         CREATED BY PPB NAZMI/MIK 😎
       </p>
     </div>
 
-    <!-- Pilih / ubah stesen -->
-    <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
-      <label class="block text-gray-800 font-semibold" for="stesenSelect">Stesen hari ini:</label>
-      <select id="stesenSelect" 
-              class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
-    </div>
+    <!-- Container frosted dari STESEN hingga Copy & WhatsApp -->
+    <div class="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-400 text-gray-900 space-y-4">
 
-    <!-- Tambah stesen baru -->
-    <div class="flex items-center space-x-2">
-      <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
-             class="flex-1 p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
-      <button id="addStesen" 
-        class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition font-semibold text-sm">
-        Tambah 📍
+      <!-- Pilih / ubah stesen -->
+      <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
+        <label class="block font-semibold" for="stesenSelect">Stesen hari ini:</label>
+        <select id="stesenSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
+      </div>
+
+      <!-- Tambah stesen baru -->
+      <div class="flex items-center space-x-2">
+        <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
+               class="flex-1 p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
+        <button id="addStesen" 
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition font-semibold text-sm">
+          Tambah 📍
+        </button>
+      </div>
+
+      <!-- Reset LocalStorage -->
+      <button id="resetStorage" 
+        class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg font-semibold transition shadow-lg">
+        Reset Senarai Stesen 🚮
       </button>
+
+      <!-- Button Copy & Buka WhatsApp -->
+      <button id="sendReport" 
+        class="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 32 32">
+          <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.82.732 5.537 2.125 7.938l-2.125 8.062 8.25-2.156c2.344 1.285 4.978 1.969 7.75 1.969 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.48 0-4.896-.648-7-1.875l-.5-.281-4.875 1.25 1.25-4.75-.312-.5c-1.193-1.915-1.813-4.11-1.813-6.344 0-6.889 5.611-12.5 12.5-12.5s12.5 5.611 12.5 12.5-5.611 12.5-12.5 12.5zM23.094 19.563c-.379-.188-2.237-1.105-2.582-1.231-.345-.129-.597-.188-.848.188-.253.379-.973 1.231-1.193 1.484-.219.252-.438.283-.817.094-.379-.188-1.603-.59-3.055-1.881-1.13-1.009-1.894-2.252-2.114-2.631-.219-.379-.023-.583.165-.771.168-.168.379-.438.568-.657.188-.219.251-.379.379-.631.126-.252.063-.473-.031-.662-.094-.188-.848-2.055-1.16-2.813-.305-.73-.618-.631-.848-.641-.219-.012-.473-.014-.726-.014s-.662.094-1.009.473c-.345.379-1.323 1.291-1.323 3.148s1.354 3.648 1.541 3.896c.188.252 2.662 4.062 6.447 5.699.902.389 1.604.621 2.152.797.904.288 1.725.247 2.373.149.725-.109 2.237-.914 2.551-1.796.315-.883.315-1.64.221-1.796-.095-.155-.348-.252-.727-.441z"/>
+        </svg>
+        <span>Copy & Buka WhatsApp</span>
+      </button>
+
     </div>
-
-    <!-- Reset LocalStorage -->
-    <button id="resetStorage" 
-      class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg font-semibold transition shadow-lg">
-      Reset Senarai Stesen 🚮
-    </button>
-
-    <!-- Button Copy & Buka WhatsApp -->
-    <button id="sendReport" 
-      class="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 32 32">
-        <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.82.732 5.537 2.125 7.938l-2.125 8.062 8.25-2.156c2.344 1.285 4.978 1.969 7.75 1.969 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.48 0-4.896-.648-7-1.875l-.5-.281-4.875 1.25 1.25-4.75-.312-.5c-1.193-1.915-1.813-4.11-1.813-6.344 0-6.889 5.611-12.5 12.5-12.5s12.5 5.611 12.5 12.5-5.611 12.5-12.5 12.5zM23.094 19.563c-.379-.188-2.237-1.105-2.582-1.231-.345-.129-.597-.188-.848.188-.253.379-.973 1.231-1.193 1.484-.219.252-.438.283-.817.094-.379-.188-1.603-.59-3.055-1.881-1.13-1.009-1.894-2.252-2.114-2.631-.219-.379-.023-.583.165-.771.168-.168.379-.438.568-.657.188-.219.251-.379.379-.631.126-.252.063-.473-.031-.662-.094-.188-.848-2.055-1.16-2.813-.305-.73-.618-.631-.848-.641-.219-.012-.473-.014-.726-.014s-.662.094-1.009.473c-.345.379-1.323 1.291-1.323 3.148s1.354 3.648 1.541 3.896c.188.252 2.662 4.062 6.447 5.699.902.389 1.604.621 2.152.797.904.288 1.725.247 2.373.149.725-.109 2.237-.914 2.551-1.796.315-.883.315-1.64.221-1.796-.095-.155-.348-.252-.727-.441z"/>
-      </svg>
-      <span>Copy & Buka WhatsApp</span>
-    </button>
 
   </div>
 
@@ -95,7 +96,6 @@ function refreshDropdown() {
 }
 refreshDropdown();
 
-// Tambah stesen baru
 document.getElementById('addStesen').addEventListener('click', () => {
     const newStesen = document.getElementById('newStesen').value.trim();
     if(newStesen && !stesenList.includes(newStesen)) {
@@ -107,7 +107,6 @@ document.getElementById('addStesen').addEventListener('click', () => {
     }
 });
 
-// Reset LocalStorage
 document.getElementById('resetStorage').addEventListener('click', () => {
     localStorage.removeItem('stesenList');
     stesenList = [...defaultStesen];
@@ -160,10 +159,6 @@ function copyAndOpenWA() {
     });
 }
 document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
-
-// Auto-run setiap 60 minit
-setInterval(copyAndOpenWA, 60*60*1000);
 </script>
 
-</body>
-</html>
+</body
