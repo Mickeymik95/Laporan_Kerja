@@ -10,9 +10,7 @@
 <body class="min-h-screen relative">
 
   <!-- Background gradient penuh -->
-  
-<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
-
+  <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
 
   <!-- Page content -->
   <div class="relative w-full max-w-4xl mx-auto p-6 space-y-6">
@@ -22,7 +20,7 @@
          style="background-image: url('DSC_0085_1.jpg');">
     </nav>
 
-    <!-- Header tanpa container -->
+    <!-- Header -->
     <div class="text-center space-y-2 text-white">
       <h2 class="text-3xl font-extrabold uppercase drop-shadow-md tracking-wide">
         📑 by DCP Pb Nazmi👮🏿‍♂️🤣
@@ -41,12 +39,20 @@
         <select id="stesenSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
       </div>
 
+      <!-- Pilih Anggota Bertugas -->
+      <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
+        <label class="block font-semibold" for="anggotaSelect">Anggota Bertugas:</label>
+        <select id="anggotaSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
+      </div>
+
       <!-- Tambah stesen baru -->
- <div class="flex space-x-2">
-  <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
-         class="flex-grow p-2 h-10 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
-  <button id="addStesen" class="px-4 h-10 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl active:translate-y-1 active:shadow-md focus:ring-2 focus:ring-blue-400 transition whitespace-nowrap">Tambah🚉</button>
-</div>
+      <div class="flex space-x-2">
+        <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
+               class="flex-grow p-2 h-10 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
+        <button id="addStesen" class="px-4 h-10 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl active:translate-y-1 active:shadow-md focus:ring-2 focus:ring-blue-400 transition whitespace-nowrap">
+          Tambah🚉
+        </button>
+      </div>
 
       <!-- Reset LocalStorage -->
       <button id="resetStorage" 
@@ -79,10 +85,22 @@ const defaultStesen = [
   "KELANA JAYA"
 ];
 
-let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [...defaultStesen];
-const stesenSelect = document.getElementById('stesenSelect');
+const defaultAnggota = [
+  "PPB NAZMI",
+  "PPB TARMIZI",
+  "PPB MUHAMMAD ALIF",
+  "KONS PB SAINOL ARIFFIN"
+];
 
+let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [...defaultStesen];
+let anggotaList = [...defaultAnggota];
+
+const stesenSelect = document.getElementById('stesenSelect');
+const anggotaSelect = document.getElementById('anggotaSelect');
+
+// Muat dropdown stesen & anggota
 function refreshDropdown() {
+    // Stesen
     stesenSelect.innerHTML = "";
     stesenList.forEach(stesen => {
         const option = document.createElement('option');
@@ -92,9 +110,22 @@ function refreshDropdown() {
     });
     const lastStesen = localStorage.getItem('stesenHariIni');
     if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
+
+    // Anggota
+    anggotaSelect.innerHTML = "";
+    anggotaList.forEach(anggota => {
+        const option = document.createElement('option');
+        option.value = anggota;
+        option.textContent = anggota;
+        anggotaSelect.appendChild(option);
+    });
+    const lastAnggota = localStorage.getItem('anggotaHariIni');
+    if(lastAnggota && anggotaList.includes(lastAnggota)) anggotaSelect.value = lastAnggota;
 }
+
 refreshDropdown();
 
+// Tambah stesen baru
 document.getElementById('addStesen').addEventListener('click', () => {
     const newStesen = document.getElementById('newStesen').value.trim();
     if(newStesen && !stesenList.includes(newStesen)) {
@@ -106,11 +137,17 @@ document.getElementById('addStesen').addEventListener('click', () => {
     }
 });
 
+// Reset senarai stesen
 document.getElementById('resetStorage').addEventListener('click', () => {
     localStorage.removeItem('stesenList');
     stesenList = [...defaultStesen];
     refreshDropdown();
     alert("Senarai stesen telah direset!");
+});
+
+// Simpan anggota terakhir dipilih
+anggotaSelect.addEventListener('change', () => {
+    localStorage.setItem('anggotaHariIni', anggotaSelect.value);
 });
 
 // Generate teks laporan
@@ -119,6 +156,8 @@ function generateText() {
     const tarikh = now.toLocaleDateString('ms-MY'); 
     const masa = now.toTimeString().slice(0,5).replace(":", "") + " HRS"; 
     const stesenHariIni = stesenSelect.value;
+    const anggotaHariIni = anggotaSelect.value;
+
     localStorage.setItem('stesenHariIni', stesenHariIni);
 
     return `
@@ -136,7 +175,7 @@ LOKASI : STESEN ${stesenHariIni} (KJL).
 3. Perkhidmatan tren beroperasi seperti biasa.
 
 Anggota Bertugas:- 
-PPB NAZMI
+${anggotaHariIni}
 
 *#TERUSKAN PERKARA BAIK*
 `;
@@ -158,6 +197,8 @@ function copyAndOpenWA() {
     });
 }
 document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
+
 </script>
 
-</body
+</body>
+</html>
