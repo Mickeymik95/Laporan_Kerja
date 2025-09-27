@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laporan PB KJL ZON 3</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Animasi berkelip */
+@keyframes blink {
+  0%, 50%, 100% { color: red; opacity: 1; }
+  25%, 75% { color: red; opacity: 0; }
+}
+.blink-red {
+  animation: blink 1s infinite;
+}
+</style>
 </head>
 
 <body class="min-h-screen relative">
@@ -25,7 +35,7 @@
       <h2 class="text-3xl font-extrabold uppercase drop-shadow-md tracking-wide">
         📑 by DCP Pb Nazmi👮🏿‍♂️🤣
       </h2>
-      <p class="text-sm font-semibold lowercase italic tracking-wide">
+      <p class="text-sm font-semibold lowercase italic tracking-wide blink-red">
         ->Pilih stesen/tambah stesen -> pilih nama -> Tekan (Copy & buka wssp)
       </p>
     </div>
@@ -74,6 +84,7 @@
   </div>
 
 <script>
+// Default senarai stesen
 const defaultStesen = [
   "ABDULLAH HUKUM",
   "KERINCHI",
@@ -85,11 +96,17 @@ const defaultStesen = [
   "KELANA JAYA"
 ];
 
+// Default senarai anggota (boleh tambah ramai)
 const defaultAnggota = [
   "PPB NAZMI",
   "PPB TARMIZI",
   "PPB MUHAMMAD ALIF",
-  "KONS PB SAINOL ARIFFIN"
+  "KONS PB SAINOL ARIFFIN",
+  "PPB AHMAD",
+  "PPB SITI",
+  "PPB HAKIM",
+  "PPB LINA",
+  "PPB FAIZAL"
 ];
 
 let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [...defaultStesen];
