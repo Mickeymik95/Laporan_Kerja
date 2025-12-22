@@ -5,64 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laporan PB KJL ZON 3</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
 @keyframes blink {
-  0%,50%,100%{opacity:1}25%,75%{opacity:0}
+  0%,50%,100%{opacity:1}
+  25%,75%{opacity:0}
 }
 .blink-red{animation:blink 4s infinite}
 </style>
 </head>
 
-<body class="min-h-screen relative overflow-hidden">
+<body class="h-screen overflow-hidden relative text-sm">
 
+<!-- Background -->
 <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
 
-<div class="relative max-w-4xl mx-auto p-4 space-y-3">
+<div class="relative max-w-3xl mx-auto p-4 space-y-3">
 
-<!-- Banner (dipendekkan) -->
-<nav class="h-24 rounded-xl shadow border border-white/30 bg-cover bg-center"
+<!-- Banner -->
+<nav class="h-24 rounded-xl shadow-lg border border-white/30 bg-cover bg-center"
 style="background-image:url('DSC_0085_1.jpg')"></nav>
 
+<!-- Header -->
 <div class="text-center text-white space-y-1">
-<h2 class="text-xl font-extrabold">🤣by PPB NAZMI👮🏿‍♂️</h2>
+<h2 class="text-2xl font-bold">🤣 by PPB NAZMI 👮🏿‍♂️</h2>
 <p class="text-xs italic blink-red">
-→ pilih stesen → pilih nama → copy & wssp
+→ Pilih stesen → pilih anggota → Copy & WhatsApp
 </p>
 </div>
 
-<div class="bg-white/70 backdrop-blur p-4 rounded-xl shadow space-y-3 text-sm">
+<!-- Glass Container -->
+<div class="bg-white/70 backdrop-blur-md rounded-xl p-4 space-y-3 shadow-xl">
 
-<!-- STESEN -->
-<div>
+<!-- Stesen -->
+<div class="bg-white rounded-lg p-2 shadow">
 <label class="font-semibold">Stesen hari ini</label>
-<select id="stesenSelect" class="w-full p-1.5 rounded shadow"></select>
+<select id="stesenSelect" class="w-full p-1.5 rounded border text-sm"></select>
 </div>
 
-<!-- ANGGOTA -->
-<div class="grid grid-cols-2 gap-2">
-<div>
+<!-- Anggota Bertugas -->
+<div class="bg-white rounded-lg p-2 shadow space-y-1">
 <label class="font-semibold">Anggota Bertugas</label>
-<select id="anggotaSelect" class="w-full p-1.5 rounded shadow"></select>
+
+<select class="anggota w-full p-1.5 rounded border"></select>
+<select class="anggota w-full p-1.5 rounded border"></select>
+<select class="anggota w-full p-1.5 rounded border"></select>
+<select class="anggota w-full p-1.5 rounded border"></select>
 </div>
 
-<div>
-<label class="font-semibold">Anggota</label>
-<select id="anggotaTambahan" class="w-full p-1.5 rounded shadow">
-<option value="">— kosong —</option>
-</select>
-</div>
-</div>
-
-<!-- TAMBAH STESEN -->
+<!-- Tambah stesen -->
 <div class="flex gap-2">
-<input id="newStesen" class="flex-1 p-1.5 rounded shadow" placeholder="Tambah stesen">
-<button id="addStesen" class="px-3 bg-blue-600 text-white rounded">
-Tambah🚉
+<input id="newStesen" placeholder="Tambah stesen"
+class="flex-1 p-1.5 rounded border text-sm">
+<button id="addStesen"
+class="px-3 bg-blue-600 text-white rounded shadow">
+Tambah
 </button>
 </div>
 
+<!-- Action -->
 <button id="sendReport"
-class="w-full bg-green-600 text-white p-2 rounded font-semibold">
+class="w-full py-2 rounded-lg bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold shadow">
 Copy & Buka WhatsApp
 </button>
 
@@ -70,6 +73,7 @@ Copy & Buka WhatsApp
 </div>
 
 <script>
+// DATA
 const defaultStesen=[
 "ABDULLAH HUKUM","KERINCHI","UNIVERSITI","TAMAN JAYA",
 "ASIA JAYA","TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"
@@ -82,47 +86,54 @@ const anggotaList=[
 "PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"
 ];
 
-let stesenList=JSON.parse(localStorage.getItem("stesenList"))||defaultStesen;
-
+// ELEMENT
 const stesenSelect=document.getElementById("stesenSelect");
-const anggotaSelect=document.getElementById("anggotaSelect");
-const anggotaTambahan=document.getElementById("anggotaTambahan");
+const anggotaSelects=document.querySelectorAll(".anggota");
 
-function loadDropdown(){
+// LOAD
+let stesenList=JSON.parse(localStorage.getItem("stesenList"))||defaultStesen;
+let lastAnggota=JSON.parse(localStorage.getItem("anggotaAkhir"))||[];
+
+// INIT
+function load(){
 stesenSelect.innerHTML="";
 stesenList.forEach(s=>{
-let o=document.createElement("option");
-o.textContent=s;stesenSelect.appendChild(o);
+stesenSelect.innerHTML+=`<option>${s}</option>`;
 });
 
-[anggotaSelect,anggotaTambahan].forEach(sel=>{
-sel.innerHTML=sel===anggotaTambahan?'<option value="">— kosong —</option>':"";
+anggotaSelects.forEach((sel,i)=>{
+sel.innerHTML="<option value=''>-</option>";
 anggotaList.forEach(a=>{
-let o=document.createElement("option");
-o.textContent=a;sel.appendChild(o);
+sel.innerHTML+=`<option>${a}</option>`;
 });
+if(lastAnggota[i]) sel.value=lastAnggota[i];
 });
 }
-loadDropdown();
+load();
 
-document.getElementById("addStesen").onclick=()=>{
-let v=newStesen.value.trim();
-if(v&&!stesenList.includes(v)){
+// TAMBAH STESEN
+addStesen.onclick=()=>{
+const v=newStesen.value.trim();
+if(v && !stesenList.includes(v)){
 stesenList.push(v);
 localStorage.setItem("stesenList",JSON.stringify(stesenList));
-loadDropdown();newStesen.value="";
+load(); newStesen.value="";
 }
 };
 
+// GENERATE
 function generateText(){
-let d=new Date();
-let tarikh=d.toLocaleDateString("ms-MY");
-let masa=d.toTimeString().slice(0,5).replace(":","")+" HRS";
+const d=new Date();
+const tarikh=d.toLocaleDateString("ms-MY");
+const masa=d.toTimeString().slice(0,5).replace(":","")+" HRS";
+const stesen=stesenSelect.value;
 
-let anggota=[
-anggotaSelect.value,
-anggotaTambahan.value
-].filter(Boolean).join("\n");
+const anggotaDipilih=[...anggotaSelects]
+.map(a=>a.value).filter(Boolean);
+
+localStorage.setItem("anggotaAkhir",JSON.stringify(anggotaDipilih));
+
+let senarai=anggotaDipilih.map((a,i)=>`${i+1}. ${a}`).join("\n");
 
 return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
 
@@ -131,18 +142,20 @@ Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 TARIKH : ${tarikh}
 MASA : ${masa}
 TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1,2
-LOKASI : STESEN ${stesenSelect.value} (KJL)
+LOKASI : STESEN ${stesen} (KJL)
 
-Anggota Bertugas:-
-${anggota}
+Anggota Bertugas:
+${senarai}
 
 *#TERUSKAN PERKARA BAIK*`;
 }
 
-document.getElementById("sendReport").onclick=()=>{
-let t=generateText();
-navigator.clipboard.writeText(t);
-window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(t));
+// SEND
+sendReport.onclick=()=>{
+const t=generateText();
+navigator.clipboard.writeText(t).then(()=>{
+window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(t),"_blank");
+});
 };
 </script>
 </body>
