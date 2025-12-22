@@ -15,57 +15,64 @@
 </style>
 </head>
 
-<body class="h-screen overflow-hidden relative text-sm">
+<body class="min-h-screen relative text-sm">
 
-<!-- Background -->
 <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
 
 <div class="relative max-w-3xl mx-auto p-4 space-y-3">
 
 <!-- Banner -->
-<nav class="h-24 rounded-xl shadow-lg border border-white/30 bg-cover bg-center"
+<nav class="h-24 rounded-xl bg-cover bg-center shadow-lg border border-white/20"
 style="background-image:url('DSC_0085_1.jpg')"></nav>
 
 <!-- Header -->
 <div class="text-center text-white space-y-1">
-<h2 class="text-2xl font-bold">🤣 by PPB NAZMI 👮🏿‍♂️</h2>
+<h2 class="text-xl font-bold">🤣 by PPB NAZMI 👮🏿‍♂️</h2>
 <p class="text-xs italic blink-red">
 → Pilih stesen → pilih anggota → Copy & WhatsApp
 </p>
 </div>
 
-<!-- Glass Container -->
+<!-- Card -->
 <div class="bg-white/70 backdrop-blur-md rounded-xl p-4 space-y-3 shadow-xl">
 
 <!-- Stesen -->
-<div class="bg-white rounded-lg p-2 shadow">
-<label class="font-semibold">Stesen hari ini</label>
-<select id="stesenSelect" class="w-full p-1.5 rounded border text-sm"></select>
+<div>
+<label class="font-semibold">Stesen Hari Ini</label>
+<select id="stesenSelect" class="w-full p-1.5 rounded text-sm"></select>
 </div>
 
 <!-- Anggota Bertugas -->
-<div class="bg-white rounded-lg p-2 shadow space-y-1">
+<div class="space-y-1">
 <label class="font-semibold">Anggota Bertugas</label>
 
-<select class="anggota w-full p-1.5 rounded border"></select>
-<select class="anggota w-full p-1.5 rounded border"></select>
-<select class="anggota w-full p-1.5 rounded border"></select>
-<select class="anggota w-full p-1.5 rounded border"></select>
+<div class="grid grid-cols-2 gap-2">
+<select class="anggota w-full p-1.5 rounded"></select>
+<select class="anggota w-full p-1.5 rounded"></select>
+<select class="anggota w-full p-1.5 rounded"></select>
+<select class="anggota w-full p-1.5 rounded"></select>
+</div>
 </div>
 
-<!-- Tambah stesen -->
+<!-- Tambah Stesen -->
 <div class="flex gap-2">
 <input id="newStesen" placeholder="Tambah stesen"
-class="flex-1 p-1.5 rounded border text-sm">
+class="flex-1 p-1.5 rounded">
 <button id="addStesen"
-class="px-3 bg-blue-600 text-white rounded shadow">
+class="px-3 bg-blue-600 text-white rounded">
 Tambah
 </button>
 </div>
 
-<!-- Action -->
+<!-- Reset -->
+<button id="resetStorage"
+class="w-full bg-red-500 text-white p-2 rounded">
+Reset Senarai Stesen
+</button>
+
+<!-- WhatsApp -->
 <button id="sendReport"
-class="w-full py-2 rounded-lg bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold shadow">
+class="w-full bg-green-600 text-white p-3 rounded font-semibold">
 Copy & Buka WhatsApp
 </button>
 
@@ -73,29 +80,29 @@ Copy & Buka WhatsApp
 </div>
 
 <script>
-// DATA
-const defaultStesen=[
-"ABDULLAH HUKUM","KERINCHI","UNIVERSITI","TAMAN JAYA",
-"ASIA JAYA","TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"
+// ===== DATA =====
+const defaultStesen = [
+"ABDULLAH HUKUM","KERINCHI","UNIVERSITI",
+"TAMAN JAYA","ASIA JAYA",
+"TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"
 ];
 
-const anggotaList=[
+const defaultAnggota = [
 "PB NAZMI","PPB AHMAD TARMIZI","PB MUHAMMAD ALIF",
-"PB SAINOL ARIFFIN","PPB ILLIYAS","PB ADEHA","PPB AFIFAH",
-"PB ZUHAIRAH","PB NUR SYAFIKAH NADIA","PB SOLEH",
-"PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"
+"PB SAINOL ARIFFIN","PPB ILLIYAS","PB ADEHA",
+"PPB AFIFAH","PB ZUHAIRAH","PPB NUR SYAFIKAH NADIA",
+"PB SOLEH","PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"
 ];
 
-// ELEMENT
-const stesenSelect=document.getElementById("stesenSelect");
-const anggotaSelects=document.querySelectorAll(".anggota");
+// ===== ELEMENT =====
+const stesenSelect = document.getElementById("stesenSelect");
+const anggotaSelects = document.querySelectorAll(".anggota");
 
-// LOAD
-let stesenList=JSON.parse(localStorage.getItem("stesenList"))||defaultStesen;
-let lastAnggota=JSON.parse(localStorage.getItem("anggotaAkhir"))||[];
+let stesenList = JSON.parse(localStorage.getItem("stesenList")) || [...defaultStesen];
+let savedAnggota = JSON.parse(localStorage.getItem("anggotaHariIni")) || [];
 
-// INIT
-function load(){
+// ===== LOAD =====
+function loadDropdown(){
 stesenSelect.innerHTML="";
 stesenList.forEach(s=>{
 stesenSelect.innerHTML+=`<option>${s}</option>`;
@@ -103,37 +110,46 @@ stesenSelect.innerHTML+=`<option>${s}</option>`;
 
 anggotaSelects.forEach((sel,i)=>{
 sel.innerHTML="<option value=''>-</option>";
-anggotaList.forEach(a=>{
+defaultAnggota.forEach(a=>{
 sel.innerHTML+=`<option>${a}</option>`;
 });
-if(lastAnggota[i]) sel.value=lastAnggota[i];
+if(savedAnggota[i]) sel.value=savedAnggota[i];
 });
 }
-load();
+loadDropdown();
 
-// TAMBAH STESEN
-addStesen.onclick=()=>{
+// ===== SAVE =====
+anggotaSelects.forEach(()=> {
+document.addEventListener("change",()=>{
+const values=[...anggotaSelects].map(s=>s.value).filter(Boolean);
+localStorage.setItem("anggotaHariIni",JSON.stringify(values));
+});
+});
+
+// ===== ADD STESEN =====
+document.getElementById("addStesen").onclick=()=>{
 const v=newStesen.value.trim();
 if(v && !stesenList.includes(v)){
 stesenList.push(v);
 localStorage.setItem("stesenList",JSON.stringify(stesenList));
-load(); newStesen.value="";
+loadDropdown();
+newStesen.value="";
 }
 };
 
-// GENERATE
+// ===== RESET =====
+resetStorage.onclick=()=>{
+localStorage.clear();
+location.reload();
+};
+
+// ===== TEXT =====
 function generateText(){
-const d=new Date();
-const tarikh=d.toLocaleDateString("ms-MY");
-const masa=d.toTimeString().slice(0,5).replace(":","")+" HRS";
+const now=new Date();
+const tarikh=now.toLocaleDateString("ms-MY");
+const masa=now.toTimeString().slice(0,5).replace(":","")+" HRS";
 const stesen=stesenSelect.value;
-
-const anggotaDipilih=[...anggotaSelects]
-.map(a=>a.value).filter(Boolean);
-
-localStorage.setItem("anggotaAkhir",JSON.stringify(anggotaDipilih));
-
-let senarai=anggotaDipilih.map((a,i)=>`${i+1}. ${a}`).join("\n");
+const anggota=[...anggotaSelects].map(s=>s.value).filter(Boolean).join("\n");
 
 return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
 
@@ -142,20 +158,23 @@ Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 TARIKH : ${tarikh}
 MASA : ${masa}
 TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1,2
-LOKASI : STESEN ${stesen} (KJL)
+LOKASI : STESEN ${stesen} (KJL).
 
-Anggota Bertugas:
-${senarai}
+1. Lapor kawalan dan pemantauan di platform Stesen ${stesen} (KJL).
+2. Pergerakan penumpang keluar/masuk tren lancar.
+3. Perkhidmatan tren beroperasi seperti biasa.
+
+Anggota Bertugas:- 
+${anggota}
 
 *#TERUSKAN PERKARA BAIK*`;
 }
 
-// SEND
+// ===== WA =====
 sendReport.onclick=()=>{
-const t=generateText();
-navigator.clipboard.writeText(t).then(()=>{
-window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(t),"_blank");
-});
+const text=generateText();
+navigator.clipboard.writeText(text);
+window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,"_blank");
 };
 </script>
 </body>
