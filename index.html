@@ -10,61 +10,64 @@
 .blink-red{animation:blink 4s infinite}
 </style>
 </head>
-<body class="min-h-screen relative text-sm">
+<body class="min-h-screen relative text-sm font-sans">
 
-<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
+<!-- Background gradient overlay -->
+<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 pointer-events-none"></div>
 
-<div class="relative max-w-3xl mx-auto p-4 space-y-3">
+<div class="relative max-w-3xl mx-auto p-4 space-y-4">
 
-<!-- Banner -->
-<nav class="h-24 rounded-xl bg-cover bg-center shadow-lg border border-white/20"
-style="background-image:url('DSC_0085_1.jpg')"></nav>
+  <!-- Banner -->
+  <nav class="h-24 rounded-xl bg-cover bg-center shadow-lg border border-white/20"
+       style="background-image:url('DSC_0085_1.jpg')"></nav>
 
-<!-- Header -->
-<div class="text-center text-white space-y-1">
-<h2 class="text-xl font-bold">🤣 by PPB NAZMI 👮🏿‍♂️</h2>
-<p class="text-xs italic blink-red">
-→ Pilih stesen → pilih anggota → Copy & WhatsApp
-</p>
-</div>
+  <!-- Header -->
+  <div class="text-center text-white space-y-1">
+    <h2 class="text-xl font-bold">🤣 by PPB NAZMI 👮🏿‍♂️</h2>
+    <p class="text-xs italic blink-red">
+      → Pilih stesen → pilih anggota → Copy & WhatsApp
+    </p>
+  </div>
 
-<!-- Card -->
-<div class="bg-white/70 backdrop-blur-md rounded-xl p-4 space-y-3 shadow-xl">
+  <!-- Card -->
+  <div class="bg-white/70 backdrop-blur-md rounded-xl p-4 space-y-3 shadow-xl">
 
-<!-- Stesen -->
-<div>
-<label class="font-semibold">Stesen Hari Ini</label>
-<select id="stesenSelect" class="w-full p-1.5 rounded text-sm"></select>
-</div>
+    <!-- Stesen -->
+    <div>
+      <label class="font-semibold">Stesen Hari Ini</label>
+      <select id="stesenSelect" class="w-full p-2 rounded text-sm"></select>
+    </div>
 
-<!-- Anggota Bertugas -->
-<div class="space-y-1">
-<label class="font-semibold">Anggota Bertugas</label>
-<div class="grid grid-cols-2 gap-2">
-<select class="anggota w-full p-1.5 rounded"></select>
-<select class="anggota w-full p-1.5 rounded"></select>
-<select class="anggota w-full p-1.5 rounded"></select>
-<select class="anggota w-full p-1.5 rounded"></select>
-</div>
-</div>
+    <!-- Anggota Bertugas 4 dropdown -->
+    <div>
+      <label class="font-semibold">Anggota Bertugas</label>
+      <div class="grid grid-cols-2 gap-2 mt-1">
+        <select class="anggota w-full p-2 rounded"></select>
+        <select class="anggota w-full p-2 rounded"></select>
+        <select class="anggota w-full p-2 rounded"></select>
+        <select class="anggota w-full p-2 rounded"></select>
+      </div>
+    </div>
 
-<!-- Tambah Stesen -->
-<div class="flex gap-2">
-<input id="newStesen" placeholder="Tambah stesen" class="flex-1 p-1.5 rounded">
-<button id="addStesen" class="px-3 bg-blue-600 text-white rounded">Tambah</button>
-</div>
+    <!-- Tambah Stesen -->
+    <div class="flex gap-2">
+      <input id="newStesen" placeholder="Tambah stesen" class="flex-1 p-2 rounded">
+      <button id="addStesen" class="px-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+        Tambah
+      </button>
+    </div>
 
-<!-- Reset -->
-<button id="resetStorage" class="w-full bg-red-500 text-white p-2 rounded">
-Reset Senarai Stesen
-</button>
+    <!-- Reset -->
+    <button id="resetStorage" class="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 transition">
+      Reset Senarai Stesen
+    </button>
 
-<!-- WhatsApp -->
-<button id="sendReport" class="w-full bg-green-600 text-white p-3 rounded font-semibold">
-Copy & Buka WhatsApp
-</button>
+    <!-- Copy & WhatsApp -->
+    <button id="sendReport" class="w-full bg-green-600 text-white p-3 rounded font-semibold hover:bg-green-700 transition">
+      Copy & Buka WhatsApp
+    </button>
 
-</div>
+  </div>
 </div>
 
 <script>
@@ -72,6 +75,7 @@ Copy & Buka WhatsApp
 const defaultStesen = ["ABDULLAH HUKUM","KERINCHI","UNIVERSITI","TAMAN JAYA","ASIA JAYA","TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"];
 const defaultAnggota = ["PB NAZMI","PPB AHMAD TARMIZI","PB MUHAMMAD ALIF","PB SAINOL ARIFFIN","PPB ILLIYAS","PB ADEHA","PPB AFIFAH","PB ZUHAIRAH","PPB NUR SYAFIKAH NADIA","PB SOLEH","PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"];
 
+// ===== ELEMENT =====
 const stesenSelect = document.getElementById("stesenSelect");
 const anggotaSelects = document.querySelectorAll(".anggota");
 const newStesen = document.getElementById("newStesen");
@@ -84,28 +88,28 @@ let savedAnggota = JSON.parse(localStorage.getItem("anggotaHariIni")) || [];
 
 // ===== LOAD DROPDOWN =====
 function loadDropdown(){
-  stesenSelect.innerHTML="";
-  stesenList.forEach(s=>stesenSelect.innerHTML+=`<option>${s}</option>`);
-  
+  stesenSelect.innerHTML = "";
+  stesenList.forEach(s => stesenSelect.innerHTML += `<option>${s}</option>`);
+
   anggotaSelects.forEach((sel,i)=>{
-    sel.innerHTML="<option value=''>-</option>";
-    defaultAnggota.forEach(a=>sel.innerHTML+=`<option>${a}</option>`);
-    if(savedAnggota[i]) sel.value=savedAnggota[i];
+    sel.innerHTML = "<option value=''>-</option>";
+    defaultAnggota.forEach(a=> sel.innerHTML += `<option>${a}</option>`);
+    if(savedAnggota[i]) sel.value = savedAnggota[i];
   });
 }
 loadDropdown();
 
 // ===== SAVE ANGGOTA =====
 anggotaSelects.forEach(sel=>{
-  sel.addEventListener("change",()=>{
+  sel.addEventListener("change", ()=>{
     const values = [...anggotaSelects].map(s=>s.value).filter(Boolean);
     localStorage.setItem("anggotaHariIni", JSON.stringify(values));
   });
 });
 
 // ===== ADD STESEN =====
-addStesen.onclick=()=>{
-  const v=newStesen.value.trim();
+addStesen.onclick = () => {
+  const v = newStesen.value.trim();
   if(v && !stesenList.includes(v)){
     stesenList.push(v);
     localStorage.setItem("stesenList", JSON.stringify(stesenList));
@@ -115,7 +119,7 @@ addStesen.onclick=()=>{
 };
 
 // ===== RESET =====
-resetStorage.onclick=()=>{
+resetStorage.onclick = () => {
   localStorage.clear();
   location.reload();
 };
@@ -127,7 +131,7 @@ function generateText(){
   const masa = now.toTimeString().slice(0,5).replace(":","")+" HRS";
   const stesen = stesenSelect.value;
   const anggota = [...anggotaSelects].map(s=>s.value).filter(Boolean).join("\n");
-  
+
   return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
 
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
@@ -148,8 +152,8 @@ ${anggota}
 }
 
 // ===== COPY & WHATSAPP =====
-sendReport.onclick=()=>{
-  const text=generateText();
+sendReport.onclick = () => {
+  const text = generateText();
   navigator.clipboard.writeText(text);
   window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
 };
