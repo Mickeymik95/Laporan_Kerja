@@ -13,7 +13,7 @@
 <body class="min-h-screen relative text-sm font-sans">
 
 <!-- Background gradient overlay -->
-<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 pointer-events-none"></div>
+<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
 
 <div class="relative max-w-3xl mx-auto p-4 space-y-4">
 
@@ -87,7 +87,7 @@ let stesenList = JSON.parse(localStorage.getItem("stesenList")) || [...defaultSt
 let savedAnggota = JSON.parse(localStorage.getItem("anggotaHariIni")) || [];
 
 // ===== LOAD DROPDOWN =====
-function loadDropdown(){
+function loadDropdown() {
   stesenSelect.innerHTML = "";
   stesenList.forEach(s => stesenSelect.innerHTML += `<option>${s}</option>`);
 
@@ -108,7 +108,7 @@ anggotaSelects.forEach(sel=>{
 });
 
 // ===== ADD STESEN =====
-addStesen.onclick = () => {
+addStesen.addEventListener("click", () => {
   const v = newStesen.value.trim();
   if(v && !stesenList.includes(v)){
     stesenList.push(v);
@@ -116,16 +116,16 @@ addStesen.onclick = () => {
     loadDropdown();
     newStesen.value="";
   }
-};
+});
 
 // ===== RESET =====
-resetStorage.onclick = () => {
+resetStorage.addEventListener("click", () => {
   localStorage.clear();
   location.reload();
-};
+});
 
 // ===== GENERATE TEKS =====
-function generateText(){
+function generateText() {
   const now = new Date();
   const tarikh = now.toLocaleDateString("ms-MY");
   const masa = now.toTimeString().slice(0,5).replace(":","")+" HRS";
@@ -152,11 +152,11 @@ ${anggota}
 }
 
 // ===== COPY & WHATSAPP =====
-sendReport.onclick = () => {
+sendReport.addEventListener("click", () => {
   const text = generateText();
   navigator.clipboard.writeText(text);
   window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
-};
+});
 </script>
 </body>
 </html>
