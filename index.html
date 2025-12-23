@@ -10,12 +10,12 @@
 .blink-red{animation:blink 4s infinite}
 </style>
 </head>
-<body class="min-h-screen relative text-sm font-sans bg-gray-900">
+<body class="min-h-screen relative text-sm font-sans">
 
-<!-- Background gradient -->
-<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 z-0"></div>
+<!-- Gradient background -->
+<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 pointer-events-none"></div>
 
-<div class="relative max-w-3xl mx-auto p-4 space-y-4 z-10">
+<div class="relative max-w-3xl mx-auto p-4 space-y-4">
 
   <!-- Banner -->
   <nav class="h-24 rounded-xl bg-cover bg-center shadow-lg border border-white/20"
@@ -71,11 +71,10 @@
 </div>
 
 <script>
-// ===== DATA =====
+// DATA
 const defaultStesen = ["ABDULLAH HUKUM","KERINCHI","UNIVERSITI","TAMAN JAYA","ASIA JAYA","TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"];
 const defaultAnggota = ["PB NAZMI","PPB AHMAD TARMIZI","PB MUHAMMAD ALIF","PB SAINOL ARIFFIN","PPB ILLIYAS","PB ADEHA","PPB AFIFAH","PB ZUHAIRAH","PPB NUR SYAFIKAH NADIA","PB SOLEH","PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"];
 
-// ===== ELEMENT =====
 const stesenSelect = document.getElementById("stesenSelect");
 const anggotaSelects = document.querySelectorAll(".anggota");
 const newStesen = document.getElementById("newStesen");
@@ -86,7 +85,7 @@ const sendReport = document.getElementById("sendReport");
 let stesenList = JSON.parse(localStorage.getItem("stesenList")) || [...defaultStesen];
 let savedAnggota = JSON.parse(localStorage.getItem("anggotaHariIni")) || [];
 
-// ===== LOAD DROPDOWN =====
+// LOAD DROPDOWN
 function loadDropdown() {
   stesenSelect.innerHTML = "";
   stesenList.forEach(s => stesenSelect.innerHTML += `<option>${s}</option>`);
@@ -99,7 +98,7 @@ function loadDropdown() {
 }
 loadDropdown();
 
-// ===== SAVE ANGGOTA =====
+// SAVE ANGGOTA
 anggotaSelects.forEach(sel=>{
   sel.addEventListener("change", ()=>{
     const values = [...anggotaSelects].map(s=>s.value).filter(Boolean);
@@ -107,7 +106,7 @@ anggotaSelects.forEach(sel=>{
   });
 });
 
-// ===== ADD STESEN =====
+// ADD STESEN
 addStesen.addEventListener("click", () => {
   const v = newStesen.value.trim();
   if(v && !stesenList.includes(v)){
@@ -118,13 +117,13 @@ addStesen.addEventListener("click", () => {
   }
 });
 
-// ===== RESET =====
+// RESET
 resetStorage.addEventListener("click", () => {
   localStorage.clear();
   location.reload();
 });
 
-// ===== GENERATE TEKS =====
+// GENERATE TEKS
 function generateText() {
   const now = new Date();
   const tarikh = now.toLocaleDateString("ms-MY");
@@ -151,7 +150,7 @@ ${anggota}
 *#TERUSKAN PERKARA BAIK*`;
 }
 
-// ===== COPY & WHATSAPP =====
+// COPY & WHATSAPP
 sendReport.addEventListener("click", () => {
   const text = generateText();
   navigator.clipboard.writeText(text);
