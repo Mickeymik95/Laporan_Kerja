@@ -5,16 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laporan PB KJL ZON 3</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
 <style>
-@keyframes blink {
-  0%,50%,100%{opacity:1}
-  25%,75%{opacity:0}
-}
+@keyframes blink {0%,50%,100%{opacity:1}25%,75%{opacity:0}}
 .blink-red{animation:blink 4s infinite}
 </style>
 </head>
-
 <body class="min-h-screen relative text-sm">
 
 <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
@@ -45,7 +40,6 @@ style="background-image:url('DSC_0085_1.jpg')"></nav>
 <!-- Anggota Bertugas -->
 <div class="space-y-1">
 <label class="font-semibold">Anggota Bertugas</label>
-
 <div class="grid grid-cols-2 gap-2">
 <select class="anggota w-full p-1.5 rounded"></select>
 <select class="anggota w-full p-1.5 rounded"></select>
@@ -56,23 +50,17 @@ style="background-image:url('DSC_0085_1.jpg')"></nav>
 
 <!-- Tambah Stesen -->
 <div class="flex gap-2">
-<input id="newStesen" placeholder="Tambah stesen"
-class="flex-1 p-1.5 rounded">
-<button id="addStesen"
-class="px-3 bg-blue-600 text-white rounded">
-Tambah
-</button>
+<input id="newStesen" placeholder="Tambah stesen" class="flex-1 p-1.5 rounded">
+<button id="addStesen" class="px-3 bg-blue-600 text-white rounded">Tambah</button>
 </div>
 
 <!-- Reset -->
-<button id="resetStorage"
-class="w-full bg-red-500 text-white p-2 rounded">
+<button id="resetStorage" class="w-full bg-red-500 text-white p-2 rounded">
 Reset Senarai Stesen
 </button>
 
 <!-- WhatsApp -->
-<button id="sendReport"
-class="w-full bg-green-600 text-white p-3 rounded font-semibold">
+<button id="sendReport" class="w-full bg-green-600 text-white p-3 rounded font-semibold">
 Copy & Buka WhatsApp
 </button>
 
@@ -81,77 +69,66 @@ Copy & Buka WhatsApp
 
 <script>
 // ===== DATA =====
-const defaultStesen = [
-"ABDULLAH HUKUM","KERINCHI","UNIVERSITI",
-"TAMAN JAYA","ASIA JAYA",
-"TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"
-];
+const defaultStesen = ["ABDULLAH HUKUM","KERINCHI","UNIVERSITI","TAMAN JAYA","ASIA JAYA","TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"];
+const defaultAnggota = ["PB NAZMI","PPB AHMAD TARMIZI","PB MUHAMMAD ALIF","PB SAINOL ARIFFIN","PPB ILLIYAS","PB ADEHA","PPB AFIFAH","PB ZUHAIRAH","PPB NUR SYAFIKAH NADIA","PB SOLEH","PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"];
 
-const defaultAnggota = [
-"PB NAZMI","PPB AHMAD TARMIZI","PB MUHAMMAD ALIF",
-"PB SAINOL ARIFFIN","PPB ILLIYAS","PB ADEHA",
-"PPB AFIFAH","PB ZUHAIRAH","PPB NUR SYAFIKAH NADIA",
-"PB SOLEH","PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"
-];
-
-// ===== ELEMENT =====
 const stesenSelect = document.getElementById("stesenSelect");
 const anggotaSelects = document.querySelectorAll(".anggota");
+const newStesen = document.getElementById("newStesen");
+const addStesen = document.getElementById("addStesen");
+const resetStorage = document.getElementById("resetStorage");
+const sendReport = document.getElementById("sendReport");
 
 let stesenList = JSON.parse(localStorage.getItem("stesenList")) || [...defaultStesen];
 let savedAnggota = JSON.parse(localStorage.getItem("anggotaHariIni")) || [];
 
-// ===== LOAD =====
+// ===== LOAD DROPDOWN =====
 function loadDropdown(){
-stesenSelect.innerHTML="";
-stesenList.forEach(s=>{
-stesenSelect.innerHTML+=`<option>${s}</option>`;
-});
-
-anggotaSelects.forEach((sel,i)=>{
-sel.innerHTML="<option value=''>-</option>";
-defaultAnggota.forEach(a=>{
-sel.innerHTML+=`<option>${a}</option>`;
-});
-if(savedAnggota[i]) sel.value=savedAnggota[i];
-});
+  stesenSelect.innerHTML="";
+  stesenList.forEach(s=>stesenSelect.innerHTML+=`<option>${s}</option>`);
+  
+  anggotaSelects.forEach((sel,i)=>{
+    sel.innerHTML="<option value=''>-</option>";
+    defaultAnggota.forEach(a=>sel.innerHTML+=`<option>${a}</option>`);
+    if(savedAnggota[i]) sel.value=savedAnggota[i];
+  });
 }
 loadDropdown();
 
-// ===== SAVE =====
-anggotaSelects.forEach(()=> {
-document.addEventListener("change",()=>{
-const values=[...anggotaSelects].map(s=>s.value).filter(Boolean);
-localStorage.setItem("anggotaHariIni",JSON.stringify(values));
-});
+// ===== SAVE ANGGOTA =====
+anggotaSelects.forEach(sel=>{
+  sel.addEventListener("change",()=>{
+    const values = [...anggotaSelects].map(s=>s.value).filter(Boolean);
+    localStorage.setItem("anggotaHariIni", JSON.stringify(values));
+  });
 });
 
 // ===== ADD STESEN =====
-document.getElementById("addStesen").onclick=()=>{
-const v=newStesen.value.trim();
-if(v && !stesenList.includes(v)){
-stesenList.push(v);
-localStorage.setItem("stesenList",JSON.stringify(stesenList));
-loadDropdown();
-newStesen.value="";
-}
+addStesen.onclick=()=>{
+  const v=newStesen.value.trim();
+  if(v && !stesenList.includes(v)){
+    stesenList.push(v);
+    localStorage.setItem("stesenList", JSON.stringify(stesenList));
+    loadDropdown();
+    newStesen.value="";
+  }
 };
 
 // ===== RESET =====
 resetStorage.onclick=()=>{
-localStorage.clear();
-location.reload();
+  localStorage.clear();
+  location.reload();
 };
 
-// ===== TEXT =====
+// ===== GENERATE TEKS =====
 function generateText(){
-const now=new Date();
-const tarikh=now.toLocaleDateString("ms-MY");
-const masa=now.toTimeString().slice(0,5).replace(":","")+" HRS";
-const stesen=stesenSelect.value;
-const anggota=[...anggotaSelects].map(s=>s.value).filter(Boolean).join("\n");
-
-return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
+  const now = new Date();
+  const tarikh = now.toLocaleDateString("ms-MY");
+  const masa = now.toTimeString().slice(0,5).replace(":","")+" HRS";
+  const stesen = stesenSelect.value;
+  const anggota = [...anggotaSelects].map(s=>s.value).filter(Boolean).join("\n");
+  
+  return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
 
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 
@@ -170,11 +147,11 @@ ${anggota}
 *#TERUSKAN PERKARA BAIK*`;
 }
 
-// ===== WA =====
+// ===== COPY & WHATSAPP =====
 sendReport.onclick=()=>{
-const text=generateText();
-navigator.clipboard.writeText(text);
-window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,"_blank");
+  const text=generateText();
+  navigator.clipboard.writeText(text);
+  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
 };
 </script>
 </body>
