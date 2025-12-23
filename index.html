@@ -6,60 +6,65 @@
 <title>Laporan PB KJL ZON 3</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-/* Buang blink, tiada perubahan lain */
+/* Buang blink untuk teks header */
 </style>
 </head>
-<body class="min-h-screen relative text-sm font-sans">
+<body class="min-h-screen relative">
 
-<!-- Gradient background -->
-<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800 pointer-events-none"></div>
+<!-- Background gradient penuh -->
+<div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
 
-<div class="relative max-w-3xl mx-auto p-4 space-y-4">
+<!-- Page content -->
+<div class="relative w-full max-w-4xl mx-auto p-6 space-y-6">
 
-  <!-- Banner -->
-  <nav class="h-24 rounded-xl bg-cover bg-center shadow-lg border border-white/20"
-       style="background-image:url('DSC_0085_1.jpg')"></nav>
+  <!-- Navbar / Banner -->
+  <nav class="bg-cover bg-center h-32 w-full rounded-2xl shadow-xl border border-white/30"
+       style="background-image: url('DSC_0085_1.jpg');">
+  </nav>
 
   <!-- Header -->
-  <div class="text-center text-white space-y-1">
-    <h2 class="text-xl font-bold">🤣 by PPB NAZMI 👮🏿‍♂️</h2>
-    <p class="text-xs italic">
-      → Pilih stesen → pilih anggota → Copy & WhatsApp
+  <div class="text-center space-y-2 text-white">
+    <h2 class="text-3xl font-extrabold drop-shadow-md tracking-wide">🤣by PPB NAZMI👮🏿‍♂️</h2>
+    <p class="text-sm font-semibold lowercase italic tracking-wide">
+      -> Pilih stesen/tambah stesen -> pilih nama -> Tekan (Copy & buka wssp)
     </p>
   </div>
 
-  <!-- Card -->
-  <div class="bg-white/70 backdrop-blur-md rounded-xl p-4 space-y-3 shadow-xl">
+  <!-- Container frosted dari STESEN hingga Copy & WhatsApp -->
+  <div class="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-400 text-gray-900 space-y-4">
 
-    <!-- Stesen -->
-    <div>
-      <label class="font-semibold">Stesen Hari Ini</label>
-      <select id="stesenSelect" class="w-full p-2 rounded text-sm"></select>
+    <!-- Pilih / ubah stesen -->
+    <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
+      <label class="block font-semibold" for="stesenSelect">Stesen hari ini:</label>
+      <select id="stesenSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
     </div>
 
-    <!-- Anggota Bertugas 3 dropdown -->
-    <div>
-      <label class="font-semibold">Anggota Bertugas</label>
-      <div class="grid grid-cols-3 gap-2 mt-1">
-        <select class="anggota w-full p-2 rounded"></select>
-        <select class="anggota w-full p-2 rounded"></select>
-        <select class="anggota w-full p-2 rounded"></select>
-      </div>
+    <!-- Pilih Anggota Bertugas (multi-select) -->
+    <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
+      <label class="block font-semibold" for="anggotaSelect">Anggota Bertugas:</label>
+      <select id="anggotaSelect" multiple class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm h-32">
+      </select>
+      <p class="text-xs italic text-gray-600">Tekan Ctrl / Cmd untuk pilih lebih daripada 1</p>
     </div>
 
-    <!-- Tambah Stesen -->
-    <div class="flex gap-2">
-      <input id="newStesen" placeholder="Tambah stesen" class="flex-1 p-2 rounded">
-      <button id="addStesen" class="px-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Tambah</button>
+    <!-- Tambah stesen baru -->
+    <div class="flex space-x-2">
+      <input type="text" id="newStesen" placeholder="Tambah stesen baru"
+             class="flex-grow p-2 h-10 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
+      <button id="addStesen" class="px-4 h-10 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl active:translate-y-1 active:shadow-md focus:ring-2 focus:ring-blue-400 transition whitespace-nowrap">
+        Tambah🚉
+      </button>
     </div>
 
-    <!-- Reset -->
-    <button id="resetStorage" class="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 transition">
-      Reset Senarai Stesen
+    <!-- Reset LocalStorage -->
+    <button id="resetStorage"
+      class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg font-semibold transition shadow-lg">
+      Reset Senarai Stesen 🚮
     </button>
 
-    <!-- Copy & WhatsApp -->
-    <button id="sendReport" class="w-full bg-green-600 text-white p-3 rounded font-semibold hover:bg-green-700 transition">
+    <!-- Button Copy & Buka WhatsApp -->
+    <button id="sendReport"
+      class="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
       Copy & Buka WhatsApp
     </button>
 
@@ -67,91 +72,142 @@
 </div>
 
 <script>
-// DATA
-const defaultStesen = ["ABDULLAH HUKUM","KERINCHI","UNIVERSITI","TAMAN JAYA","ASIA JAYA","TAMAN PARAMOUNT","TAMAN BAHAGIA","KELANA JAYA"];
-const defaultAnggota = ["PB NAZMI","PPB AHMAD TARMIZI","PB MUHAMMAD ALIF","PB SAINOL ARIFFIN","PPB ILLIYAS","PB ADEHA","PPB AFIFAH","PB ZUHAIRAH","PPB NUR SYAFIKAH NADIA","PB SOLEH","PB HAZIQ","PB NUR SYAHIRA","PB SYASYA"];
+// Default senarai stesen
+const defaultStesen = [
+  "ABDULLAH HUKUM",
+  "KERINCHI",
+  "UNIVERSITI",
+  "TAMAN JAYA",
+  "ASIA JAYA",
+  "TAMAN PARAMOUNT",
+  "TAMAN BAHAGIA",
+  "KELANA JAYA"
+];
 
-const stesenSelect = document.getElementById("stesenSelect");
-const anggotaSelects = document.querySelectorAll(".anggota");
-const newStesen = document.getElementById("newStesen");
-const addStesen = document.getElementById("addStesen");
-const resetStorage = document.getElementById("resetStorage");
-const sendReport = document.getElementById("sendReport");
+// Default senarai anggota
+const defaultAnggota = [
+  "PB NAZMI",
+  "PPB AHMAD TARMIZI",
+  "PB MUHAMMAD ALIF",
+  "PB SAINOL ARIFFIN",
+  "PPB ILLIYAS",
+  "PB ADEHA",
+  "PPB AFIFAH",
+  "PB ZUHAIRAH",
+  "PPB NUR SYAFIKAH NADIA",
+  "PB SOLEH",
+  "PB HAZIQ",
+  "PB NUR SYAHIRA",
+  "PB SYASYA",
+];
 
-let stesenList = JSON.parse(localStorage.getItem("stesenList")) || [...defaultStesen];
-let savedAnggota = JSON.parse(localStorage.getItem("anggotaHariIni")) || [];
+let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [...defaultStesen];
+let anggotaList = [...defaultAnggota];
 
-// LOAD DROPDOWN
-function loadDropdown() {
-  stesenSelect.innerHTML = "";
-  stesenList.forEach(s => stesenSelect.innerHTML += `<option>${s}</option>`);
+const stesenSelect = document.getElementById('stesenSelect');
+const anggotaSelect = document.getElementById('anggotaSelect');
 
-  anggotaSelects.forEach((sel,i)=>{
-    sel.innerHTML = "<option value=''>-</option>";
-    defaultAnggota.forEach(a => sel.innerHTML += `<option>${a}</option>`);
-    if(savedAnggota[i]) sel.value = savedAnggota[i];
-  });
+// Muat dropdown stesen & anggota
+function refreshDropdown() {
+    // Stesen
+    stesenSelect.innerHTML = "";
+    stesenList.forEach(stesen => {
+        const option = document.createElement('option');
+        option.value = stesen;
+        option.textContent = stesen;
+        stesenSelect.appendChild(option);
+    });
+    const lastStesen = localStorage.getItem('stesenHariIni');
+    if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
+
+    // Anggota
+    anggotaSelect.innerHTML = "";
+    anggotaList.forEach(anggota => {
+        const option = document.createElement('option');
+        option.value = anggota;
+        option.textContent = anggota;
+        anggotaSelect.appendChild(option);
+    });
+    const lastAnggota = JSON.parse(localStorage.getItem('anggotaHariIni')) || [];
+    for (let i=0; i<anggotaSelect.options.length; i++) {
+        if (lastAnggota.includes(anggotaSelect.options[i].value)) {
+            anggotaSelect.options[i].selected = true;
+        }
+    }
 }
-loadDropdown();
+refreshDropdown();
 
-// SAVE ANGGOTA
-anggotaSelects.forEach(sel=>{
-  sel.addEventListener("change", ()=>{
-    const values = [...anggotaSelects].map(s=>s.value).filter(Boolean);
-    localStorage.setItem("anggotaHariIni", JSON.stringify(values));
-  });
+// Tambah stesen baru
+document.getElementById('addStesen').addEventListener('click', () => {
+    const newStesenValue = document.getElementById('newStesen').value.trim();
+    if(newStesenValue && !stesenList.includes(newStesenValue)) {
+        stesenList.push(newStesenValue);
+        localStorage.setItem('stesenList', JSON.stringify(stesenList));
+        refreshDropdown();
+        document.getElementById('newStesen').value = "";
+        alert("Stesen baru ditambah!");
+    }
 });
 
-// ADD STESEN
-addStesen.addEventListener("click", () => {
-  const v = newStesen.value.trim();
-  if(v && !stesenList.includes(v)){
-    stesenList.push(v);
-    localStorage.setItem("stesenList", JSON.stringify(stesenList));
-    loadDropdown();
-    newStesen.value="";
-  }
+// Reset senarai stesen
+document.getElementById('resetStorage').addEventListener('click', () => {
+    localStorage.removeItem('stesenList');
+    localStorage.removeItem('anggotaHariIni');
+    stesenList = [...defaultStesen];
+    refreshDropdown();
+    alert("Senarai stesen dan anggota telah direset!");
 });
 
-// RESET
-resetStorage.addEventListener("click", () => {
-  localStorage.clear();
-  location.reload();
+// Simpan anggota terakhir dipilih
+anggotaSelect.addEventListener('change', () => {
+    const selected = Array.from(anggotaSelect.selectedOptions).map(opt => opt.value);
+    localStorage.setItem('anggotaHariIni', JSON.stringify(selected));
 });
 
-// GENERATE TEKS
+// Generate teks laporan
 function generateText() {
-  const now = new Date();
-  const tarikh = now.toLocaleDateString("ms-MY");
-  const masa = now.toTimeString().slice(0,5).replace(":","")+" HRS";
-  const stesen = stesenSelect.value;
-  const anggota = [...anggotaSelects].map(s=>s.value).filter(Boolean).join("\n");
+    const now = new Date();
+    const tarikh = now.toLocaleDateString('ms-MY');
+    const masa = now.toTimeString().slice(0,5).replace(":", "") + " HRS";
+    const stesenHariIni = stesenSelect.value;
+    const anggotaHariIni = Array.from(anggotaSelect.selectedOptions).map(opt => opt.value).join("\n");
 
-  return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
+    localStorage.setItem('stesenHariIni', stesenHariIni);
+
+    return `
+*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
 
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 
 TARIKH : ${tarikh}
 MASA : ${masa}
 TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1,2
-LOKASI : STESEN ${stesen} (KJL).
+LOKASI : STESEN ${stesenHariIni} (KJL).
 
-1. Lapor kawalan dan pemantauan di platform Stesen ${stesen} (KJL).
+1. Lapor kawalan dan pemantauan di platform Stesen ${stesenHariIni} (KJL).
 2. Pergerakan penumpang keluar/masuk tren lancar.
 3. Perkhidmatan tren beroperasi seperti biasa.
 
-Anggota Bertugas:- 
-${anggota}
+Anggota Bertugas:-   
+${anggotaHariIni}
 
-*#TERUSKAN PERKARA BAIK*`;
+*#TERUSKAN PERKARA BAIK*
+`;
 }
 
-// COPY & WHATSAPP
-sendReport.addEventListener("click", () => {
-  const text = generateText();
-  navigator.clipboard.writeText(text);
-  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
-});
+// Copy + buka WhatsApp
+function copyAndOpenWA() {
+    const text = generateText();
+    navigator.clipboard.writeText(text).then(() => {
+        const encodedText = encodeURIComponent(text);
+        const waLink = (/android/i.test(navigator.userAgent) || (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream))
+                       ? `https://api.whatsapp.com/send?text=${encodedText}`
+                       : `https://web.whatsapp.com/send?text=${encodedText}`;
+        window.open(waLink, "_blank");
+    });
+}
+document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
+
 </script>
 </body>
 </html>
