@@ -85,7 +85,7 @@
       <!-- Reset LocalStorage -->
       <button id="resetStorage" 
         class="w-full bg-red-500 hover:bg-red-600 text-white p-2.2 h-10 rounded-lg text-sm font-semibold transition shadow-md">
-        Reset Semua Senarai 🚮
+        Reset Semua Senarai & Komen 🚮
       </button>
 
       <hr class="border-gray-400/50 my-4">
@@ -122,8 +122,9 @@ let anggotaList = JSON.parse(localStorage.getItem('anggotaList')) || [];
 
 const stesenSelect = document.getElementById('stesenSelect');
 const anggotaSelect = document.getElementById('anggotaSelect');
+const statusInput = document.getElementById('statusInput');
 
-// Muat dropdown stesen & anggota
+// Muat dropdown stesen, anggota & teks komen dari LocalStorage
 function refreshDropdown() {
     // Dropdown Stesen
     stesenSelect.innerHTML = '<option value="">-- Sila pilih stesen --</option>';
@@ -146,9 +147,18 @@ function refreshDropdown() {
     });
     const lastAnggota = localStorage.getItem('anggotaHariIni');
     if(lastAnggota && anggotaList.includes(lastAnggota)) anggotaSelect.value = lastAnggota;
+
+    // Muat semula komen terakhir yang ditaip
+    const lastStatus = localStorage.getItem('statusHariIni');
+    if(lastStatus) statusInput.value = lastStatus;
 }
 
 refreshDropdown();
+
+// Kekalkan komen/status dalam localStorage semasa ditaip
+statusInput.addEventListener('input', () => {
+    localStorage.setItem('statusHariIni', statusInput.value);
+});
 
 // Tambah stesen baru
 document.getElementById('addStesen').addEventListener('click', () => {
@@ -158,7 +168,8 @@ document.getElementById('addStesen').addEventListener('click', () => {
             stesenList.push(newStesen);
             localStorage.setItem('stesenList', JSON.stringify(stesenList));
             refreshDropdown();
-            stesenSelect.value = newStesen; // Auto-pilih stesen baru dimasukkan
+            stesenSelect.value = newStesen; 
+            localStorage.setItem('stesenHariIni', newStesen);
             document.getElementById('newStesen').value = "";
         } else {
             alert("Stesen ini sudah wujud dalam senarai!");
@@ -174,7 +185,8 @@ document.getElementById('addAnggota').addEventListener('click', () => {
             anggotaList.push(newAnggota);
             localStorage.setItem('anggotaList', JSON.stringify(anggotaList));
             refreshDropdown();
-            anggotaSelect.value = newAnggota; // Auto-pilih nama baru dimasukkan
+            anggotaSelect.value = newAnggota; 
+            localStorage.setItem('anggotaHariIni', newAnggota);
             document.getElementById('newAnggota').value = "";
         } else {
             alert("Nama anggota ini sudah wujud dalam senarai!");
@@ -184,19 +196,21 @@ document.getElementById('addAnggota').addEventListener('click', () => {
 
 // Reset LocalStorage
 document.getElementById('resetStorage').addEventListener('click', () => {
-    if(confirm("Adakah anda pasti untuk padam semua senarai stesen dan anggota?")) {
+    if(confirm("Adakah anda pasti untuk padam semua senarai stesen, anggota, dan komen?")) {
         localStorage.removeItem('stesenList');
         localStorage.removeItem('anggotaList');
         localStorage.removeItem('stesenHariIni');
         localStorage.removeItem('anggotaHariIni');
+        localStorage.removeItem('statusHariIni');
         stesenList = [];
         anggotaList = [];
+        statusInput.value = "";
         refreshDropdown();
-        alert("Semua senarai telah dikosongkan!");
+        alert("Semua data telah dikosongkan!");
     }
 });
 
-// Simpan pilihan semasa ke LocalStorage
+// Simpan pilihan dropdown semasa ke LocalStorage
 stesenSelect.addEventListener('change', () => {
     localStorage.setItem('stesenHariIni', stesenSelect.value);
 });
@@ -223,7 +237,7 @@ function generateLaporanBiasa() {
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 
 TARIKH : ${tarikh}
-MASA : ${masa}
+MASA : ${fancyMasa = masa}
 TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1,2
 LOKASI : STESEN ${stesenHariIni} (KJL).
 
@@ -241,7 +255,7 @@ ${anggotaHariIni}
 function generateLaporanPeak() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const statusKomen = document.getElementById('statusInput').value.trim() || "Perkhidmatan tren beroperasi dengan lancar dan kawalan penumpang terkawal.";
+    const statusKomen = statusInput.value.trim() || "Perkhidmatan tren beroperasi dengan lancar dan kawalan penumpang terkawal.";
 
     return `*Update Terkini :*
 * ${tarikh}
