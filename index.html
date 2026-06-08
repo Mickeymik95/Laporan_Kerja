@@ -32,11 +32,11 @@
 
     <!-- Header -->
     <div class="text-center space-y-2 text-white">
-      <h2 class="text-3xl font-extrabold  drop-shadow-md tracking-wide">
+      <h2 class="text-3xl font-extrabold drop-shadow-md tracking-wide">
         🤣by PPB NAZMI👮🏿‍♂️
       </h2>
       <p class="text-sm font-semibold lowercase italic tracking-wide blink-red">
-        -> Pilih stesen/tambah stesen -> pilih nama -> Tekan (Copy & buka wssp)
+        -> Tambah stesen/nama -> Pilih -> Tekan jenis laporan (Copy & buka wssp)
       </p>
     </div>
 
@@ -46,83 +46,87 @@
       <!-- Pilih / ubah stesen -->
       <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
         <label class="block font-semibold" for="stesenSelect">Stesen hari ini:</label>
-        <select id="stesenSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
+        <select id="stesenSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
+          <option value="">-- Sila tambah/pilih stesen --</option>
+        </select>
+        <!-- Tambah stesen baru -->
+        <div class="flex space-x-2 pt-2">
+          <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
+                 class="flex-grow p-2 h-10 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
+          <button id="addStesen" class="px-4 h-10 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition text-sm font-medium whitespace-nowrap">
+            + Stesen 🚉
+          </button>
+        </div>
       </div>
 
       <!-- Pilih Anggota Bertugas -->
       <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
         <label class="block font-semibold" for="anggotaSelect">Anggota Bertugas:</label>
-        <select id="anggotaSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm"></select>
+        <select id="anggotaSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
+          <option value="">-- Sila tambah/pilih nama --</option>
+        </select>
+        <!-- Tambah anggota baru -->
+        <div class="flex space-x-2 pt-2">
+          <input type="text" id="newAnggota" placeholder="Tambah nama anggota baru" 
+                 class="flex-grow p-2 h-10 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
+          <button id="addAnggota" class="px-4 h-10 bg-teal-600 text-white rounded-lg shadow-lg hover:bg-teal-700 transition text-sm font-medium whitespace-nowrap">
+            + Anggota 👮🏿‍♂️
+          </button>
+        </div>
       </div>
 
-      <!-- Tambah stesen baru -->
-      <div class="flex space-x-2">
-        <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
-               class="flex-grow p-2 h-10 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
-        <button id="addStesen" class="px-4 h-10 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl active:translate-y-1 active:shadow-md focus:ring-2 focus:ring-blue-400 transition whitespace-nowrap">
-          Tambah🚉
-        </button>
+      <!-- Ruangan Status / Komen untuk Peak Hour -->
+      <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
+        <label class="block font-semibold" for="statusInput">Status / Komen (Untuk Laporan Peak Hour):</label>
+        <textarea id="statusInput" placeholder="Masukkan status semasa stesen (Contoh: Keadaan terkini penumpang ramai tapi terkawal)" 
+                  class="w-full p-2 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm h-20 resize-none"></textarea>
       </div>
 
       <!-- Reset LocalStorage -->
       <button id="resetStorage" 
-        class="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg font-semibold transition shadow-lg">
-        Reset Senarai Stesen 🚮
+        class="w-full bg-red-500 hover:bg-red-600 text-white p-2.2 h-10 rounded-lg text-sm font-semibold transition shadow-md">
+        Reset Semua Senarai 🚮
       </button>
 
-      <!-- Button Copy & Buka WhatsApp -->
-      <button id="sendReport" 
-        class="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 32 32">
-          <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.82.732 5.537 2.125 7.938l-2.125 8.062 8.25-2.156c2.344 1.285 4.978 1.969 7.75 1.969 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.48 0-4.896-.648-7-1.875l-.5-.281-4.875 1.25 1.25-4.75-.312-.5c-1.193-1.915-1.813-4.11-1.813-6.344 0-6.889 5.611-12.5 12.5-12.5s12.5 5.611 12.5 12.5-5.611 12.5-12.5 12.5zM23.094 19.563c-.379-.188-2.237-1.105-2.582-1.231-.345-.129-.597-.188-.848.188-.253.379-.973 1.231-1.193 1.484-.219.252-.438.283-.817.094-.379-.188-1.603-.59-3.055-1.881-1.13-1.009-1.894-2.252-2.114-2.631-.219-.379-.023-.583.165-.771.168-.168.379-.438.568-.657.188-.219.251-.379.379-.631.126-.252.063-.473-.031-.662-.094-.188-.848-2.055-1.16-2.813-.305-.73-.618-.631-.848-.641-.219-.012-.473-.014-.726-.014s-.662.094-1.009.473c-.345.379-1.323 1.291-1.323 3.148s1.354 3.648 1.541 3.896c.188.252 2.662 4.062 6.447 5.699.902.389 1.604.621 2.152.797.904.288 1.725.247 2.373.149.725-.109 2.237-.914 2.551-1.796.315-.883.315-1.64.221-1.796-.095-.155-.348-.252-.727-.441z"/>
-        </svg>
-        <span>Copy & Buka WhatsApp</span>
-      </button>
+      <hr class="border-gray-400/50 my-4">
+
+      <!-- Butang Hantar Laporan -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Button Laporan Biasa -->
+        <button id="sendLaporanBiasa" 
+          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white p-4 rounded-lg font-semibold transition shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 32 32">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.82.732 5.537 2.125 7.938l-2.125 8.062 8.25-2.156c2.344 1.285 4.978 1.969 7.75 1.969 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.48 0-4.896-.648-7-1.875l-.5-.281-4.875 1.25 1.25-4.75-.312-.5c-1.193-1.915-1.813-4.11-1.813-6.344 0-6.889 5.611-12.5 12.5-12.5s12.5 5.611 12.5 12.5-5.611 12.5-12.5 12.5zM23.094 19.563c-.379-.188-2.237-1.105-2.582-1.231-.345-.129-.597-.188-.848.188-.253.379-.973 1.231-1.193 1.484-.219.252-.438.283-.817.094-.379-.188-1.603-.59-3.055-1.881-1.13-1.009-1.894-2.252-2.114-2.631-.219-.379-.023-.583.165-.771.168-.168.379-.438.568-.657.188-.219.251-.379.379-.631.126-.252.063-.473-.031-.662-.094-.188-.848-2.055-1.16-2.813-.305-.73-.618-.631-.848-.641-.219-.012-.473-.014-.726-.014s-.662.094-1.009.473c-.345.379-1.323 1.291-1.323 3.148s1.354 3.648 1.541 3.896c.188.252 2.662 4.062 6.447 5.699.902.389 1.604.621 2.152.797.904.288 1.725.247 2.373.149.725-.109 2.237-.914 2.551-1.796.315-.883.315-1.64.221-1.796-.095-.155-.348-.252-.727-.441z"/>
+          </svg>
+          <span>Laporan Biasa (WhatsApp)</span>
+        </button>
+
+        <!-- Button Laporan Peak Hour -->
+        <button id="sendLaporanPeak" 
+          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 32 32">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.82.732 5.537 2.125 7.938l-2.125 8.062 8.25-2.156c2.344 1.285 4.978 1.969 7.75 1.969 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.48 0-4.896-.648-7-1.875l-.5-.281-4.875 1.25 1.25-4.75-.312-.5c-1.193-1.915-1.813-4.11-1.813-6.344 0-6.889 5.611-12.5 12.5-12.5s12.5 5.611 12.5 12.5-5.611 12.5-12.5 12.5zM23.094 19.563c-.379-.188-2.237-1.105-2.582-1.231-.345-.129-.597-.188-.848.188-.253.379-.973 1.231-1.193 1.484-.219.252-.438.283-.817.094-.379-.188-1.603-.59-3.055-1.881-1.13-1.009-1.894-2.252-2.114-2.631-.219-.379-.023-.583.165-.771.168-.168.379-.438.568-.657.188-.219.251-.379.379-.631.126-.252.063-.473-.031-.662-.094-.188-.848-2.055-1.16-2.813-.305-.73-.618-.631-.848-.641-.219-.012-.473-.014-.726-.014s-.662.094-1.009.473c-.345.379-1.323 1.291-1.323 3.148s1.354 3.648 1.541 3.896c.188.252 2.662 4.062 6.447 5.699.902.389 1.604.621 2.152.797.904.288 1.725.247 2.373.149.725-.109 2.237-.914 2.551-1.796.315-.883.315-1.64.221-1.796-.095-.155-.348-.252-.727-.441z"/>
+          </svg>
+          <span>Laporan Peak Hour (WhatsApp)</span>
+        </button>
+      </div>
 
     </div>
 
   </div>
 
 <script>
-// Default senarai stesen
-const defaultStesen = [
-  "ABDULLAH HUKUM",
-  "KERINCHI",
-  "UNIVERSITI",
-  "TAMAN JAYA",
-  "ASIA JAYA",
-  "TAMAN PARAMOUNT",
-  "TAMAN BAHAGIA",
-  "KELANA JAYA"
-];
-
-// Default senarai anggota (boleh tambah ramai)
-const defaultAnggota = [
-  "KONS PB NAZMI",
-  "PPB AHMAD TARMIZI",
-  "KONS PB MUHAMMAD ALIF",
-  "KONS PB SAINOL ARIFFIN",
-  "PPB ILLIYAS",
-  "KONS PB ADEHA",
-  "PPB AFIFAH",
-  "KONS PB ZUHAIRAH",
-  "PPB NUR SYAFIKAH NADIA",
-  "KONS PB SOLEH",
-  "KONS PB HAZIQ",
-  "KONS PB NUR SYAHIRA",
-  "KONS PB SYASYA",
-];
-
-let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [...defaultStesen];
-let anggotaList = [...defaultAnggota];
+// Ambil data daripada LocalStorage (mula sebagai senarai kosong jika tiada data)
+let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [];
+let anggotaList = JSON.parse(localStorage.getItem('anggotaList')) || [];
 
 const stesenSelect = document.getElementById('stesenSelect');
 const anggotaSelect = document.getElementById('anggotaSelect');
 
 // Muat dropdown stesen & anggota
 function refreshDropdown() {
-    // Stesen
-    stesenSelect.innerHTML = "";
+    // Dropdown Stesen
+    stesenSelect.innerHTML = '<option value="">-- Sila pilih stesen --</option>';
     stesenList.forEach(stesen => {
         const option = document.createElement('option');
         option.value = stesen;
@@ -132,8 +136,8 @@ function refreshDropdown() {
     const lastStesen = localStorage.getItem('stesenHariIni');
     if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
 
-    // Anggota
-    anggotaSelect.innerHTML = "";
+    // Dropdown Anggota
+    anggotaSelect.innerHTML = '<option value="">-- Sila pilih nama --</option>';
     anggotaList.forEach(anggota => {
         const option = document.createElement('option');
         option.value = anggota;
@@ -148,41 +152,73 @@ refreshDropdown();
 
 // Tambah stesen baru
 document.getElementById('addStesen').addEventListener('click', () => {
-    const newStesen = document.getElementById('newStesen').value.trim();
-    if(newStesen && !stesenList.includes(newStesen)) {
-        stesenList.push(newStesen);
-        localStorage.setItem('stesenList', JSON.stringify(stesenList));
-        refreshDropdown();
-        document.getElementById('newStesen').value = "";
-        alert("Stesen baru ditambah!");
+    const newStesen = document.getElementById('newStesen').value.trim().toUpperCase();
+    if(newStesen) {
+        if(!stesenList.includes(newStesen)) {
+            stesenList.push(newStesen);
+            localStorage.setItem('stesenList', JSON.stringify(stesenList));
+            refreshDropdown();
+            stesenSelect.value = newStesen; // Auto-pilih stesen baru dimasukkan
+            document.getElementById('newStesen').value = "";
+        } else {
+            alert("Stesen ini sudah wujud dalam senarai!");
+        }
     }
 });
 
-// Reset senarai stesen
-document.getElementById('resetStorage').addEventListener('click', () => {
-    localStorage.removeItem('stesenList');
-    stesenList = [...defaultStesen];
-    refreshDropdown();
-    alert("Senarai stesen telah direset!");
+// Tambah anggota baru
+document.getElementById('addAnggota').addEventListener('click', () => {
+    const newAnggota = document.getElementById('newAnggota').value.trim().toUpperCase();
+    if(newAnggota) {
+        if(!anggotaList.includes(newAnggota)) {
+            anggotaList.push(newAnggota);
+            localStorage.setItem('anggotaList', JSON.stringify(anggotaList));
+            refreshDropdown();
+            anggotaSelect.value = newAnggota; // Auto-pilih nama baru dimasukkan
+            document.getElementById('newAnggota').value = "";
+        } else {
+            alert("Nama anggota ini sudah wujud dalam senarai!");
+        }
+    }
 });
 
-// Simpan anggota terakhir dipilih
+// Reset LocalStorage
+document.getElementById('resetStorage').addEventListener('click', () => {
+    if(confirm("Adakah anda pasti untuk padam semua senarai stesen dan anggota?")) {
+        localStorage.removeItem('stesenList');
+        localStorage.removeItem('anggotaList');
+        localStorage.removeItem('stesenHariIni');
+        localStorage.removeItem('anggotaHariIni');
+        stesenList = [];
+        anggotaList = [];
+        refreshDropdown();
+        alert("Semua senarai telah dikosongkan!");
+    }
+});
+
+// Simpan pilihan semasa ke LocalStorage
+stesenSelect.addEventListener('change', () => {
+    localStorage.setItem('stesenHariIni', stesenSelect.value);
+});
 anggotaSelect.addEventListener('change', () => {
     localStorage.setItem('anggotaHariIni', anggotaSelect.value);
 });
 
-// Generate teks laporan
-function generateText() {
+// Fungsi pembantu Dapatkan Waktu Semasa
+function getDateTime() {
     const now = new Date();
     const tarikh = now.toLocaleDateString('ms-MY'); 
-    const masa = now.toTimeString().slice(0,5).replace(":", "") + " HRS"; 
-    const stesenHariIni = stesenSelect.value;
-    const anggotaHariIni = anggotaSelect.value;
+    const masa = now.toTimeString().slice(0,5).replace(":", "") + " HRS";
+    return { tarikh, masa };
+}
 
-    localStorage.setItem('stesenHariIni', stesenHariIni);
+// Generate teks Laporan Biasa
+function generateLaporanBiasa() {
+    const { tarikh, masa } = getDateTime();
+    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
+    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
 
-    return `
-*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
+    return `*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
 
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 
@@ -198,15 +234,26 @@ LOKASI : STESEN ${stesenHariIni} (KJL).
 Anggota Bertugas:- 
 ${anggotaHariIni}
 
-*#TERUSKAN PERKARA BAIK*
-`;
+*#TERUSKAN PERKARA BAIK*`;
 }
 
-// Copy + buka WhatsApp
-function copyAndOpenWA() {
-    const text = generateText();
-    navigator.clipboard.writeText(text).then(() => {
-        const encodedText = encodeURIComponent(text);
+// Generate teks Laporan Peak Hour
+function generateLaporanPeak() {
+    const { tarikh, masa } = getDateTime();
+    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
+    const statusKomen = document.getElementById('statusInput').value.trim() || "Perkhidmatan tren beroperasi dengan lancar dan kawalan penumpang terkawal.";
+
+    return `Update Terkini :
+* ${tarikh}
+* Stesen : ${stesenHariIni}
+* ${masa}
+Status : ${statusKomen}`;
+}
+
+// Fungsi hantar / buka link WhatsApp
+function hantarKeWhatsApp(teksLaporan) {
+    navigator.clipboard.writeText(teksLaporan).then(() => {
+        const encodedText = encodeURIComponent(teksLaporan);
         const ua = navigator.userAgent || navigator.vendor || window.opera;
         let waLink;
         if (/android/i.test(ua) || (/iPad|iPhone|iPod/.test(ua) && !window.MSStream)) {
@@ -215,9 +262,21 @@ function copyAndOpenWA() {
             waLink = `https://web.whatsapp.com/send?text=${encodedText}`;
         }
         window.open(waLink, "_blank");
+    }).catch(err => {
+        alert("Gagal menyalin teks secara automatik. Sila cuba lagi.");
     });
 }
-document.getElementById('sendReport').addEventListener('click', copyAndOpenWA);
+
+// Event Listeners bagi kedua-dua butang laporan
+document.getElementById('sendLaporanBiasa').addEventListener('click', () => {
+    const text = generateLaporanBiasa();
+    hantarKeWhatsApp(text);
+});
+
+document.getElementById('sendLaporanPeak').addEventListener('click', () => {
+    const text = generateLaporanPeak();
+    hantarKeWhatsApp(text);
+});
 
 </script>
 
