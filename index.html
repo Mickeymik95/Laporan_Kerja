@@ -243,10 +243,11 @@ function generateLaporanPeak() {
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
     const statusKomen = document.getElementById('statusInput').value.trim() || "Perkhidmatan tren beroperasi dengan lancar dan kawalan penumpang terkawal.";
 
-    return `Update Terkini :
-* ${tarikh}
-* Stesen : *${stesenHariIni}*
-* ${masa}
+    return `*Update Terkini :*
+* *${tarikh}*
+* *${stesenHariIni}*
+* *${masa}*
+
 Status : *${statusKomen}*`;
 }
 
