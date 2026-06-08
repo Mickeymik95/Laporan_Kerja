@@ -244,9 +244,9 @@ function generateLaporanPeak() {
     const statusKomen = document.getElementById('statusInput').value.trim() || "Perkhidmatan tren beroperasi dengan lancar dan kawalan penumpang terkawal.";
 
     return `*Update Terkini :*
-* *${tarikh}*
-* *${stesenHariIni}*
-* *${masa}*
+* ${tarikh}
+* Stesen ${stesenHariIni}
+* ${masa}
 
 Status : *${statusKomen}*`;
 }
