@@ -68,8 +68,24 @@
 
       <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
         <label class="block font-semibold" for="statusInput">Status / Komen / Catatan Tambahan:</label>
-        <textarea id="statusInput" placeholder="Masukkan status semasa stesen / butiran krisis / nama kontraktor dll." 
+        <textarea id="statusInput" placeholder="Masukkan status semasa stesen / butiran krisis / catatan am dll." 
                   class="w-full p-2 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm h-20 resize-none"></textarea>
+      </div>
+
+      <div class="rounded-2xl shadow-md p-4 bg-blue-50/50 border border-blue-200 space-y-3">
+        <span class="block font-bold text-blue-900 text-sm">Maklumat Tambahan (Untuk Laporan Kontraktor Cucian):</span>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1" for="jumlahKontraktor">Jumlah Pekerja:</label>
+            <input type="number" id="jumlahKontraktor" placeholder="Contoh: 7" 
+                   class="w-full p-2 h-9 rounded border border-gray-300 text-sm focus:ring-2 focus:ring-blue-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1" for="syarikatKontraktor">Nama Syarikat:</label>
+            <input type="text" id="syarikatKontraktor" placeholder="Contoh: Alam Bersih" 
+                   class="w-full p-2 h-9 rounded border border-gray-300 text-sm focus:ring-2 focus:ring-blue-400">
+          </div>
+        </div>
       </div>
 
       <button id="resetStorage" 
@@ -116,17 +132,18 @@
   </div>
 
 <script>
-// Ambil data daripada LocalStorage (mula sebagai senarai kosong jika tiada data)
+// Ambil data daripada LocalStorage
 let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [];
 let anggotaList = JSON.parse(localStorage.getItem('anggotaList')) || [];
 
 const stesenSelect = document.getElementById('stesenSelect');
 const anggotaSelect = document.getElementById('anggotaSelect');
 const statusInput = document.getElementById('statusInput');
+const jumlahKontraktorInput = document.getElementById('jumlahKontraktor');
+const syarikatKontraktorInput = document.getElementById('syarikatKontraktor');
 
-// Muat dropdown stesen, anggota & teks komen dari LocalStorage
+// Muat dropdown stesen, anggota & teks dari LocalStorage
 function refreshDropdown() {
-    // Dropdown Stesen
     stesenSelect.innerHTML = '<option value="">-- Sila pilih stesen --</option>';
     stesenList.forEach(stesen => {
         const option = document.createElement('option');
@@ -137,7 +154,6 @@ function refreshDropdown() {
     const lastStesen = localStorage.getItem('stesenHariIni');
     if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
 
-    // Dropdown Anggota
     anggotaSelect.innerHTML = '<option value="">-- Sila pilih nama --</option>';
     anggotaList.forEach(anggota => {
         const option = document.createElement('option');
@@ -148,17 +164,22 @@ function refreshDropdown() {
     const lastAnggota = localStorage.getItem('anggotaHariIni');
     if(lastAnggota && anggotaList.includes(lastAnggota)) anggotaSelect.value = lastAnggota;
 
-    // Muat semula komen terakhir yang ditaip
     const lastStatus = localStorage.getItem('statusHariIni');
     if(lastStatus) statusInput.value = lastStatus;
+
+    const lastJumlah = localStorage.getItem('jumlahKontraktorHariIni');
+    if(lastJumlah) jumlahKontraktorInput.value = lastJumlah;
+
+    const lastSyarikat = localStorage.getItem('syarikatKontraktorHariIni');
+    if(lastSyarikat) syarikatKontraktorInput.value = lastSyarikat;
 }
 
 refreshDropdown();
 
-// Kekalkan komen/status dalam localStorage semasa ditaip
-statusInput.addEventListener('input', () => {
-    localStorage.setItem('statusHariIni', statusInput.value);
-});
+// Simpan data semasa ditaip
+statusInput.addEventListener('input', () => { localStorage.setItem('statusHariIni', statusInput.value); });
+jumlahKontraktorInput.addEventListener('input', () => { localStorage.setItem('jumlahKontraktorHariIni', jumlahKontraktorInput.value); });
+syarikatKontraktorInput.addEventListener('input', () => { localStorage.setItem('syarikatKontraktorHariIni', syarikatKontraktorInput.value); });
 
 // Tambah stesen baru
 document.getElementById('addStesen').addEventListener('click', () => {
@@ -202,21 +223,20 @@ document.getElementById('resetStorage').addEventListener('click', () => {
         localStorage.removeItem('stesenHariIni');
         localStorage.removeItem('anggotaHariIni');
         localStorage.removeItem('statusHariIni');
+        localStorage.removeItem('jumlahKontraktorHariIni');
+        localStorage.removeItem('syarikatKontraktorHariIni');
         stesenList = [];
         anggotaList = [];
         statusInput.value = "";
+        jumlahKontraktorInput.value = "";
+        syarikatKontraktorInput.value = "";
         refreshDropdown();
         alert("Semua data telah dikosongkan!");
     }
 });
 
-// Simpan pilihan dropdown semasa ke LocalStorage
-stesenSelect.addEventListener('change', () => {
-    localStorage.setItem('stesenHariIni', stesenSelect.value);
-});
-anggotaSelect.addEventListener('change', () => {
-    localStorage.setItem('anggotaHariIni', anggotaSelect.value);
-});
+stesenSelect.addEventListener('change', () => { localStorage.setItem('stesenHariIni', stesenSelect.value); });
+anggotaSelect.addEventListener('change', () => { localStorage.setItem('anggotaHariIni', anggotaSelect.value); });
 
 // Fungsi pembantu Dapatkan Waktu Semasa
 function getDateTime() {
@@ -226,7 +246,7 @@ function getDateTime() {
     return { tarikh, masa };
 }
 
-// 1. Generate teks Laporan Biasa
+// 1. Laporan Biasa
 function generateLaporanBiasa() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
@@ -251,7 +271,7 @@ ${anggotaHariIni}
 *#TERUSKAN PERKARA BAIK*`;
 }
 
-// 2. Generate teks Laporan Peak Hour / Krisis
+// 2. Laporan Peak Hour / Krisis
 function generateLaporanPeak() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
@@ -264,26 +284,38 @@ function generateLaporanPeak() {
 * Status/Komen : *${statusKomen}*`;
 }
 
-// 3. Generate teks Laporan Kontraktor Cucian
+// 3. Laporan Kontraktor Cucian (DIKEMASKINI DENGAN FORMAT BARU ANDA)
 function generateLaporanCucian() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const statusKomen = statusInput.value.trim() || "Kerja-kerja pembersihan sedang dijalankan dengan baik.";
     const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
+    const jmlKontraktor = jumlahKontraktorInput.value.trim() || "0";
+    const syktKontraktor = syarikatKontraktorInput.value.trim() || "Alam Bersih";
 
-    return `*Laporan Kerja Kontraktor Cucian*
-* Tarikh : ${tarikh}
-* Masa : ${masa}
-* Lokasi : STESEN ${stesenHariIni}
-* Butiran Kerja : ${statusKomen}
-* Dipantau oleh : ${anggotaHariIni}`;
+    return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
+
+Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
+
+TARIKH : ${tarikh}
+MASA : ${masa}
+TUGASAN : PERIKSA KEMASUKAN KONTRAKTOR 
+LOKASI : STESEN ${stesenHariIni} (KJL)
+
+1. Kehadiran (${jmlKontraktor}) kontraktor pembersihan syarikat ${syktKontraktor} tujuan kerja-kerja cucian stesen
+2. Semakan Pas Kontraktor serta _Work Permit_ masih dalam tempoh sah laku
+3. Tiada sebarang penyamaran / perkara mencurigakan, sekian.
+
+ANGGOTA BERTUGAS :
+${anggotaHariIni}
+
+*#Teruskan Perkara Baik*`;
 }
 
-// 4. Generate teks Laporan Kontraktor Am
+// 4. Laporan Kontraktor Am
 function generateLaporanKontraktor() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const statusKomen = statusInput.value.trim() || "Penyelenggaraan am sedang berjalan.";
+    const statusKomen = statusInput.value.trim() || "Penyelenngaraan am sedang berjalan.";
     const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
 
     return `*Laporan Kemasukan Kontraktor*
@@ -294,7 +326,7 @@ function generateLaporanKontraktor() {
 * Tindakan/Pemantauan : ${anggotaHariIni}`;
 }
 
-// 5. Generate teks Laporan Tamat Operasi
+// 5. Laporan Tamat Operasi
 function generateLaporanTamat() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
@@ -311,7 +343,7 @@ Anggota Bertugas:-
 ${anggotaHariIni}`;
 }
 
-// 6. Generate teks Laporan Redmike
+// 6. Laporan Redmike
 function generateLaporanRedmike() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
@@ -342,29 +374,12 @@ function hantarKeWhatsApp(teksLaporan) {
 }
 
 // Event Listeners bagi kesemua butang laporan
-document.getElementById('sendLaporanBiasa').addEventListener('click', () => {
-    hantarKeWhatsApp(generateLaporanBiasa());
-});
-
-document.getElementById('sendLaporanPeak').addEventListener('click', () => {
-    hantarKeWhatsApp(generateLaporanPeak());
-});
-
-document.getElementById('sendLaporanCucian').addEventListener('click', () => {
-    hantarKeWhatsApp(generateLaporanCucian());
-});
-
-document.getElementById('sendLaporanKontraktor').addEventListener('click', () => {
-    hantarKeWhatsApp(generateLaporanKontraktor());
-});
-
-document.getElementById('sendLaporanTamat').addEventListener('click', () => {
-    hantarKeWhatsApp(generateLaporanTamat());
-});
-
-document.getElementById('sendLaporanRedmike').addEventListener('click', () => {
-    hantarKeWhatsApp(generateLaporanRedmike());
-});
+document.getElementById('sendLaporanBiasa').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanBiasa()); });
+document.getElementById('sendLaporanPeak').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanPeak()); });
+document.getElementById('sendLaporanCucian').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanCucian()); });
+document.getElementById('sendLaporanKontraktor').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanKontraktor()); });
+document.getElementById('sendLaporanTamat').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanTamat()); });
+document.getElementById('sendLaporanRedmike').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanRedmike()); });
 
 </script>
 
