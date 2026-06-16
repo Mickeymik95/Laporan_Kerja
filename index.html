@@ -1,387 +1,113 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laporan PB KJL ZON 3</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-/* Animasi berkelip */
-@keyframes blink {
-  0%, 50%, 100% { color: white; opacity: 1; }
-  25%, 75% { color: white; opacity: 0; }
-}
-.blink-red {
-  animation: blink 4s infinite;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan PB KJL ZON 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .blink-red { animation: blink 4s infinite; }
+        @keyframes blink { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+    </style>
 </head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen p-4">
 
-<body class="min-h-screen relative">
-
-  <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
-
-  <div class="relative w-full max-w-4xl mx-auto p-6 space-y-6">
-
-    <nav class="bg-cover bg-center h-32 w-full rounded-2xl shadow-xl border border-white/30"
-         style="background-image: url('DSC_0085_1.jpg');">
-    </nav>
-
-    <div class="text-center space-y-2 text-white">
-      <h2 class="text-3xl font-extrabold drop-shadow-md tracking-wide">
-        🤣by PPB NAZMI👮🏿‍♂️
-      </h2>
-      <p class="text-sm font-semibold lowercase italic tracking-wide blink-red">
-        -> Tambah stesen/nama -> Pilih -> Tekan jenis laporan (Copy & buka wssp)
-      </p>
+<div class="max-w-md mx-auto space-y-6">
+    <!-- Header -->
+    <div class="text-center text-white pt-4">
+        <h2 class="text-2xl font-bold">Laporan PB KJL ZON 3</h2>
+        <p class="text-xs italic blink-red">🤣 by PPB NAZMI 👮🏿‍♂️</p>
     </div>
 
-    <div class="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-400 text-gray-900 space-y-4">
+    <div class="glass p-5 rounded-3xl shadow-2xl space-y-4">
+        <!-- Input Utama -->
+        <input type="text" id="stesen" placeholder="Stesen hari ini" class="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500">
+        <input type="text" id="anggota" placeholder="Nama Anggota" class="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500">
+        
+        <button id="sendLaporanBiasa" class="w-full bg-green-600 text-white p-3 rounded-xl font-bold hover:bg-green-700 shadow-lg">Laporan Biasa</button>
 
-      <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
-        <label class="block font-semibold" for="stesenSelect">Stesen hari ini:</label>
-        <select id="stesenSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
-          <option value="">-- Sila tambah/pilih stesen --</option>
-        </select>
-        <div class="flex space-x-2 pt-2">
-          <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
-                 class="flex-grow p-2 h-10 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
-          <button id="addStesen" class="px-4 h-10 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition text-sm font-medium whitespace-nowrap">
-            + Stesen 🚉
-          </button>
-        </div>
-      </div>
+        <hr class="border-gray-200">
 
-      <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
-        <label class="block font-semibold" for="anggotaSelect">Anggota Bertugas:</label>
-        <select id="anggotaSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
-          <option value="">-- Sila tambah/pilih nama --</option>
-        </select>
-        <div class="flex space-x-2 pt-2">
-          <input type="text" id="newAnggota" placeholder="Tambah nama anggota baru" 
-                 class="flex-grow p-2 h-10 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
-          <button id="addAnggota" class="px-4 h-10 bg-teal-600 text-white rounded-lg shadow-lg hover:bg-teal-700 transition text-sm font-medium whitespace-nowrap">
-            + Anggota 👮🏿‍♂️
-          </button>
-        </div>
-      </div>
-
-      <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
-        <label class="block font-semibold" for="statusInput">Status / Komen / Catatan Tambahan:</label>
-        <textarea id="statusInput" placeholder="Masukkan status semasa stesen / butiran krisis / catatan am dll." 
-                  class="w-full p-2 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm h-20 resize-none"></textarea>
-      </div>
-
-      <div class="rounded-2xl shadow-md p-4 bg-blue-50/50 border border-blue-200 space-y-3">
-        <span class="block font-bold text-blue-900 text-sm">Maklumat Tambahan (Untuk Laporan Kontraktor Cucian):</span>
+        <!-- Peak Hour -->
+        <textarea id="komenPeak" placeholder="Komen Laporan Peak Hour / Crisis" class="w-full p-3 rounded-xl border border-gray-300 h-20 text-sm"></textarea>
         <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1" for="jumlahKontraktor">Jumlah Pekerja:</label>
-            <input type="number" id="jumlahKontraktor" placeholder="Contoh: 7" 
-                   class="w-full p-2 h-9 rounded border border-gray-300 text-sm focus:ring-2 focus:ring-blue-400">
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1" for="syarikatKontraktor">Nama Syarikat:</label>
-            <input type="text" id="syarikatKontraktor" placeholder="Contoh: Alam Bersih" 
-                   class="w-full p-2 h-9 rounded border border-gray-300 text-sm focus:ring-2 focus:ring-blue-400">
-          </div>
+            <button id="sendLaporanPeak" class="bg-amber-500 text-white p-3 rounded-xl font-bold text-sm hover:bg-amber-600 shadow-md">Laporan Peak Hour</button>
+            <button id="sendLaporanTamat" class="bg-indigo-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-indigo-700 shadow-md">Tamat Operasi</button>
         </div>
-      </div>
 
-      <button id="resetStorage" 
-        class="w-full bg-red-500 hover:bg-red-600 text-white p-2.2 h-10 rounded-lg text-sm font-semibold transition shadow-md">
-        Reset Semua Senarai & Komen 🚮
-      </button>
+        <hr class="border-gray-200">
 
-      <hr class="border-gray-400/50 my-4">
+        <!-- Kontraktor Cucian -->
+        <div class="bg-blue-50 p-3 rounded-2xl border border-blue-100 space-y-2">
+            <p class="text-xs font-bold text-blue-800 uppercase">Kontraktor Cucian</p>
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="syarikatCucian" placeholder="Syarikat" class="p-2 rounded-lg border border-gray-300 text-sm">
+                <input type="number" id="jumlahCucian" placeholder="Jumlah Org" class="p-2 rounded-lg border border-gray-300 text-sm">
+            </div>
+            <button id="sendLaporanCucian" class="w-full bg-cyan-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-cyan-700">Laporan Kontraktor Cucian</button>
+        </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <button id="sendLaporanBiasa" 
-          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <span>Laporan Biasa 📄</span>
-        </button>
+        <!-- Kontraktor Am -->
+        <div class="bg-orange-50 p-3 rounded-2xl border border-orange-100 space-y-2">
+            <p class="text-xs font-bold text-orange-800 uppercase">Kontraktor Am</p>
+            <input type="text" id="kontraktorAm" placeholder="Syarikat & Jumlah" class="w-full p-2 rounded-lg border border-gray-300 text-sm">
+            <input type="text" id="stafPemantau" placeholder="Staf Pemantau" class="w-full p-2 rounded-lg border border-gray-300 text-sm">
+            <button id="sendLaporanKontraktor" class="w-full bg-orange-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-orange-700">Laporan Kontraktor Am</button>
+        </div>
 
-        <button id="sendLaporanPeak" 
-          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <span>Peak Hour / Krisis ⚠️</span>
-        </button>
+        <!-- Redmike -->
+        <input type="text" id="redmikeInput" placeholder="Catatan Redmike" class="w-full p-3 rounded-xl border border-gray-300">
+        <button id="sendLaporanRedmike" class="w-full bg-rose-600 text-white p-3 rounded-xl font-bold hover:bg-rose-700 shadow-lg">Redmike</button>
 
-        <button id="sendLaporanCucian" 
-          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <span>Kontraktor Cucian 🧼</span>
-        </button>
-
-        <button id="sendLaporanKontraktor" 
-          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <span>Kontraktor Am 🛠️</span>
-        </button>
-
-        <button id="sendLaporanTamat" 
-          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <span>Tamat Operasi 🔒</span>
-        </button>
-
-        <button id="sendLaporanRedmike" 
-          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <span>Redmike 🚨</span>
-        </button>
-      </div>
-
+        <button id="resetStorage" class="w-full text-xs text-red-500 py-2">Reset Semua Data 🚮</button>
     </div>
-
-  </div>
+</div>
 
 <script>
-// Ambil data daripada LocalStorage
-let stesenList = JSON.parse(localStorage.getItem('stesenList')) || [];
-let anggotaList = JSON.parse(localStorage.getItem('anggotaList')) || [];
+    // Load Data
+    const fields = ['stesen', 'anggota', 'komenPeak', 'syarikatCucian', 'jumlahCucian', 'kontraktorAm', 'stafPemantau', 'redmikeInput'];
+    fields.forEach(f => document.getElementById(f).value = localStorage.getItem(f) || '');
+    
+    // Save Data
+    fields.forEach(f => document.getElementById(f).addEventListener('input', (e) => localStorage.setItem(f, e.target.value)));
 
-const stesenSelect = document.getElementById('stesenSelect');
-const anggotaSelect = document.getElementById('anggotaSelect');
-const statusInput = document.getElementById('statusInput');
-const jumlahKontraktorInput = document.getElementById('jumlahKontraktor');
-const syarikatKontraktorInput = document.getElementById('syarikatKontraktor');
-
-// Muat dropdown stesen, anggota & teks dari LocalStorage
-function refreshDropdown() {
-    stesenSelect.innerHTML = '<option value="">-- Sila pilih stesen --</option>';
-    stesenList.forEach(stesen => {
-        const option = document.createElement('option');
-        option.value = stesen;
-        option.textContent = stesen;
-        stesenSelect.appendChild(option);
-    });
-    const lastStesen = localStorage.getItem('stesenHariIni');
-    if(lastStesen && stesenList.includes(lastStesen)) stesenSelect.value = lastStesen;
-
-    anggotaSelect.innerHTML = '<option value="">-- Sila pilih nama --</option>';
-    anggotaList.forEach(anggota => {
-        const option = document.createElement('option');
-        option.value = anggota;
-        option.textContent = anggota;
-        anggotaSelect.appendChild(option);
-    });
-    const lastAnggota = localStorage.getItem('anggotaHariIni');
-    if(lastAnggota && anggotaList.includes(lastAnggota)) anggotaSelect.value = lastAnggota;
-
-    const lastStatus = localStorage.getItem('statusHariIni');
-    if(lastStatus) statusInput.value = lastStatus;
-
-    const lastJumlah = localStorage.getItem('jumlahKontraktorHariIni');
-    if(lastJumlah) jumlahKontraktorInput.value = lastJumlah;
-
-    const lastSyarikat = localStorage.getItem('syarikatKontraktorHariIni');
-    if(lastSyarikat) syarikatKontraktorInput.value = lastSyarikat;
-}
-
-refreshDropdown();
-
-// Simpan data semasa ditaip
-statusInput.addEventListener('input', () => { localStorage.setItem('statusHariIni', statusInput.value); });
-jumlahKontraktorInput.addEventListener('input', () => { localStorage.setItem('jumlahKontraktorHariIni', jumlahKontraktorInput.value); });
-syarikatKontraktorInput.addEventListener('input', () => { localStorage.setItem('syarikatKontraktorHariIni', syarikatKontraktorInput.value); });
-
-// Tambah stesen baru
-document.getElementById('addStesen').addEventListener('click', () => {
-    const newStesen = document.getElementById('newStesen').value.trim().toUpperCase();
-    if(newStesen) {
-        if(!stesenList.includes(newStesen)) {
-            stesenList.push(newStesen);
-            localStorage.setItem('stesenList', JSON.stringify(stesenList));
-            refreshDropdown();
-            stesenSelect.value = newStesen; 
-            localStorage.setItem('stesenHariIni', newStesen);
-            document.getElementById('newStesen').value = "";
-        } else {
-            alert("Stesen ini sudah wujud dalam senarai!");
-        }
+    function hantar(teks) {
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(teks)}`, "_blank");
     }
-});
 
-// Tambah anggota baru
-document.getElementById('addAnggota').addEventListener('click', () => {
-    const newAnggota = document.getElementById('newAnggota').value.trim().toUpperCase();
-    if(newAnggota) {
-        if(!anggotaList.includes(newAnggota)) {
-            anggotaList.push(newAnggota);
-            localStorage.setItem('anggotaList', JSON.stringify(anggotaList));
-            refreshDropdown();
-            anggotaSelect.value = newAnggota; 
-            localStorage.setItem('anggotaHariIni', newAnggota);
-            document.getElementById('newAnggota').value = "";
-        } else {
-            alert("Nama anggota ini sudah wujud dalam senarai!");
+    const { tarikh, masa } = { tarikh: new Date().toLocaleDateString('ms-MY'), masa: new Date().toLocaleTimeString('ms-MY', {hour:'2-digit', minute:'2-digit'}) + " HRS" };
+
+    document.getElementById('sendLaporanBiasa').onclick = () => {
+        hantar(`*Laporan Biasa*\n\nTARIKH : ${tarikh}\nMASA : ${masa}\nLOKASI : STESEN ${document.getElementById('stesen').value}\n\n1. Lapor kawalan dan pemantauan platform.\n2. Pergerakan penumpang lancar.\n\nANGGOTA : ${document.getElementById('anggota').value}`);
+    };
+
+    document.getElementById('sendLaporanPeak').onclick = () => {
+        hantar(`*Update Terkini (Peak Hour/Krisis)*\n\nTarikh : ${tarikh}\nStesen : ${document.getElementById('stesen').value}\nStatus : ${document.getElementById('komenPeak').value}`);
+    };
+
+    document.getElementById('sendLaporanTamat').onclick = () => {
+        hantar(`*Laporan Tamat Operasi*\n\nStesen : ${document.getElementById('stesen').value}\nSemua akses telah dikunci.\n\nAnggota : ${document.getElementById('anggota').value}`);
+    };
+
+    document.getElementById('sendLaporanCucian').onclick = () => {
+        hantar(`*Laporan Kerja Kontraktor Cucian*\n\nStesen : ${document.getElementById('stesen').value}\nSyarikat : ${document.getElementById('syarikatCucian').value}\nJumlah : ${document.getElementById('jumlahCucian').value} orang\n\nDipantau : ${document.getElementById('anggota').value}`);
+    };
+
+    document.getElementById('sendLaporanKontraktor').onclick = () => {
+        hantar(`*Laporan Kemasukan Kontraktor Am*\n\nStesen : ${document.getElementById('stesen').value}\nInfo : ${document.getElementById('kontraktorAm').value}\nPemantau : ${document.getElementById('stafPemantau').value}`);
+    };
+
+    document.getElementById('sendLaporanRedmike').onclick = () => {
+        hantar(`*Laporan Ujian Redmike*\n\nStesen : ${document.getElementById('stesen').value}\nCatatan : ${document.getElementById('redmikeInput').value}`);
+    };
+
+    document.getElementById('resetStorage').onclick = () => {
+        if(confirm("Padam semua data?")) {
+            localStorage.clear();
+            location.reload();
         }
-    }
-});
-
-// Reset LocalStorage
-document.getElementById('resetStorage').addEventListener('click', () => {
-    if(confirm("Adakah anda pasti untuk padam semua senarai stesen, anggota, dan komen?")) {
-        localStorage.removeItem('stesenList');
-        localStorage.removeItem('anggotaList');
-        localStorage.removeItem('stesenHariIni');
-        localStorage.removeItem('anggotaHariIni');
-        localStorage.removeItem('statusHariIni');
-        localStorage.removeItem('jumlahKontraktorHariIni');
-        localStorage.removeItem('syarikatKontraktorHariIni');
-        stesenList = [];
-        anggotaList = [];
-        statusInput.value = "";
-        jumlahKontraktorInput.value = "";
-        syarikatKontraktorInput.value = "";
-        refreshDropdown();
-        alert("Semua data telah dikosongkan!");
-    }
-});
-
-stesenSelect.addEventListener('change', () => { localStorage.setItem('stesenHariIni', stesenSelect.value); });
-anggotaSelect.addEventListener('change', () => { localStorage.setItem('anggotaHariIni', anggotaSelect.value); });
-
-// Fungsi pembantu Dapatkan Waktu Semasa
-function getDateTime() {
-    const now = new Date();
-    const tarikh = now.toLocaleDateString('ms-MY'); 
-    const masa = now.toTimeString().slice(0,5).replace(":", "") + " HRS";
-    return { tarikh, masa };
-}
-
-// 1. Laporan Biasa
-function generateLaporanBiasa() {
-    const { tarikh, masa } = getDateTime();
-    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
-
-    return `*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
-
-Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
-
-TARIKH : ${tarikh}
-MASA : ${masa}
-TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1,2
-LOKASI : STESEN ${stesenHariIni} (KJL).
-
-1. Lapor kawalan dan pemantauan di platform Stesen ${stesenHariIni} (KJL).
-2. Pergerakan penumpang keluar/masuk tren lancar.
-3. Perkhidmatan tren beroperasi seperti biasa.
-
-Anggota Bertugas:- 
-${anggotaHariIni}
-
-*#TERUSKAN PERKARA BAIK*`;
-}
-
-// 2. Laporan Peak Hour / Krisis
-function generateLaporanPeak() {
-    const { tarikh, masa } = getDateTime();
-    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const statusKomen = statusInput.value.trim() || "Perkhidmatan tren beroperasi dengan lancar dan kawalan penumpang terkawal.";
-
-    return `*Update Terkini (Peak Hour/Krisis):*
-* Tarikh : ${tarikh}
-* Stesen : ${stesenHariIni}
-* Masa : ${masa}
-* Status/Komen : *${statusKomen}*`;
-}
-
-// 3. Laporan Kontraktor Cucian (DIKEMASKINI DENGAN FORMAT BARU ANDA)
-function generateLaporanCucian() {
-    const { tarikh, masa } = getDateTime();
-    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
-    const jmlKontraktor = jumlahKontraktorInput.value.trim() || "0";
-    const syktKontraktor = syarikatKontraktorInput.value.trim() || "Alam Bersih";
-
-    return `*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
-
-Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
-
-TARIKH : ${tarikh}
-MASA : ${masa}
-TUGASAN : PERIKSA KEMASUKAN KONTRAKTOR 
-LOKASI : STESEN ${stesenHariIni} (KJL)
-
-1. Kehadiran (${jmlKontraktor}) kontraktor pembersihan syarikat ${syktKontraktor} tujuan kerja-kerja cucian stesen
-2. Semakan Pas Kontraktor serta _Work Permit_ masih dalam tempoh sah laku
-3. Tiada sebarang penyamaran / perkara mencurigakan, sekian.
-
-ANGGOTA BERTUGAS :
-${anggotaHariIni}
-
-*#Teruskan Perkara Baik*`;
-}
-
-// 4. Laporan Kontraktor Am
-function generateLaporanKontraktor() {
-    const { tarikh, masa } = getDateTime();
-    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const statusKomen = statusInput.value.trim() || "Penyelenngaraan am sedang berjalan.";
-    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
-
-    return `*Laporan Kemasukan Kontraktor*
-* Tarikh : ${tarikh}
-* Masa : ${masa}
-* Lokasi : STESEN ${stesenHariIni}
-* Aktiviti : ${statusKomen}
-* Tindakan/Pemantauan : ${anggotaHariIni}`;
-}
-
-// 5. Laporan Tamat Operasi
-function generateLaporanTamat() {
-    const { tarikh, masa } = getDateTime();
-    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
-
-    return `*Laporan Tamat Operasi Stesen*
-* Tarikh : ${tarikh}
-* Masa : ${masa}
-* Lokasi : STESEN ${stesenHariIni}
-
-Selesai tugasan tutup stesen. Semua pintu akses telah dikunci rapat dan berada dalam keadaan selamat. Tiada penumpang tertinggal di dalam stesen.
-
-Anggota Bertugas:-
-${anggotaHariIni}`;
-}
-
-// 6. Laporan Redmike
-function generateLaporanRedmike() {
-    const { tarikh, masa } = getDateTime();
-    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
-    const statusKomen = statusInput.value.trim() || "Ujian sistem 'Redmike' dilakukan dan berfungsi dengan baik.";
-
-    return `*Laporan Ujian Panggilan Redmike*
-* Tarikh : ${tarikh}
-* Masa : ${masa}
-* Lokasi : STESEN ${stesenHariIni}
-* Catatan : *${statusKomen}*`;
-}
-
-// Fungsi hantar / buka link WhatsApp
-function hantarKeWhatsApp(teksLaporan) {
-    navigator.clipboard.writeText(teksLaporan).then(() => {
-        const encodedText = encodeURIComponent(teksLaporan);
-        const ua = navigator.userAgent || navigator.vendor || window.opera;
-        let waLink;
-        if (/android/i.test(ua) || (/iPad|iPhone|iPod/.test(ua) && !window.MSStream)) {
-            waLink = `https://api.whatsapp.com/send?text=${encodedText}`;
-        } else {
-            waLink = `https://web.whatsapp.com/send?text=${encodedText}`;
-        }
-        window.open(waLink, "_blank");
-    }).catch(err => {
-        alert("Gagal menyalin teks secara automatik. Sila cuba lagi.");
-    });
-}
-
-// Event Listeners bagi kesemua butang laporan
-document.getElementById('sendLaporanBiasa').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanBiasa()); });
-document.getElementById('sendLaporanPeak').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanPeak()); });
-document.getElementById('sendLaporanCucian').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanCucian()); });
-document.getElementById('sendLaporanKontraktor').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanKontraktor()); });
-document.getElementById('sendLaporanTamat').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanTamat()); });
-document.getElementById('sendLaporanRedmike').addEventListener('click', () => { hantarKeWhatsApp(generateLaporanRedmike()); });
-
+    };
 </script>
-
 </body>
 </html>
