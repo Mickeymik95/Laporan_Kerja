@@ -62,27 +62,34 @@
 
     <hr>
 
-    <!-- PEAK HOUR -->
+    <!-- BAHAGIAN PEAK HOUR & TAMAT OPERASI (IKUT URUTAN DIMINTA) -->
+    
+    <!-- 1. Input peak hour -->
     <textarea
         id="komenPeak"
         placeholder="Status Peak Hour / Krisis"
         class="w-full p-3 rounded-xl border border-gray-300 h-20"></textarea>
 
-    <div class="grid grid-cols-2 gap-2">
+    <!-- 2. BTN peak hour -->
+    <button
+        id="sendLaporanPeak"
+        class="w-full bg-amber-500 text-white p-3 rounded-xl font-bold hover:bg-amber-600">
+        Laporan Peak Hour
+    </button>
 
-        <button
-            id="sendLaporanPeak"
-            class="bg-amber-500 text-white p-3 rounded-xl font-bold text-sm hover:bg-amber-600">
-            Laporan Peak Hour
-        </button>
+    <!-- 3. Input laporan tambahan -->
+    <input
+        type="text"
+        id="laporanTambahanTamat"
+        placeholder="Laporan Tambahan Tamat Operasi (Pilihan)"
+        class="w-full p-3 rounded-xl border border-gray-300 text-sm">
 
-        <button
-            id="sendLaporanTamat"
-            class="bg-indigo-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-indigo-700">
-            Laporan Tamat Operasi
-        </button>
-
-    </div>
+    <!-- 4. BTN Laporan tamat operasi -->
+    <button
+        id="sendLaporanTamat"
+        class="w-full bg-indigo-600 text-white p-3 rounded-xl font-bold hover:bg-indigo-700">
+        Tamat Operasi
+    </button>
 
     <hr>
 
@@ -180,6 +187,7 @@ const fields = [
 'stesen',
 'anggota',
 'komenPeak',
+'laporanTambahanTamat',
 'syarikatCucian',
 'jumlahCucian',
 'jumlahKontraktor',
@@ -270,6 +278,12 @@ Status : *${document.getElementById('komenPeak').value || 'BAIK & TERKAWAL'}*`);
 document.getElementById('sendLaporanTamat').onclick = ()=>{
 
 const stesen = document.getElementById('stesen').value.toUpperCase();
+const tambahan = document.getElementById('laporanTambahanTamat').value;
+
+let barisTambahan = '';
+if(tambahan.trim() !== '') {
+    barisTambahan = `\n4. ${tambahan}`;
+}
 
 hantar(`*Assalamualaikum wbt & Salam Sejahtera Tuan/Puan,*
 
@@ -282,7 +296,7 @@ LOKASI : STESEN LRT ${stesen} (KJL)
 
 1. Rondaan dan pemantauan sekitar kawasan stesen selepas tamat operasi tren bagi STESEN LRT ${stesen} (KJL).
 2. ⁠Kawasan concourse, kiosk, tandas, surau, bilik janitor, ER, CSO,tangga kecemasan dan platform.
-3. ⁠SELESAI RONDAAN LOKASI BAIK,SERTA TIADA KELIBAT PENUMPANG DIDALAM STESEN DAN KEADAAN TERKAWAL .
+3. ⁠SELESAI RONDAAN LOKASI BAIK,SERTA TIADA KELIBAT PENUMPANG DIDALAM STESEN DAN KEADAAN TERKAWAL.${barisTambahan}
 
 ANGGOTA BERTUGAS :
 ${document.getElementById('anggota').value}
