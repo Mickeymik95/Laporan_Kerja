@@ -62,34 +62,40 @@
 
     <hr>
 
-    <!-- BAHAGIAN PEAK HOUR & TAMAT OPERASI (IKUT URUTAN DIMINTA) -->
-    
-    <!-- 1. Input peak hour -->
-    <textarea
-        id="komenPeak"
-        placeholder="Status Peak Hour / Krisis"
-        class="w-full p-3 rounded-xl border border-gray-300 h-20"></textarea>
+    <!-- BAHAGIAN PEAK HOUR (TEMA AMBER) -->
+    <div class="space-y-2 p-1 rounded-2xl">
+        <!-- 1. Input peak hour -->
+        <textarea
+            id="komenPeak"
+            placeholder="Status Peak Hour / Krisis"
+            class="w-full p-3 rounded-xl border border-amber-200 bg-amber-50 placeholder-amber-700/60 focus:outline-none focus:border-amber-500 h-20 text-sm text-amber-900"></textarea>
 
-    <!-- 2. BTN peak hour -->
-    <button
-        id="sendLaporanPeak"
-        class="w-full bg-amber-500 text-white p-3 rounded-xl font-bold hover:bg-amber-600">
-        Laporan Peak Hour
-    </button>
+        <!-- 2. BTN peak hour -->
+        <button
+            id="sendLaporanPeak"
+            class="w-full bg-amber-500 text-white p-3 rounded-xl font-bold hover:bg-amber-600 shadow-md">
+            Laporan Peak Hour
+        </button>
+    </div>
 
-    <!-- 3. Input laporan tambahan -->
-    <input
-        type="text"
-        id="laporanTambahanTamat"
-        placeholder="Laporan Tambahan Tamat Operasi (Pilihan)"
-        class="w-full p-3 rounded-xl border border-gray-300 text-sm">
+    <hr>
 
-    <!-- 4. BTN Laporan tamat operasi -->
-    <button
-        id="sendLaporanTamat"
-        class="w-full bg-indigo-600 text-white p-3 rounded-xl font-bold hover:bg-indigo-700">
-        Tamat Operasi
-    </button>
+    <!-- BAHAGIAN TAMAT OPERASI (TEMA INDIGO) -->
+    <div class="space-y-2 p-1 rounded-2xl">
+        <!-- 3. Input laporan tambahan -->
+        <input
+            type="text"
+            id="laporanTambahanTamat"
+            placeholder="Laporan Tambahan Tamat Operasi (Pilihan)"
+            class="w-full p-3 rounded-xl border border-indigo-200 bg-indigo-50 placeholder-indigo-700/60 focus:outline-none focus:border-indigo-500 text-sm text-indigo-900">
+
+        <!-- 4. BTN Laporan tamat operasi -->
+        <button
+            id="sendLaporanTamat"
+            class="w-full bg-indigo-600 text-white p-3 rounded-xl font-bold hover:bg-indigo-700 shadow-md">
+            Tamat Operasi
+        </button>
+    </div>
 
     <hr>
 
