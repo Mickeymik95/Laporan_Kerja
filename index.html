@@ -1,113 +1,339 @@
-<!DOCTYPE html>
-<html lang="ms">
+<!DOCTYPE html><html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan PB KJL ZON 3</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
-        .blink-red { animation: blink 4s infinite; }
-        @keyframes blink { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen p-4">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan PB KJL ZON 3</title><script src="https://cdn.tailwindcss.com"></script><style>
+.glass{
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(10px);
+}
 
-<div class="max-w-md mx-auto space-y-6">
-    <!-- Header -->
-    <div class="text-center text-white pt-4">
-        <h2 class="text-2xl font-bold">Laporan PB KJL ZON 3</h2>
-        <p class="text-xs italic blink-red">🤣 by PPB NAZMI 👮🏿‍♂️</p>
-    </div>
+.blink-red{
+    animation:blink 4s infinite;
+}
 
-    <div class="glass p-5 rounded-3xl shadow-2xl space-y-4">
-        <!-- Input Utama -->
-        <input type="text" id="stesen" placeholder="Stesen hari ini" class="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500">
-        <input type="text" id="anggota" placeholder="Nama Anggota" class="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500">
-        
-        <button id="sendLaporanBiasa" class="w-full bg-green-600 text-white p-3 rounded-xl font-bold hover:bg-green-700 shadow-lg">Laporan Biasa</button>
-
-        <hr class="border-gray-200">
-
-        <!-- Peak Hour -->
-        <textarea id="komenPeak" placeholder="Komen Laporan Peak Hour / Crisis" class="w-full p-3 rounded-xl border border-gray-300 h-20 text-sm"></textarea>
-        <div class="grid grid-cols-2 gap-2">
-            <button id="sendLaporanPeak" class="bg-amber-500 text-white p-3 rounded-xl font-bold text-sm hover:bg-amber-600 shadow-md">Laporan Peak Hour</button>
-            <button id="sendLaporanTamat" class="bg-indigo-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-indigo-700 shadow-md">Tamat Operasi</button>
-        </div>
-
-        <hr class="border-gray-200">
-
-        <!-- Kontraktor Cucian -->
-        <div class="bg-blue-50 p-3 rounded-2xl border border-blue-100 space-y-2">
-            <p class="text-xs font-bold text-blue-800 uppercase">Kontraktor Cucian</p>
-            <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="syarikatCucian" placeholder="Syarikat" class="p-2 rounded-lg border border-gray-300 text-sm">
-                <input type="number" id="jumlahCucian" placeholder="Jumlah Org" class="p-2 rounded-lg border border-gray-300 text-sm">
-            </div>
-            <button id="sendLaporanCucian" class="w-full bg-cyan-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-cyan-700">Laporan Kontraktor Cucian</button>
-        </div>
-
-        <!-- Kontraktor Am -->
-        <div class="bg-orange-50 p-3 rounded-2xl border border-orange-100 space-y-2">
-            <p class="text-xs font-bold text-orange-800 uppercase">Kontraktor Am</p>
-            <input type="text" id="kontraktorAm" placeholder="Syarikat & Jumlah" class="w-full p-2 rounded-lg border border-gray-300 text-sm">
-            <input type="text" id="stafPemantau" placeholder="Staf Pemantau" class="w-full p-2 rounded-lg border border-gray-300 text-sm">
-            <button id="sendLaporanKontraktor" class="w-full bg-orange-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-orange-700">Laporan Kontraktor Am</button>
-        </div>
-
-        <!-- Redmike -->
-        <input type="text" id="redmikeInput" placeholder="Catatan Redmike" class="w-full p-3 rounded-xl border border-gray-300">
-        <button id="sendLaporanRedmike" class="w-full bg-rose-600 text-white p-3 rounded-xl font-bold hover:bg-rose-700 shadow-lg">Redmike</button>
-
-        <button id="resetStorage" class="w-full text-xs text-red-500 py-2">Reset Semua Data 🚮</button>
-    </div>
+@keyframes blink{
+    0%,50%,100%{opacity:1;}
+    25%,75%{opacity:0;}
+}
+</style></head><body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen p-4"><div class="max-w-md mx-auto space-y-6"><div class="text-center text-white pt-4">
+    <h2 class="text-2xl font-bold">Laporan PB KJL ZON 3</h2>
+    <p class="text-xs italic blink-red">🤣 by PPB NAZMI 👮🏿‍♂️</p>
 </div>
 
-<script>
-    // Load Data
-    const fields = ['stesen', 'anggota', 'komenPeak', 'syarikatCucian', 'jumlahCucian', 'kontraktorAm', 'stafPemantau', 'redmikeInput'];
-    fields.forEach(f => document.getElementById(f).value = localStorage.getItem(f) || '');
-    
-    // Save Data
-    fields.forEach(f => document.getElementById(f).addEventListener('input', (e) => localStorage.setItem(f, e.target.value)));
+<div class="glass p-5 rounded-3xl shadow-2xl space-y-4">
 
-    function hantar(teks) {
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(teks)}`, "_blank");
-    }
+    <!-- STESEN -->
+    <input
+        type="text"
+        id="stesen"
+        placeholder="Stesen Hari Ini"
+        class="w-full p-3 rounded-xl border border-gray-300">
 
-    const { tarikh, masa } = { tarikh: new Date().toLocaleDateString('ms-MY'), masa: new Date().toLocaleTimeString('ms-MY', {hour:'2-digit', minute:'2-digit'}) + " HRS" };
+    <!-- ANGGOTA -->
+    <input
+        type="text"
+        id="anggota"
+        placeholder="Nama Anggota"
+        class="w-full p-3 rounded-xl border border-gray-300">
 
-    document.getElementById('sendLaporanBiasa').onclick = () => {
-        hantar(`*Laporan Biasa*\n\nTARIKH : ${tarikh}\nMASA : ${masa}\nLOKASI : STESEN ${document.getElementById('stesen').value}\n\n1. Lapor kawalan dan pemantauan platform.\n2. Pergerakan penumpang lancar.\n\nANGGOTA : ${document.getElementById('anggota').value}`);
-    };
+    <!-- LAPORAN BIASA -->
+    <button
+        id="sendLaporanBiasa"
+        class="w-full bg-green-600 text-white p-3 rounded-xl font-bold hover:bg-green-700">
+        Laporan Biasa
+    </button>
 
-    document.getElementById('sendLaporanPeak').onclick = () => {
-        hantar(`*Update Terkini (Peak Hour/Krisis)*\n\nTarikh : ${tarikh}\nStesen : ${document.getElementById('stesen').value}\nStatus : ${document.getElementById('komenPeak').value}`);
-    };
+    <hr>
 
-    document.getElementById('sendLaporanTamat').onclick = () => {
-        hantar(`*Laporan Tamat Operasi*\n\nStesen : ${document.getElementById('stesen').value}\nSemua akses telah dikunci.\n\nAnggota : ${document.getElementById('anggota').value}`);
-    };
+    <!-- PEAK HOUR -->
+    <textarea
+        id="komenPeak"
+        placeholder="Status Peak Hour / Krisis"
+        class="w-full p-3 rounded-xl border border-gray-300 h-20"></textarea>
 
-    document.getElementById('sendLaporanCucian').onclick = () => {
-        hantar(`*Laporan Kerja Kontraktor Cucian*\n\nStesen : ${document.getElementById('stesen').value}\nSyarikat : ${document.getElementById('syarikatCucian').value}\nJumlah : ${document.getElementById('jumlahCucian').value} orang\n\nDipantau : ${document.getElementById('anggota').value}`);
-    };
+    <div class="grid grid-cols-2 gap-2">
 
-    document.getElementById('sendLaporanKontraktor').onclick = () => {
-        hantar(`*Laporan Kemasukan Kontraktor Am*\n\nStesen : ${document.getElementById('stesen').value}\nInfo : ${document.getElementById('kontraktorAm').value}\nPemantau : ${document.getElementById('stafPemantau').value}`);
-    };
+        <button
+            id="sendLaporanPeak"
+            class="bg-amber-500 text-white p-3 rounded-xl font-bold text-sm hover:bg-amber-600">
+            Laporan Peak Hour
+        </button>
 
-    document.getElementById('sendLaporanRedmike').onclick = () => {
-        hantar(`*Laporan Ujian Redmike*\n\nStesen : ${document.getElementById('stesen').value}\nCatatan : ${document.getElementById('redmikeInput').value}`);
-    };
+        <button
+            id="sendLaporanTamat"
+            class="bg-indigo-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-indigo-700">
+            Tamat Operasi
+        </button>
 
-    document.getElementById('resetStorage').onclick = () => {
-        if(confirm("Padam semua data?")) {
-            localStorage.clear();
-            location.reload();
+    </div>
+
+    <hr>
+
+    <!-- KONTRAKTOR CUCIAN -->
+    <div class="bg-blue-50 p-3 rounded-2xl border border-blue-100 space-y-2">
+
+        <p class="text-xs font-bold text-blue-800 uppercase">
+            Kontraktor Cucian
+        </p>
+
+        <div class="grid grid-cols-2 gap-2">
+
+            <input
+                type="text"
+                id="syarikatCucian"
+                placeholder="Nama Syarikat"
+                class="p-2 rounded-lg border border-gray-300 text-sm">
+
+            <input
+                type="number"
+                id="jumlahCucian"
+                placeholder="Jumlah Orang"
+                class="p-2 rounded-lg border border-gray-300 text-sm">
+
+        </div>
+
+        <button
+            id="sendLaporanCucian"
+            class="w-full bg-cyan-600 text-white p-3 rounded-xl font-bold hover:bg-cyan-700">
+            Laporan Kontraktor Cucian
+        </button>
+
+    </div>
+
+    <!-- KONTRAKTOR AM -->
+    <div class="bg-orange-50 p-3 rounded-2xl border border-orange-100 space-y-2">
+
+        <p class="text-xs font-bold text-orange-800 uppercase">
+            Kontraktor Am
+        </p>
+
+        <input
+            type="number"
+            id="jumlahKontraktor"
+            placeholder="Jumlah Kontraktor"
+            class="w-full p-2 rounded-lg border border-gray-300 text-sm">
+
+        <input
+            type="text"
+            id="syarikatKontraktor"
+            placeholder="Nama Syarikat"
+            class="w-full p-2 rounded-lg border border-gray-300 text-sm">
+
+        <input
+            type="text"
+            id="stafPemantau"
+            placeholder="Staf Pemantau"
+            class="w-full p-2 rounded-lg border border-gray-300 text-sm">
+
+        <button
+            id="sendLaporanKontraktor"
+            class="w-full bg-orange-600 text-white p-3 rounded-xl font-bold hover:bg-orange-700">
+            Laporan Kontraktor Am
+        </button>
+
+    </div>
+
+    <!-- REDMIKE -->
+    <input
+        type="text"
+        id="redmikeInput"
+        placeholder="Catatan Redmike"
+        class="w-full p-3 rounded-xl border border-gray-300">
+
+    <button
+        id="sendLaporanRedmike"
+        class="w-full bg-rose-600 text-white p-3 rounded-xl font-bold hover:bg-rose-700">
+        Redmike
+    </button>
+
+    <!-- RESET -->
+    <button
+        id="resetStorage"
+        class="w-full text-xs text-red-500 py-2">
+        Reset Semua Data 🚮
+    </button>
+
+</div>
+
+</div><script>
+
+const fields = [
+'stesen',
+'anggota',
+'komenPeak',
+'syarikatCucian',
+'jumlahCucian',
+'jumlahKontraktor',
+'syarikatKontraktor',
+'stafPemantau',
+'redmikeInput'
+];
+
+fields.forEach(id=>{
+    document.getElementById(id).value =
+    localStorage.getItem(id) || '';
+});
+
+fields.forEach(id=>{
+    document.getElementById(id).addEventListener('input',e=>{
+        localStorage.setItem(id,e.target.value);
+    });
+});
+
+function getTarikh(){
+    return new Date().toLocaleDateString('ms-MY');
+}
+
+function getMasa(){
+
+    const now = new Date();
+
+    return now.toLocaleTimeString(
+        'en-GB',
+        {
+            hour:'2-digit',
+            minute:'2-digit',
+            hour12:false
         }
-    };
-</script>
-</body>
+    ).replace(':','') + 'HRS';
+}
+
+function hantar(teks){
+
+    window.open(
+        "https://api.whatsapp.com/send?text=" +
+        encodeURIComponent(teks),
+        "_blank"
+    );
+}
+
+document.getElementById('sendLaporanBiasa').onclick = ()=>{
+
+const stesen =
+document.getElementById('stesen').value.toUpperCase();
+
+hantar(`*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
+
+Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
+
+TARIKH : ${getTarikh()}
+MASA : ${getMasa()}
+TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1,2
+LOKASI : STESEN ${stesen} (KJL)
+
+1. Lapor kawalan dan pemantauan di platform Stesen ${stesen} (KJL).
+2. Pergerakan penumpang keluar/masuk tren lancar.
+3. Perkhidmatan tren beroperasi seperti biasa.
+
+ANGGOTA BERTUGAS :
+${document.getElementById('anggota').value}
+
+*#TERUSKAN PERKARA BAIK*`);
+
+};
+
+document.getElementById('sendLaporanPeak').onclick = ()=>{
+
+hantar(`*Update Terkini :*
+
+- Tarikh : ${getTarikh()}
+- Stesen : ${document.getElementById('stesen').value.toUpperCase()}
+- Masa : ${getMasa()}
+
+Status : *${document.getElementById('komenPeak').value || 'BAIK & TERKAWAL'}*`);
+
+};
+
+document.getElementById('sendLaporanTamat').onclick = ()=>{
+
+hantar(`*LAPORAN TAMAT OPERASI*
+
+TARIKH : ${getTarikh()}
+MASA : ${getMasa()}
+
+STESEN : ${document.getElementById('stesen').value.toUpperCase()}
+
+1. Pemeriksaan tamat operasi selesai dilaksanakan.
+2. Semua akses telah dikunci.
+3. Tiada sebarang kejadian dilaporkan.
+
+ANGGOTA :
+${document.getElementById('anggota').value}`);
+
+};
+
+document.getElementById('sendLaporanCucian').onclick = ()=>{
+
+hantar(`*Assalamualaikum wbt & Salam Sejahtera YDH Datuk/Tuan/Puan,*
+
+Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
+
+TARIKH : ${getTarikh()}
+MASA : ${getMasa()}
+TUGASAN : PERIKSA KEMASUKAN KONTRAKTOR
+LOKASI : STESEN ${document.getElementById('stesen').value.toUpperCase()} (KJL)
+
+1. Kehadiran ${document.getElementById('jumlahCucian').value} kontraktor pembersihan syarikat ${document.getElementById('syarikatCucian').value} tujuan kerja-kerja cucian stesen.
+2. Semakan Pas Kontraktor serta Work Permit masih dalam tempoh sah laku.
+3. Tiada sebarang penyamaran / perkara mencurigakan, sekian.
+
+ANGGOTA BERTUGAS :
+${document.getElementById('anggota').value}
+
+*#Teruskan Perkara Baik*`);
+
+};
+
+document.getElementById('sendLaporanKontraktor').onclick = ()=>{
+
+const stesen =
+document.getElementById('stesen').value.toUpperCase();
+
+hantar(`*Assalamualaikum wbt & Salam Sejahtera Tuan/Puan,*
+
+Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
+
+TARIKH : ${getTarikh()}
+MASA : ${getMasa()}
+TUGASAN : PEMERIKSAAN KEMASUKAN KONTRAKTOR
+LOKASI : STESEN ${stesen} (KJL)
+
+1. Lapor kemasukan ${document.getElementById('jumlahKontraktor').value} kontraktor ${document.getElementById('syarikatKontraktor').value}.
+2. Masuk membuat kerja-kerja baik pulih Roller Shuttle stesen ${stesen}.
+3. Kesemua kontraktor mempunyai Emergency Work Permit.
+4. Diberikan pas kontraktor sementara sehingga kerja-kerja baik pulih siap sepenuhnya.
+5. Kesemua kontraktor dipantau oleh staff bertugas ${document.getElementById('stafPemantau').value}.
+6. Lokasi baik dan dalam kawalan.
+
+ANGGOTA BERTUGAS :
+${document.getElementById('anggota').value}
+
+*#Teruskan Perkara Baik*`);
+
+};
+
+document.getElementById('sendLaporanRedmike').onclick = ()=>{
+
+hantar(`*LAPORAN UJIAN REDMIKE*
+
+STESEN : ${document.getElementById('stesen').value.toUpperCase()}
+
+CATATAN :
+${document.getElementById('redmikeInput').value}`);
+
+};
+
+document.getElementById('resetStorage').onclick = ()=>{
+
+if(confirm('Padam semua data?')){
+
+localStorage.clear();
+location.reload();
+
+}
+
+};
+
+</script></body>
 </html>
