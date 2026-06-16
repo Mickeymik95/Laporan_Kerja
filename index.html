@@ -124,17 +124,30 @@
             Kontraktor Am
         </p>
 
-        <input
-            type="number"
-            id="jumlahKontraktor"
-            placeholder="Jumlah Kontraktor"
-            class="w-full p-2 rounded-lg border border-gray-300 text-sm">
+        <div class="grid grid-cols-2 gap-2">
+            <input
+                type="number"
+                id="jumlahKontraktor"
+                placeholder="Jumlah Kontraktor"
+                class="p-2 rounded-lg border border-gray-300 text-sm">
+
+            <input
+                type="text"
+                id="syarikatKontraktor"
+                placeholder="Nama Syarikat"
+                class="p-2 rounded-lg border border-gray-300 text-sm">
+        </div>
 
         <input
             type="text"
-            id="syarikatKontraktor"
-            placeholder="Nama Syarikat"
+            id="kerjaKontraktor"
+            placeholder="Jenis Kerja Kontraktor (cth: baik pulih lampu)"
             class="w-full p-2 rounded-lg border border-gray-300 text-sm">
+
+        <select id="jenisPas" class="w-full p-2 rounded-lg border border-gray-300 bg-white text-sm text-gray-700">
+            <option value="Mempunyai Pas Kontraktor">Mempunyai Pas Kontraktor</option>
+            <option value="Diberikan pas kontraktor sementara sehingga kerja-kerja baik pulih siap sepenuhnya">Diberikan Pas Kontraktor Sementara</option>
+        </select>
 
         <input
             type="text"
@@ -150,23 +163,10 @@
 
     </div>
 
-    <!-- REDMIKE -->
-    <input
-        type="text"
-        id="redmikeInput"
-        placeholder="Catatan Redmike"
-        class="w-full p-3 rounded-xl border border-gray-300">
-
-    <button
-        id="sendLaporanRedmike"
-        class="w-full bg-rose-600 text-white p-3 rounded-xl font-bold hover:bg-rose-700">
-        Redmike
-    </button>
-
     <!-- RESET -->
     <button
         id="resetStorage"
-        class="w-full text-xs text-red-500 py-2">
+        class="w-full text-xs text-red-500 py-2 pt-4">
         Reset Semua Data 🚮
     </button>
 
@@ -184,13 +184,14 @@ const fields = [
 'jumlahCucian',
 'jumlahKontraktor',
 'syarikatKontraktor',
-'stafPemantau',
-'redmikeInput'
+'kerjaKontraktor',
+'jenisPas',
+'stafPemantau'
 ];
 
 fields.forEach(id=>{
     document.getElementById(id).value =
-    localStorage.getItem(id) || '';
+    localStorage.getItem(id) || (id === 'jenisPas' ? 'Mempunyai Pas Kontraktor' : '');
 });
 
 fields.forEach(id=>{
@@ -314,8 +315,12 @@ ${document.getElementById('anggota').value}
 
 document.getElementById('sendLaporanKontraktor').onclick = ()=>{
 
-const stesen =
-document.getElementById('stesen').value.toUpperCase();
+const stesen = document.getElementById('stesen').value.toUpperCase();
+const jumlah = document.getElementById('jumlahKontraktor').value;
+const syarikat = document.getElementById('syarikatKontraktor').value.toUpperCase();
+const kerja = document.getElementById('kerjaKontraktor').value;
+const pas = document.getElementById('jenisPas').value;
+const pemantau = document.getElementById('stafPemantau').value.toUpperCase();
 
 hantar(`*Assalamualaikum wbt & Salam Sejahtera Tuan/Puan,*
 
@@ -326,28 +331,17 @@ MASA : ${getMasa()}
 TUGASAN : PEMERIKSAAN KEMASUKAN KONTRAKTOR
 LOKASI : STESEN LRT ${stesen} (KJL)
 
-1. Lapor kemasukan ${document.getElementById('jumlahKontraktor').value} kontraktor ${document.getElementById('syarikatKontraktor').value}.
-2. Masuk membuat kerja-kerja baik pulih Roller Shutter stesen ${stesen}.
-3. Kesemua kontraktor mempunyai Emergency Work Permit.
-4. Diberikan pas kontraktor sementara sehingga kerja-kerja baik pulih siap sepenuhnya.
-5. Kesemua kontraktor dipantau oleh staff bertugas ${document.getElementById('stafPemantau').value}.
+1. Lapor kemasukan ${jumlah} kontraktor ${syarikat}.
+2. Masuk membuat kerja-kerja ${kerja} stesen ${stesen}.
+3. Kesemua kontraktor mempunyai Work Permit.
+4. ${pas}.
+5. Kesemua kontraktor dipantau oleh staff bertugas ${pemantau}.
 6. Lokasi baik dan dalam kawalan.
 
 ANGGOTA BERTUGAS :
 ${document.getElementById('anggota').value}
 
 *#Teruskan Perkara Baik*`);
-
-};
-
-document.getElementById('sendLaporanRedmike').onclick = ()=>{
-
-hantar(`*LAPORAN UJIAN REDMIKE*
-
-STESEN : ${document.getElementById('stesen').value.toUpperCase()}
-
-CATATAN :
-${document.getElementById('redmikeInput').value}`);
 
 };
 
