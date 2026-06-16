@@ -19,18 +19,14 @@
 
 <body class="min-h-screen relative">
 
-  <!-- Background gradient penuh -->
   <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800"></div>
 
-  <!-- Page content -->
   <div class="relative w-full max-w-4xl mx-auto p-6 space-y-6">
 
-    <!-- Navbar / Banner -->
     <nav class="bg-cover bg-center h-32 w-full rounded-2xl shadow-xl border border-white/30"
          style="background-image: url('DSC_0085_1.jpg');">
     </nav>
 
-    <!-- Header -->
     <div class="text-center space-y-2 text-white">
       <h2 class="text-3xl font-extrabold drop-shadow-md tracking-wide">
         🤣by PPB NAZMI👮🏿‍♂️
@@ -40,16 +36,13 @@
       </p>
     </div>
 
-    <!-- Container frosted dari STESEN hingga Copy & WhatsApp -->
     <div class="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-400 text-gray-900 space-y-4">
 
-      <!-- Pilih / ubah stesen -->
       <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
         <label class="block font-semibold" for="stesenSelect">Stesen hari ini:</label>
         <select id="stesenSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
           <option value="">-- Sila tambah/pilih stesen --</option>
         </select>
-        <!-- Tambah stesen baru -->
         <div class="flex space-x-2 pt-2">
           <input type="text" id="newStesen" placeholder="Tambah stesen baru" 
                  class="flex-grow p-2 h-10 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
@@ -59,13 +52,11 @@
         </div>
       </div>
 
-      <!-- Pilih Anggota Bertugas -->
       <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
         <label class="block font-semibold" for="anggotaSelect">Anggota Bertugas:</label>
         <select id="anggotaSelect" class="w-full p-2 rounded shadow-sm focus:ring-2 focus:ring-blue-400 text-sm">
           <option value="">-- Sila tambah/pilih nama --</option>
         </select>
-        <!-- Tambah anggota baru -->
         <div class="flex space-x-2 pt-2">
           <input type="text" id="newAnggota" placeholder="Tambah nama anggota baru" 
                  class="flex-grow p-2 h-10 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm min-w-0">
@@ -75,14 +66,12 @@
         </div>
       </div>
 
-      <!-- Ruangan Status / Komen untuk Peak Hour -->
       <div class="rounded-2xl shadow-md p-4 bg-white space-y-2">
-        <label class="block font-semibold" for="statusInput">Status / Komen (Untuk Laporan Peak Hour):</label>
-        <textarea id="statusInput" placeholder="Masukkan status semasa stesen (Contoh: Keadaan terkini penumpang ramai tapi terkawal)" 
+        <label class="block font-semibold" for="statusInput">Status / Komen / Catatan Tambahan:</label>
+        <textarea id="statusInput" placeholder="Masukkan status semasa stesen / butiran krisis / nama kontraktor dll." 
                   class="w-full p-2 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400 text-sm h-20 resize-none"></textarea>
       </div>
 
-      <!-- Reset LocalStorage -->
       <button id="resetStorage" 
         class="w-full bg-red-500 hover:bg-red-600 text-white p-2.2 h-10 rounded-lg text-sm font-semibold transition shadow-md">
         Reset Semua Senarai & Komen 🚮
@@ -90,24 +79,35 @@
 
       <hr class="border-gray-400/50 my-4">
 
-      <!-- Butang Hantar Laporan -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Button Laporan Biasa -->
         <button id="sendLaporanBiasa" 
           class="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 32 32">
-            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.82.732 5.537 2.125 7.938l-2.125 8.062 8.25-2.156c2.344 1.285 4.978 1.969 7.75 1.969 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.48 0-4.896-.648-7-1.875l-.5-.281-4.875 1.25 1.25-4.75-.312-.5c-1.193-1.915-1.813-4.11-1.813-6.344 0-6.889 5.611-12.5 12.5-12.5s12.5 5.611 12.5 12.5-5.611 12.5-12.5 12.5zM23.094 19.563c-.379-.188-2.237-1.105-2.582-1.231-.345-.129-.597-.188-.848.188-.253.379-.973 1.231-1.193 1.484-.219.252-.438.283-.817.094-.379-.188-1.603-.59-3.055-1.881-1.13-1.009-1.894-2.252-2.114-2.631-.219-.379-.023-.583.165-.771.168-.168.379-.438.568-.657.188-.219.251-.379.379-.631.126-.252.063-.473-.031-.662-.094-.188-.848-2.055-1.16-2.813-.305-.73-.618-.631-.848-.641-.219-.012-.473-.014-.726-.014s-.662.094-1.009.473c-.345.379-1.323 1.291-1.323 3.148s1.354 3.648 1.541 3.896c.188.252 2.662 4.062 6.447 5.699.902.389 1.604.621 2.152.797.904.288 1.725.247 2.373.149.725-.109 2.237-.914 2.551-1.796.315-.883.315-1.64.221-1.796-.095-.155-.348-.252-.727-.441z"/>
-          </svg>
-          <span>Laporan Biasa</span>
+          <span>Laporan Biasa 📄</span>
         </button>
 
-        <!-- Button Laporan Peak Hour -->
         <button id="sendLaporanPeak" 
           class="flex items-center justify-center space-x-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 32 32">
-            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.82.732 5.537 2.125 7.938l-2.125 8.062 8.25-2.156c2.344 1.285 4.978 1.969 7.75 1.969 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.25c-2.48 0-4.896-.648-7-1.875l-.5-.281-4.875 1.25 1.25-4.75-.312-.5c-1.193-1.915-1.813-4.11-1.813-6.344 0-6.889 5.611-12.5 12.5-12.5s12.5 5.611 12.5 12.5-5.611 12.5-12.5 12.5zM23.094 19.563c-.379-.188-2.237-1.105-2.582-1.231-.345-.129-.597-.188-.848.188-.253.379-.973 1.231-1.193 1.484-.219.252-.438.283-.817.094-.379-.188-1.603-.59-3.055-1.881-1.13-1.009-1.894-2.252-2.114-2.631-.219-.379-.023-.583.165-.771.168-.168.379-.438.568-.657.188-.219.251-.379.379-.631.126-.252.063-.473-.031-.662-.094-.188-.848-2.055-1.16-2.813-.305-.73-.618-.631-.848-.641-.219-.012-.473-.014-.726-.014s-.662.094-1.009.473c-.345.379-1.323 1.291-1.323 3.148s1.354 3.648 1.541 3.896c.188.252 2.662 4.062 6.447 5.699.902.389 1.604.621 2.152.797.904.288 1.725.247 2.373.149.725-.109 2.237-.914 2.551-1.796.315-.883.315-1.64.221-1.796-.095-.155-.348-.252-.727-.441z"/>
-          </svg>
-          <span>Laporan Peak Hour</span>
+          <span>Peak Hour / Krisis ⚠️</span>
+        </button>
+
+        <button id="sendLaporanCucian" 
+          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
+          <span>Kontraktor Cucian 🧼</span>
+        </button>
+
+        <button id="sendLaporanKontraktor" 
+          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-4 rounded-lg font-semibold transition shadow-lg">
+          <span>Kontraktor Am 🛠️</span>
+        </button>
+
+        <button id="sendLaporanTamat" 
+          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white p-4 rounded-lg font-semibold transition shadow-lg">
+          <span>Tamat Operasi 🔒</span>
+        </button>
+
+        <button id="sendLaporanRedmike" 
+          class="flex items-center justify-center space-x-2 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white p-4 rounded-lg font-semibold transition shadow-lg">
+          <span>Redmike 🚨</span>
         </button>
       </div>
 
@@ -226,7 +226,7 @@ function getDateTime() {
     return { tarikh, masa };
 }
 
-// Generate teks Laporan Biasa
+// 1. Generate teks Laporan Biasa
 function generateLaporanBiasa() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
@@ -237,7 +237,7 @@ function generateLaporanBiasa() {
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 
 TARIKH : ${tarikh}
-MASA : ${fancyMasa = masa}
+MASA : ${masa}
 TUGASAN : KAWALAN DAN PEMANTAUAN DI PLATFORM 1,2
 LOKASI : STESEN ${stesenHariIni} (KJL).
 
@@ -251,17 +251,77 @@ ${anggotaHariIni}
 *#TERUSKAN PERKARA BAIK*`;
 }
 
-// Generate teks Laporan Peak Hour
+// 2. Generate teks Laporan Peak Hour / Krisis
 function generateLaporanPeak() {
     const { tarikh, masa } = getDateTime();
     const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
     const statusKomen = statusInput.value.trim() || "Perkhidmatan tren beroperasi dengan lancar dan kawalan penumpang terkawal.";
 
-    return `*Update Terkini :*
-* ${tarikh}
-* Stesen ${stesenHariIni}
-* ${masa}
-Status : *${statusKomen}*`;
+    return `*Update Terkini (Peak Hour/Krisis):*
+* Tarikh : ${tarikh}
+* Stesen : ${stesenHariIni}
+* Masa : ${masa}
+* Status/Komen : *${statusKomen}*`;
+}
+
+// 3. Generate teks Laporan Kontraktor Cucian
+function generateLaporanCucian() {
+    const { tarikh, masa } = getDateTime();
+    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
+    const statusKomen = statusInput.value.trim() || "Kerja-kerja pembersihan sedang dijalankan dengan baik.";
+    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
+
+    return `*Laporan Kerja Kontraktor Cucian*
+* Tarikh : ${tarikh}
+* Masa : ${masa}
+* Lokasi : STESEN ${stesenHariIni}
+* Butiran Kerja : ${statusKomen}
+* Dipantau oleh : ${anggotaHariIni}`;
+}
+
+// 4. Generate teks Laporan Kontraktor Am
+function generateLaporanKontraktor() {
+    const { tarikh, masa } = getDateTime();
+    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
+    const statusKomen = statusInput.value.trim() || "Penyelenggaraan am sedang berjalan.";
+    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
+
+    return `*Laporan Kemasukan Kontraktor*
+* Tarikh : ${tarikh}
+* Masa : ${masa}
+* Lokasi : STESEN ${stesenHariIni}
+* Aktiviti : ${statusKomen}
+* Tindakan/Pemantauan : ${anggotaHariIni}`;
+}
+
+// 5. Generate teks Laporan Tamat Operasi
+function generateLaporanTamat() {
+    const { tarikh, masa } = getDateTime();
+    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
+    const anggotaHariIni = anggotaSelect.value || "(Sila Pilih Anggota)";
+
+    return `*Laporan Tamat Operasi Stesen*
+* Tarikh : ${tarikh}
+* Masa : ${masa}
+* Lokasi : STESEN ${stesenHariIni}
+
+Selesai tugasan tutup stesen. Semua pintu akses telah dikunci rapat dan berada dalam keadaan selamat. Tiada penumpang tertinggal di dalam stesen.
+
+Anggota Bertugas:-
+${anggotaHariIni}`;
+}
+
+// 6. Generate teks Laporan Redmike
+function generateLaporanRedmike() {
+    const { tarikh, masa } = getDateTime();
+    const stesenHariIni = stesenSelect.value || "(Sila Pilih Stesen)";
+    const statusKomen = statusInput.value.trim() || "Ujian sistem 'Redmike' dilakukan dan berfungsi dengan baik.";
+
+    return `*Laporan Ujian Panggilan Redmike*
+* Tarikh : ${tarikh}
+* Masa : ${masa}
+* Lokasi : STESEN ${stesenHariIni}
+* Catatan : *${statusKomen}*`;
 }
 
 // Fungsi hantar / buka link WhatsApp
@@ -281,15 +341,29 @@ function hantarKeWhatsApp(teksLaporan) {
     });
 }
 
-// Event Listeners bagi kedua-dua butang laporan
+// Event Listeners bagi kesemua butang laporan
 document.getElementById('sendLaporanBiasa').addEventListener('click', () => {
-    const text = generateLaporanBiasa();
-    hantarKeWhatsApp(text);
+    hantarKeWhatsApp(generateLaporanBiasa());
 });
 
 document.getElementById('sendLaporanPeak').addEventListener('click', () => {
-    const text = generateLaporanPeak();
-    hantarKeWhatsApp(text);
+    hantarKeWhatsApp(generateLaporanPeak());
+});
+
+document.getElementById('sendLaporanCucian').addEventListener('click', () => {
+    hantarKeWhatsApp(generateLaporanCucian());
+});
+
+document.getElementById('sendLaporanKontraktor').addEventListener('click', () => {
+    hantarKeWhatsApp(generateLaporanKontraktor());
+});
+
+document.getElementById('sendLaporanTamat').addEventListener('click', () => {
+    hantarKeWhatsApp(generateLaporanTamat());
+});
+
+document.getElementById('sendLaporanRedmike').addEventListener('click', () => {
+    hantarKeWhatsApp(generateLaporanRedmike());
 });
 
 </script>
