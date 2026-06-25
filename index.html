@@ -35,10 +35,15 @@
 
   /* Gaya seragam untuk semua input dan select apabila fokus */
   input:focus, select:focus, textarea:focus {
-    --tw-ring-color: #3b82f6; /* Warna biru primer */
+    --tw-ring-color: #3b82f6;
     outline: none;
     ring: 2px;
     border-color: #3b82f6;
+  }
+
+  /* Paksa huruf besar pada paparan input tertentu */
+  .uppercase-input {
+    text-transform: uppercase;
   }
 </style>
 </head>
@@ -54,6 +59,13 @@
     <p class="text-lg font-semibold text-blue-400 mt-1">KJL ZON 3</p>
     <p class="text-xs italic blink-red mt-3 text-gray-400">By Detektif 👨‍✈️ NAZMI 👮🏿‍♂️🤣</p>
   </div>
+
+  <!-- BUTANG KHAS: BORANG REDMIKE -->
+  <button 
+    id="btnRedMikeOpen"
+    class="w-full bg-red-600 text-white p-4 rounded-2xl font-black text-xl hover:bg-red-700 active:bg-red-800 transition-all shadow-2xl flex items-center justify-center gap-3 border border-red-500 tracking-wider">
+    <span>🚨</span> REDMIKE
+  </button>
 
   <!-- Kad Borang Utama (Glassmorphism) -->
   <div class="glass p-6 sm:p-8 rounded-3xl shadow-2xl space-y-6 border border-white/10">
@@ -87,7 +99,7 @@
           type="text" 
           id="anggota" 
           placeholder="Cth: L/Kpl Ali bin Abu" 
-          class="w-full p-3.5 rounded-xl border border-gray-300 shadow-sm transition-all focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          class="w-full p-3.5 rounded-xl border border-gray-300 shadow-sm transition-all focus:ring-2 focus:ring-blue-500 focus:border-blue-500 uppercase-input">
       </div>
     </div>
 
@@ -97,14 +109,27 @@
         <span>📋</span> Jenis Laporan
       </h3>
 
-      <!-- LAPORAN BIASA -->
-      <button 
-        id="sendLaporanBiasa" 
-        class="w-full bg-green-600 text-white p-4 rounded-xl font-bold hover:bg-green-700 active:bg-green-800 transition-colors shadow-lg flex items-center justify-center gap-2 text-lg">
-        <span>✅</span> Laporan Biasa
-      </button>
+      <!-- 1. BAHAGIAN LAPORAN BIASA -->
+      <div class="space-y-3 p-4 rounded-2xl bg-green-50 border border-green-200 shadow-inner">
+        <label class="text-xs font-bold text-green-900 uppercase tracking-wider flex items-center gap-1.5">
+          <span>📋</span> Laporan Harian Biasa
+        </label>
+        <p class="text-xs text-green-700/80 px-1">Menjana laporan rutin kawalan platform 1 & 2 mengikut waktu semasa secara automatik.</p>
+        <div class="flex gap-2">
+          <button 
+            id="sendLaporanBiasa" 
+            class="flex-1 bg-green-600 text-white p-3.5 rounded-xl font-bold hover:bg-green-700 active:bg-green-800 transition-colors shadow-md flex items-center justify-center gap-2 text-base">
+            <span>✅</span> WhatsApp
+          </button>
+          <button 
+            id="copyLaporanBiasa" 
+            class="bg-green-200 text-green-800 px-4 rounded-xl hover:bg-green-300 font-semibold transition-colors shadow-md">
+            📋 Salin
+          </button>
+        </div>
+      </div>
 
-      <!-- BAHAGIAN PEAK HOUR (TEMA AMBER) -->
+      <!-- 2. BAHAGIAN PEAK HOUR (KEDUDUKAN NO 2) -->
       <div class="space-y-3 p-4 rounded-2xl bg-amber-50 border border-amber-200 shadow-inner">
         <label for="komenPeak" class="text-xs font-semibold text-amber-900 px-1 flex items-center gap-1.5">
           <span>⚠️</span> Status Peak Hour / Krisis
@@ -112,15 +137,83 @@
         <textarea 
           id="komenPeak" 
           placeholder="Nyatakan status jika ada kelewatan, gangguan, atau krisis. Jika tiada, biarkan kosong untuk 'BAIK & TERKAWAL'." 
-          class="w-full p-3.5 rounded-xl border border-amber-300 bg-white placeholder-amber-700/50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 h-24 text-sm text-amber-950 transition-all"></textarea>
-        <button 
-          id="sendLaporanPeak" 
-          class="w-full bg-amber-500 text-amber-950 p-3.5 rounded-xl font-bold hover:bg-amber-600 active:bg-amber-700 transition-colors shadow-md flex items-center justify-center gap-2">
-          <span>🕒</span> Hantar Laporan Peak Hour
-        </button>
+          class="w-full p-3.5 rounded-xl border border-amber-300 bg-white placeholder-amber-700/50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 h-24 text-sm text-amber-950 transition-all uppercase-input"></textarea>
+        
+        <div class="flex gap-2">
+          <button 
+            id="sendLaporanPeak" 
+            class="flex-1 bg-amber-500 text-amber-950 p-3.5 rounded-xl font-bold hover:bg-amber-600 active:bg-amber-700 transition-colors shadow-md flex items-center justify-center gap-2">
+            <span>🕒</span> WhatsApp
+          </button>
+          <button 
+            id="copyLaporanPeak" 
+            class="bg-amber-200 text-amber-950 px-4 rounded-xl hover:bg-amber-300 font-semibold transition-colors shadow-md">
+            📋 Salin
+          </button>
+        </div>
       </div>
 
-      <!-- BAHAGIAN TAMAT OPERASI (TEMA INDIGO) -->
+      <!-- 3. BAHAGIAN LAPORAN OKU (KEDUDUKAN NO 3) -->
+      <div class="space-y-3 p-4 rounded-2xl bg-purple-50 border border-purple-200 shadow-inner">
+        <label class="text-xs font-bold text-purple-900 uppercase tracking-wider flex items-center gap-1.5">
+          <span>♿</span> Laporan Bantuan OKU
+        </label>
+        
+        <div class="grid grid-cols-1 gap-3">
+          <div class="space-y-1">
+            <label for="stesenTujuan" class="text-[11px] font-semibold text-purple-700 px-1">Stesen Tujuan (Tulis Bebas)</label>
+            <input 
+              type="text" 
+              id="stesenTujuan" 
+              placeholder="Cth: KL SENTRAL / MASJID JAMEK" 
+              class="w-full p-3 rounded-xl border border-purple-300 bg-white text-sm text-gray-800 focus:ring-1 focus:ring-purple-400 shadow-sm uppercase-input">
+          </div>
+
+          <div class="grid grid-cols-3 gap-2">
+            <div class="space-y-1">
+              <label for="platform" class="text-[11px] font-semibold text-purple-700 px-1">Platform</label>
+              <select id="platform" class="w-full p-3 rounded-xl border border-purple-300 bg-white text-sm text-gray-800 focus:ring-1 focus:ring-purple-400 shadow-sm">
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </select>
+            </div>
+            
+            <div class="space-y-1">
+              <label for="trenId" class="text-[11px] font-semibold text-purple-700 px-1">Tren ID</label>
+              <input 
+                type="number" 
+                id="trenId" 
+                placeholder="Cth: 45" 
+                class="w-full p-3 rounded-xl border border-purple-300 bg-white text-sm text-gray-800 focus:ring-1 focus:ring-purple-400 shadow-sm">
+            </div>
+
+            <div class="space-y-1">
+              <label for="pintu" class="text-[11px] font-semibold text-purple-700 px-1">Pintu (1-12)</label>
+              <input 
+                type="number" 
+                id="pintu" 
+                min="1" max="12"
+                placeholder="1-12" 
+                class="w-full p-3 rounded-xl border border-purple-300 bg-white text-sm text-gray-800 focus:ring-1 focus:ring-purple-400 shadow-sm">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-2">
+          <button 
+            id="sendLaporanOKU" 
+            class="flex-1 bg-purple-600 text-white p-3.5 rounded-xl font-bold hover:bg-purple-700 active:bg-purple-800 transition-colors shadow-md flex items-center justify-center gap-2">
+            <span>♿</span> WhatsApp
+          </button>
+          <button 
+            id="copyLaporanOKU" 
+            class="bg-purple-200 text-purple-700 px-4 rounded-xl hover:bg-purple-300 font-semibold transition-colors shadow-md">
+            📋 Salin
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. BAHAGIAN TAMAT OPERASI -->
       <div class="space-y-3 p-4 rounded-2xl bg-indigo-50 border border-indigo-200 shadow-inner">
         <label for="laporanTambahanTamat" class="text-xs font-semibold text-indigo-900 px-1 flex items-center gap-1.5">
           <span>🏁</span> Tamat Operasi (Pilihan)
@@ -129,19 +222,27 @@
           type="text" 
           id="laporanTambahanTamat" 
           placeholder="Laporan tambahan jika ada (cth: lampu platform 1 mati)" 
-          class="w-full p-3.5 rounded-xl border border-indigo-300 bg-white placeholder-indigo-700/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm text-indigo-950 transition-all">
-        <button 
-          id="sendLaporanTamat" 
-          class="w-full bg-indigo-600 text-white p-3.5 rounded-xl font-bold hover:bg-indigo-700 active:bg-indigo-800 transition-colors shadow-md flex items-center justify-center gap-2">
-          <span>🔒</span> Hantar Tamat Operasi
-        </button>
+          class="w-full p-3.5 rounded-xl border border-indigo-300 bg-white placeholder-indigo-700/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm text-indigo-950 transition-all uppercase-input">
+        
+        <div class="flex gap-2">
+          <button 
+            id="sendLaporanTamat" 
+            class="flex-1 bg-indigo-600 text-white p-3.5 rounded-xl font-bold hover:bg-indigo-700 active:bg-indigo-800 transition-colors shadow-md flex items-center justify-center gap-2">
+            <span>🔒</span> WhatsApp
+          </button>
+          <button 
+            id="copyLaporanTamat" 
+            class="bg-indigo-200 text-indigo-700 px-4 rounded-xl hover:bg-indigo-300 font-semibold transition-colors shadow-md">
+            📋 Salin
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- Komponen 3: Kontraktor -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-gray-200">
       
-      <!-- KONTRAKTOR CUCIAN (TEMA BLUE) -->
+      <!-- KONTRAKTOR CUCIAN -->
       <div class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100 space-y-3 shadow-sm">
         <p class="text-xs font-bold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
           <span>🧹</span> Kontraktor Cucian
@@ -151,7 +252,7 @@
             type="text" 
             id="syarikatCucian" 
             placeholder="Nama Syarikat" 
-            class="p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-blue-400">
+            class="p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-blue-400 uppercase-input">
           <input 
             type="number" 
             id="jumlahCucian" 
@@ -165,7 +266,7 @@
         </button>
       </div>
 
-      <!-- KONTRAKTOR AM (TEMA ORANGE) -->
+      <!-- KONTRAKTOR AM -->
       <div class="bg-orange-50/50 p-5 rounded-2xl border border-orange-100 space-y-3 shadow-sm">
         <p class="text-xs font-bold text-orange-900 uppercase tracking-wider flex items-center gap-1.5">
           <span>🛠️</span> Kontraktor Am
@@ -180,13 +281,13 @@
             type="text" 
             id="syarikatKontraktor" 
             placeholder="Syarikat" 
-            class="p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-orange-400">
+            class="p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-orange-400 uppercase-input">
         </div>
         <input 
           type="text" 
           id="kerjaKontraktor" 
           placeholder="Jenis Kerja (cth: baik pulih lampu)" 
-          class="w-full p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-orange-400">
+          class="w-full p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-orange-400 uppercase-input">
         <select id="jenisPas" class="w-full p-3 rounded-lg border border-gray-300 bg-white text-sm text-gray-800 focus:ring-1 focus:ring-orange-400">
           <option value="Mempunyai Pas Kontraktor">Mempunyai Pas Kontraktor</option>
           <option value="Diberikan pas kontraktor sementara sehingga kerja-kerja baik pulih siap sepenuhnya">Diberikan Pas Kontraktor Sementara</option>
@@ -195,7 +296,7 @@
           type="text" 
           id="stafPemantau" 
           placeholder="Nama Staf Pemantau" 
-          class="w-full p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-orange-400">
+          class="w-full p-3 rounded-lg border border-gray-300 text-sm focus:ring-1 focus:ring-orange-400 uppercase-input">
         <button 
           id="sendLaporanKontraktor" 
           class="w-full bg-orange-600 text-white p-3 rounded-xl font-semibold hover:bg-orange-700 active:bg-orange-800 transition-colors shadow flex items-center justify-center gap-1.5 text-sm">
@@ -220,47 +321,246 @@
 
   <!-- Footer Kecil -->
   <div class="text-center text-gray-500 text-xs pb-6">
-    Sistem Laporan Pantas v2.1 | Dibina untuk Jabatan Sekuriti Aliran Kelana Jaya
+    Sistem Laporan Pantas v2.5 | Dibina untuk Jabatan Sekuriti Aliran Kelana Jaya
   </div>
 
 </div>
 
-<script>
-// --- LOGIK JAVASCRIPT (Kekal Sama Seperti Asal) ---
+<!-- ======================================================== -->
+<!-- FLOATING WINDOW MODAL FOR REDMIKE                        -->
+<!-- ======================================================== -->
+<div id="modalRedMike" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-red-500">
+    <!-- Modal Header -->
+    <div class="bg-red-700 text-white p-4 font-black tracking-wide text-lg flex justify-between items-center shrink-0">
+      <div class="flex items-center gap-2"><span>🚨</span> BORANG REDMIKE</div>
+      <button id="btnRedMikeClose" class="bg-red-900/50 hover:bg-red-900/80 transition-colors text-white text-sm px-3 py-1.5 rounded-xl font-bold">X TUTUP</button>
+    </div>
+    
+    <!-- Modal Body (Scrollable Form) -->
+    <div class="p-6 overflow-y-auto space-y-6 text-gray-800 bg-gray-50 text-sm">
+      
+      <!-- Tajuk Kes & Asas -->
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-red-700 mb-1">TAJUK KEJADIAN / KES (AUTO HURUF BESAR)</label>
+          <input type="text" id="rm_tajuk" placeholder="Cth: KEJADIAN RED MIKE / KEJADIAN RED TANGO" class="w-full p-2.5 border rounded-lg uppercase-input font-bold bg-red-50">
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-gray-600 mb-1">TARIKH</label>
+            <input type="text" id="rm_tarikh" placeholder="Cth: 19/06/2026" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-600 mb-1">MASA (HRS)</label>
+            <input type="text" id="rm_masa" placeholder="Cth: 1353HRS" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+        </div>
+      </div>
 
+      <!-- Anggota Bertugas Pecahan -->
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-4">
+        <h4 class="font-bold text-red-700 border-b pb-1 text-xs uppercase tracking-wider">👮‍♂️ Maklumat Anggota & Petugas Bertugas</h4>
+        
+        <!-- PENYELIA BERTUGAS -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-gray-700">PENYELIA BERTUGAS (MAKSIMUM 4)</label>
+          <input type="text" id="rm_penyelia1" placeholder="Penyelia 1 [ID dan Nama]" class="w-full p-2 border rounded-lg text-xs uppercase-input">
+          <input type="text" id="rm_penyelia2" placeholder="Penyelia 2 [ID dan Nama] (Opsional)" class="w-full p-2 border rounded-lg text-xs uppercase-input">
+          <input type="text" id="rm_penyelia3" placeholder="Penyelia 3 [ID dan Nama] (Opsional)" class="w-full p-2 border rounded-lg text-xs uppercase-input">
+          <input type="text" id="rm_penyelia4" placeholder="Penyelia 4 [ID dan Nama] (Opsional)" class="w-full p-2 border rounded-lg text-xs uppercase-input">
+        </div>
+
+        <!-- SCC BERTUGAS -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-gray-700">SCC BERTUGAS (MAKSIMUM 3)</label>
+          <input type="text" id="rm_scc1" placeholder="SCC Bertugas 1 [ID dan Nama]" class="w-full p-2 border rounded-lg text-xs uppercase-input">
+          <input type="text" id="rm_scc2" placeholder="SCC Bertugas 2 [ID dan Nama] (Opsional)" class="w-full p-2 border rounded-lg text-xs uppercase-input">
+          <input type="text" id="rm_scc3" placeholder="SCC Bertugas 3 [ID dan Nama] (Opsional)" class="w-full p-2 border rounded-lg text-xs uppercase-input">
+        </div>
+
+        <!-- ANGGOTA STESEN BERTUGAS -->
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">ANGGOTA STESEN BERTUGAS (Boleh enter isi banyak)</label>
+          <textarea id="rm_anggotaStesen" placeholder="Cth:&#10;10010524 LKPL PB MAJANIL BIN MIKAIL&#10;10019166 KONT PB MUHAMMAD AZHARI" class="w-full p-2.5 border rounded-lg h-24 text-xs uppercase-input"></textarea>
+        </div>
+
+        <!-- HOSLER/CSA BERTUGAS -->
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">HOSLER / CSA BERTUGAS</label>
+          <input type="text" id="rm_csa1" placeholder="CSA Bertugas [ID dan Nama]" class="w-full p-2.5 border rounded-lg text-xs uppercase-input">
+        </div>
+      </div>
+
+      <!-- Butir Butir Mangsa -->
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <h4 class="font-bold text-red-700 border-b pb-1 text-xs uppercase tracking-wider">👤 Butir-butir Mangsa</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-gray-500 mb-1">NAMA MANGSA</label>
+            <input type="text" id="rm_nama" placeholder="Cth: MOHD SHAHEDAN BIN JAAFAR" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">NO. IC</label>
+            <input type="text" id="rm_ic" placeholder="Cth: 820829-14-5265" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">UMUR</label>
+            <input type="text" id="rm_umur" placeholder="Cth: 44 TAHUN" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">JANTINA</label>
+            <input type="text" id="rm_jantina" placeholder="Cth: LELAKI" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">WARGANEGARA</label>
+            <input type="text" id="rm_warganegara" placeholder="Cth: MALAYSIA" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">BANGSA</label>
+            <input type="text" id="rm_bangsa" placeholder="Cth: MELAYU" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">NO. TEL</label>
+            <input type="text" id="rm_tel" placeholder="Cth: 011-39060157" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-gray-500 mb-1">PEKERJAAN</label>
+            <input type="text" id="rm_pekerjaan" placeholder="Cth: CUSTOMER SERVICE (STARTEK) ARA DAMANSARA" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-gray-500 mb-1">ALAMAT</label>
+            <textarea id="rm_alamat" placeholder="Alamat penuh rumah mangsa" class="w-full p-2.5 border rounded-lg h-16 text-xs uppercase-input"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kecederaan & Sebab Kejadian -->
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-1">KECEDERAAN</label>
+          <input type="text" id="rm_kecederaan" placeholder="Cth: TIADA" class="w-full p-2.5 border rounded-lg uppercase-input">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-1">SEBAB KEJADIAN</label>
+          <input type="text" id="rm_sebab" placeholder="Cth: SESAK NAFAS" class="w-full p-2.5 border rounded-lg uppercase-input">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-1">RED STATE (MASA)</label>
+          <input type="text" id="rm_redState" placeholder="Cth: 13:53 HRS" class="w-full p-2.5 border rounded-lg uppercase-input">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-1">GREEN STATE (MASA)</label>
+          <input type="text" id="rm_greenState" placeholder="Cth: 14:51 HRS" class="w-full p-2.5 border rounded-lg uppercase-input">
+        </div>
+      </div>
+
+      <!-- Perubatan & Ambulans -->
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <h4 class="font-bold text-red-700 border-b pb-1 text-xs uppercase tracking-wider">🚑 Butiran Perubatan & Ambulan</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">NAMA PEGAWAI PERUBATAN</label>
+            <input type="text" id="rm_namaMedik" placeholder="Cth: ALRENCE EIPAS ANAK REDING" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">NO ID PEGAWAI</label>
+            <input type="text" id="rm_idMedik" placeholder="Cth: LPP 28224" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">NO PLAT AMBULAN</label>
+            <input type="text" id="rm_noPlat" placeholder="Cth: BNL 7046" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">HOSPITAL RUJUKAN</label>
+            <input type="text" id="rm_hospital" placeholder="Cth: HOSPITAL KUALA LUMPUR" class="w-full p-2.5 border rounded-lg uppercase-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- Kronologi & Tindakan (UBAH IKUT STRUKTUR ASAL) -->
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <h4 class="font-bold text-red-700 border-b pb-1 text-xs uppercase tracking-wider">📝 Kronologi & Tindakan</h4>
+        <div>
+          <label class="block text-xs font-bold text-gray-500 mb-1">KRONOLOGI RINGKASAN KEJADIAN</label>
+          <textarea id="rm_kronologi" placeholder="PADA JAM LEBIH KURANG 1350 HRS SAYA..." class="w-full p-2.5 border rounded-lg h-36 text-xs uppercase-input"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-red-700 mb-1">TINDAKAN TAMBAHAN (Jika Ada)</label>
+          <p class="text-[11px] text-gray-500 mb-1">Nota: No 1, 2, dan 3 adalah automatik. Sebarang teks yang ditulis di sini akan bermula daripada <b>No. 4</b>.</p>
+          <textarea id="rm_tindakan" placeholder="Taip tindakan tambahan di sini (jika ada)..." class="w-full p-2.5 border rounded-lg h-24 text-xs uppercase-input"></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Modal Footer Fixed Button -->
+    <div class="bg-gray-100 p-4 border-t flex gap-2 shrink-0">
+      <button 
+        id="sendRedMike" 
+        class="flex-1 bg-red-600 text-white p-3 rounded-xl font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 shadow-md">
+        <span>🚨</span> WhatsApp
+      </button>
+      <button 
+        id="copyRedMike" 
+        class="bg-gray-200 text-gray-700 px-5 rounded-xl font-bold hover:bg-gray-300 transition-colors shadow-md">
+        📋 Salin
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- LOGIK JAVASCRIPT ---
+
+const kodStesen = {
+  "ABDULLAH HUKUM": "ABH",
+  "KERINCHI": "KER",
+  "UNIVERSITI": "UNI",
+  "TAMAN JAYA": "TJA",
+  "ASIA JAYA": "ASJ",
+  "TAMAN PARAMOUNT": "TPR",
+  "TAMAN BAHAGIA": "TBH",
+  "KELANA JAYA": "KLJ"
+};
+
+// ID input untuk auto-save ke LocalStorage
 const fields = [
-  'stesen',
-  'anggota',
-  'komenPeak',
-  'laporanTambahanTamat',
-  'syarikatCucian',
-  'jumlahCucian',
-  'jumlahKontraktor',
-  'syarikatKontraktor',
-  'kerjaKontraktor',
-  'jenisPas',
-  'stafPemantau'
+  'stesen', 'anggota', 'komenPeak', 'laporanTambahanTamat',
+  'syarikatCucian', 'jumlahCucian', 'jumlahKontraktor',
+  'syarikatKontraktor', 'kerjaKontraktor', 'jenisPas', 'stafPemantau',
+  'stesenTujuan', 'platform', 'trenId', 'pintu',
+  /* Red Mike Inputs */
+  'rm_tajuk', 'rm_tarikh', 'rm_masa', 
+  'rm_penyelia1', 'rm_penyelia2', 'rm_penyelia3', 'rm_penyelia4',
+  'rm_scc1', 'rm_scc2', 'rm_scc3',
+  'rm_anggotaStesen', 'rm_csa1', 'rm_nama', 'rm_ic', 'rm_umur',
+  'rm_jantina', 'rm_warganegara', 'rm_bangsa', 'rm_tel', 'rm_pekerjaan',
+  'rm_alamat', 'rm_kecederaan', 'rm_sebab', 'rm_redState', 'rm_greenState',
+  'rm_namaMedik', 'rm_idMedik', 'rm_noPlat', 'rm_hospital', 'rm_kronologi', 'rm_tindakan'
 ];
 
-// Load data dari localStorage semasa halaman dimuatkan
 fields.forEach(id=>{
   const element = document.getElementById(id);
   if (element) {
-    element.value = localStorage.getItem(id) || (id === 'jenisPas' ? 'Mempunyai Pas Kontraktor' : '');
+    element.value = localStorage.getItem(id) || (id === 'jenisPas' ? 'Mempunyai Pas Kontraktor' : (id === 'platform' ? '1' : ''));
   }
 });
 
-// Simpan data ke localStorage setiap kali input berubah
 fields.forEach(id=>{
   const element = document.getElementById(id);
   if (element) {
-    const saveToStorage = e => localStorage.setItem(id, e.target.value);
+    const saveToStorage = e => {
+      if(element.classList.contains('uppercase-input')) {
+        element.value = element.value.toUpperCase();
+      }
+      localStorage.setItem(id, element.value);
+    };
     element.addEventListener('change', saveToStorage);
     element.addEventListener('input', saveToStorage);
   }
 });
 
-// Fungsi pembantu untuk Tarikh dan Masa
 function getTarikh(){
   return new Date().toLocaleDateString('ms-MY', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
@@ -270,18 +570,177 @@ function getMasa(){
   return now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', hour12:false }).replace(':','') + 'HRS';
 }
 
-// Fungsi untuk membuka WhatsApp
 function hantar(teks){
   window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(teks), "_blank");
 }
 
-// --- LOGIK BUTANG HANTAR ---
+function salinTeks(teks) {
+  navigator.clipboard.writeText(teks).then(() => {
+    alert("Teks laporan berjaya disalin!");
+  }).catch(() => {
+    alert("Gagal menyalin teks. Sila cuba lagi.");
+  });
+}
 
-document.getElementById('sendLaporanBiasa').onclick = ()=>{
+// --- PENGURUSAN FLOATING MODAL WINDOW (REDMIKE) ---
+const modal = document.getElementById('modalRedMike');
+document.getElementById('btnRedMikeOpen').onclick = () => {
+  modal.classList.remove('hidden');
+  if(!document.getElementById('rm_tarikh').value) {
+    document.getElementById('rm_tarikh').value = getTarikh();
+  }
+  if(!document.getElementById('rm_tajuk').value) {
+    document.getElementById('rm_tajuk').value = "KEJADIAN REDMIKE";
+  }
+};
+document.getElementById('btnRedMikeClose').onclick = () => modal.classList.add('hidden');
+
+// --- STRUKTUR FORMAT TEXT UNTUK REDMIKE ---
+function binaLaporanRedMike() {
+  const stesenHariIni = document.getElementById('stesen').value.toUpperCase() || "................";
+
+  let listPenyelia = "";
+  for(let i=1; i<=4; i++) {
+    const val = document.getElementById(`rm_penyelia${i}`).value.trim();
+    if(val) listPenyelia += `- ${val.toUpperCase()}\n`;
+  }
+  if(!listPenyelia) listPenyelia = "-\n";
+
+  let listScc = "";
+  for(let i=1; i<=3; i++) {
+    const val = document.getElementById(`rm_scc${i}`).value.trim();
+    if(val) listScc += `- ${val.toUpperCase()}\n`;
+  }
+  if(!listScc) listScc = "-\n";
+
+  const csaVal = document.getElementById('rm_csa1').value.trim() ? `- ${document.getElementById('rm_csa1').value.toUpperCase()}` : "-";
+
+  let anggotaRaw = document.getElementById('rm_anggotaStesen').value.trim();
+  let listAnggota = "";
+  
+  if (anggotaRaw) {
+    listAnggota = anggotaRaw.split('\n').map(line => {
+      let trimmed = line.trim();
+      if (!trimmed) return "";
+      if (!trimmed.startsWith('-')) {
+        return `- ${trimmed.toUpperCase()}`;
+      }
+      return trimmed.toUpperCase();
+    }).filter(line => line !== "").join('\n') + '\n';
+  } else {
+    listAnggota = "-\n";
+  }
+
+  // --- LOGIK STRUKTUR 3 TINDAKAN ASAL + AUTO NO 4 ---
+  let tindakanAsal = `1. MAKLUMAN AWAL KEJADIAN TELAH DIMAJUKAN KEPADA SCC BERTUGAS UNTUK TINDAKAN SELANJUTNYA.\n2. ANGGOTA DAN CSA BERTUGAS TELAH MEMBERI BANTUAN AWAL KEPADA MANGSA DI LOKASI KEJADIAN.\n3. MEMBANTU PIHAK PEGAWAI PERUBATAN MEMBAWA MANGSA KE AMBULANS UNTUK DIHANTAR KE HOSPITAL JALANAN.`;
+  
+  let tindakanTambahanRaw = document.getElementById('rm_tindakan').value.trim();
+  let tindakanFinal = tindakanAsal;
+
+  if (tindakanTambahanRaw) {
+    let barisTambahan = tindakanTambahanRaw.split('\n');
+    let noMula = 4;
+    
+    barisTambahan.forEach(line => {
+      let trimmedLine = line.trim();
+      if(trimmedLine) {
+        // Buang nombor depan lama jika user tertulis (cth: "1. buat kerja" jadi "buat kerja")
+        let cleanLine = trimmedLine.replace(/^\d+[\s\.\-\)]+/, '');
+        tindakanFinal += `\n${noMula}. ${cleanLine.toUpperCase()}`;
+        noMula++;
+      }
+    });
+  }
+
+  return `🚩🚩🚩
+ 
+*SALAM SEJAHTERA YDH TUAN/PUAN,*
+ 
+*${document.getElementById('rm_tajuk').value.toUpperCase()} STESEN ${stesenHariIni} (KJL)*
+ 
+*TARIKH :* - ${document.getElementById('rm_tarikh').value.toUpperCase()}
+ 
+*MASA :* - ${document.getElementById('rm_masa').value.toUpperCase()}
+ 
+*STESEN :* - ${stesenHariIni} (KJL)
+ 
+*PENYELIA BERTUGAS :*
+${listPenyelia}
+*SCC BERTUGAS :*
+${listScc}
+*ANGGOTA STESEN BERTUGAS :*
+${listAnggota}    
+*HOSLER/CSA BERTUGAS :* ${csaVal}
+ 
+*BUTIR BUTIR MANGSA :*
+ 
+- *NAMA* : ${document.getElementById('rm_nama').value.toUpperCase()}
+- *NO. IC* : ${document.getElementById('rm_ic').value.toUpperCase()} 
+- *UMUR* : ${document.getElementById('rm_umur').value.toUpperCase()}
+- *JANTINA* : ${document.getElementById('rm_jantina').value.toUpperCase()} 
+- *WARGANEGARA* - ${document.getElementById('rm_warganegara').value.toUpperCase()} 
+- *BANGSA*: ${document.getElementById('rm_bangsa').value.toUpperCase()}
+- *NO. TEL*: ${document.getElementById('rm_tel').value.toUpperCase()}
+- *PEKERJAAN* : ${document.getElementById('rm_pekerjaan').value.toUpperCase()}
+- *ALAMAT* : ${document.getElementById('rm_alamat').value.toUpperCase()} 
+ 
+*KECEDERAAN :*
+- ${document.getElementById('rm_kecederaan').value.toUpperCase()}
+ 
+*SEBAB KEJADIAN :*
+- ${document.getElementById('rm_sebab').value.toUpperCase()}
+ 
+*RED STATE :*
+- ${document.getElementById('rm_redState').value.toUpperCase()}
+ 
+*GREEN STATE :*
+- ${document.getElementById('rm_greenState').value.toUpperCase()}
+ 
+*BUTIRAN PEGAWAI PERUBATAN :*
+- NAMA : ${document.getElementById('rm_namaMedik').value.toUpperCase()}
+- NO ID : ${document.getElementById('rm_idMedik').value.toUpperCase()}
+ 
+*BUTIRAN AMBULAN :*
+- NO PLAT : ${document.getElementById('rm_noPlat').value.toUpperCase()}
+- HOSPITAL : ${document.getElementById('rm_hospital').value.toUpperCase()}
+ 
+*KRONOLOGI RINGKASAN KEJADIAN :*
+- ${document.getElementById('rm_kronologi').value.toUpperCase()}
+ 
+*TINDAKAN :*
+${tindakanFinal}
+ 
+SEKIAN LAPORAN UNTUK MAKLUMAN PIHAK TUAN/PUAN
+ 
+TERIMA KASIH`;
+}
+
+// Action Button REDMIKE
+document.getElementById('sendRedMike').onclick = () => { const t = binaLaporanRedMike(); hantar(t); };
+document.getElementById('copyRedMike').onclick = () => { const t = binaLaporanRedMike(); salinTeks(t); };
+
+// --- STRUKTUR TEKS LAPORAN LAIN ---
+function binaLaporanOKU() {
+  const stesenAsalAsal = document.getElementById('stesen').value;
+  const stesenTujuanAsal = document.getElementById('stesenTujuan').value.toUpperCase();
+  const platform = document.getElementById('platform').value;
+  const trenId = document.getElementById('trenId').value;
+  const pintu = document.getElementById('pintu').value;
+
+  if(!stesenAsalAsal) { alert('Sila pilih Stesen Hari Ini.'); return null; }
+  if(!stesenTujuanAsal) { alert('Sila taip Stesen Tujuan.'); return null; }
+  if(!trenId) { alert('Sila isi Tren ID.'); return null; }
+  if(!pintu || pintu < 1 || pintu > 12) { alert('Sila isi nombor pintu yang betul (1-12).'); return null; }
+
+  const kodAsal = kodStesen[stesenAsalAsal] || stesenAsalAsal;
+  
+  // Format baru menggunakan simbol ◇ dan teks "Id" & "Door" mengikut contoh anda
+  return `*◇ OKU - ${kodAsal.toUpperCase()} > ${stesenTujuanAsal}*\n*◇ Platform - ${platform}*\n*◇ Tren Id  ${trenId} - Door ${pintu}*`;
+}
+function binaLaporanBiasa() {
   const stesen = document.getElementById('stesen').value.toUpperCase();
-  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return; }
-
-  hantar(`*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
+  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return null; }
+  return `*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
 
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 
@@ -295,35 +754,30 @@ LOKASI : STESEN LRT ${stesen} (KJL)
 3. Perkhidmatan tren beroperasi seperti biasa.
 
 ANGGOTA BERTUGAS :
-${document.getElementById('anggota').value}
+${document.getElementById('anggota').value.toUpperCase()}
 
-*#TERUSKAN PERKARA BAIK*`);
-};
+*#TERUSKAN PERKARA BAIK*`;
+}
 
-document.getElementById('sendLaporanPeak').onclick = ()=>{
+function binaLaporanPeak() {
   const stesen = document.getElementById('stesen').value.toUpperCase();
-  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return; }
-
-  hantar(`*Update Terkini :*
+  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return null; }
+  return `*Update Terkini :*
 
 - Tarikh : ${getTarikh()}
 - Stesen : ${stesen}
 - Masa : ${getMasa()}
 
-Status : *${document.getElementById('komenPeak').value || 'BAIK & TERKAWAL'}*`);
-};
+Status : *${document.getElementById('komenPeak').value.toUpperCase() || 'BAIK & TERKAWAL'}*`;
+}
 
-document.getElementById('sendLaporanTamat').onclick = ()=>{
+function binaLaporanTamat() {
   const stesen = document.getElementById('stesen').value.toUpperCase();
-  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return; }
-  const tambahan = document.getElementById('laporanTambahanTamat').value;
+  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return null; }
+  const tambahan = document.getElementById('laporanTambahanTamat').value.toUpperCase();
+  let barisTambahan = tambahan.trim() !== '' ? `\n4. ${tambahan}` : '';
 
-  let barisTambahan = '';
-  if(tambahan.trim() !== '') {
-    barisTambahan = `\n4. ${tambahan}`;
-  }
-
-  hantar(`*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
+  return `*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
 
 Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
 
@@ -337,77 +791,39 @@ LOKASI : STESEN LRT ${stesen} (KJL)
 3. ⁠SELESAI RONDAAN LOKASI BAIK,SERTA TIADA KELIBAT PENUMPANG DIDALAM STESEN DAN KEADAAN TERKAWAL.${barisTambahan}
 
 ANGGOTA BERTUGAS :
-${document.getElementById('anggota').value}
+${document.getElementById('anggota').value.toUpperCase()}
 
-*#TERUSKAN PERKARA BAIK*`);
-};
+*#TERUSKAN PERKARA BAIK*`;
+}
+
+// --- ACTIONS BUTTON UTAMA ---
+document.getElementById('sendLaporanBiasa').onclick = () => { const t = binaLaporanBiasa(); if(t) hantar(t); };
+document.getElementById('copyLaporanBiasa').onclick = () => { const t = binaLaporanBiasa(); if(t) salinTeks(t); };
+document.getElementById('sendLaporanOKU').onclick = () => { const t = binaLaporanOKU(); if(t) hantar(t); };
+document.getElementById('copyLaporanOKU').onclick = () => { const t = binaLaporanOKU(); if(t) salinTeks(t); };
+document.getElementById('sendLaporanPeak').onclick = () => { const t = binaLaporanPeak(); if(t) hantar(t); };
+document.getElementById('copyLaporanPeak').onclick = () => { const t = binaLaporanPeak(); if(t) salinTeks(t); };
+document.getElementById('sendLaporanTamat').onclick = () => { const t = binaLaporanTamat(); if(t) hantar(t); };
+document.getElementById('copyLaporanTamat').onclick = () => { const t = binaLaporanTamat(); if(t) salinTeks(t); };
 
 document.getElementById('sendLaporanCucian').onclick = ()=>{
-  const stesen = document.getElementById('stesen').value.toUpperCase();
-  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return; }
-
-  hantar(`*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*
-
-Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
-
-TARIKH : ${getTarikh()}
-MASA : ${getMasa()}
-TUGASAN : PERIKSA KEMASUKAN KONTRAKTOR
-LOKASI : STESEN LRT ${stesen} (KJL)
-
-1. Kehadiran ${document.getElementById('jumlahCucian').value} kontraktor pembersihan syarikat ${document.getElementById('syarikatCucian').value} tujuan kerja-kerja cucian stesen.
-2. Semakan Pas Kontraktor serta Work Permit masih dalam tempoh sah laku.
-3. Tiada sebarang penyamaran / perkara mencurigakan, sekian.
-
-ANGGOTA BERTUGAS :
-${document.getElementById('anggota').value}
-
-*#Teruskan Perkara Baik*`);
+  const stesen = document.getElementById('stesen').value.toUpperCase(); if(!stesen) { alert('Sila pilih Stesen.'); return; }
+  hantar(`*Assalamualaikum wbt & Salam Sejahtera YDH Tuan,*\n\nLaporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.\n\nTARIKH : ${getTarikh()}\nMASA : ${getMasa()}\nTUGASAN : PERIKSA KEMASUKAN KONTRAKTOR\nLOKASI : STESEN LRT ${stesen} (KJL)\n\n1. Kehadiran ${document.getElementById('jumlahCucian').value} kontraktor pembersihan syarikat ${document.getElementById('syarikatCucian').value.toUpperCase()} tujuan kerja-kerja cucian stesen.\n2. Semakan Pas Kontraktor serta Work Permit masih dalam tempoh sah laku.\n3. Tiada sebarang penyamaran / perkara mencurigakan, sekian.\n\nANGGOTA BERTUGAS :\n${document.getElementById('anggota').value.toUpperCase()}\n\n*#Teruskan Perkara Baik*`);
 };
 
 document.getElementById('sendLaporanKontraktor').onclick = ()=>{
-  const stesen = document.getElementById('stesen').value.toUpperCase();
-  if(!stesen) { alert('Sila pilih Stesen terlebih dahulu.'); return; }
-  const jumlah = document.getElementById('jumlahKontraktor').value;
-  const syarikat = document.getElementById('syarikatKontraktor').value.toUpperCase();
-  const kerja = document.getElementById('kerjaKontraktor').value;
-  const pas = document.getElementById('jenisPas').value;
-  const pemantau = document.getElementById('stafPemantau').value.toUpperCase();
-
-  hantar(`*Assalamualaikum wbt & Salam Sejahtera Tuan/Puan,*
-
-Laporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.
-
-TARIKH : ${getTarikh()}
-MASA : ${getMasa()}
-TUGASAN : PEMERIKSAAN KEMASUKAN KONTRAKTOR
-LOKASI : STESEN LRT ${stesen} (KJL)
-
-1. Lapor kemasukan ${jumlah} kontraktor ${syarikat}.
-2. Masuk membuat kerja-kerja ${kerja} stesen ${stesen}.
-3. Kesemua kontraktor mempunyai Work Permit.
-4. ${pas}.
-5. Kesemua kontraktor dipantau oleh staff bertugas ${pemantau}.
-6. Lokasi baik dan dalam kawalan.
-
-ANGGOTA BERTUGAS :
-${document.getElementById('anggota').value}
-
-*#Teruskan Perkara Baik*`);
+  const stesen = document.getElementById('stesen').value.toUpperCase(); if(!stesen) { alert('Sila pilih Stesen.'); return; }
+  hantar(`*Assalamualaikum wbt & Salam Sejahtera Tuan/Puan,*\n\nLaporan penugasan anggota bertugas Aliran Kelana Jaya Jabatan Sekuriti.\n\nTARIKH : ${getTarikh()}\nMASA : ${getMasa()}\nTUGASAN : PEMERIKSAAN KEMASUKAN KONTRAKTOR\nLOKASI : STESEN LRT ${stesen} (KJL)\n\n1. Lapor kemasukan ${document.getElementById('jumlahKontraktor').value} kontraktor ${document.getElementById('syarikatKontraktor').value.toUpperCase()}.\n2. Masuk membuat kerja-kerja ${document.getElementById('kerjaKontraktor').value.toUpperCase()} stesen ${stesen}.\n3. Kesemua kontraktor mempunyai Work Permit.\n4. ${document.getElementById('jenisPas').value.toUpperCase()}.\n5. Kesemua kontraktor dipantau oleh staff bertugas ${document.getElementById('stafPemantau').value.toUpperCase()}.\n6. Lokasi baik dan dalam kawalan.\n\nANGGOTA BERTUGAS :\n${document.getElementById('anggota').value.toUpperCase()}\n\n*#Teruskan Perkara Baik*`);
 };
 
-// --- LOGIK BUTANG RESET ---
-
+// --- RESET ---
 document.getElementById('resetStorage').onclick = ()=>{
-  // Menggunakan confirm yang lebih mesra pengguna (walaupun standard pelayar)
-  if(confirm('⚠️ PERINGATAN: Adakah anda pasti untuk memadam SEMUA data yang telah diisi dalam borang ini? Tindakan ini tidak boleh diundur.')){
+  if(confirm('⚠️ Adakah anda pasti untuk memadam SEMUA data?')){
     localStorage.clear();
-    // Menambah kesan visual sedikit sebelum reload
     document.querySelector('.glass').style.opacity = '0.5';
     setTimeout(() => location.reload(), 300);
   }
 };
-
 </script>
 </body>
 </html>
